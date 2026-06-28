@@ -6,9 +6,9 @@ local DEPENDENCIES = {
     sfr_crafter = {'redlib'}
 }
 local CATEGORIES = {
-    ['sfr_server.lua'] = 'sfr'
-    ['sfr_client.lua'] = 'sfr'
-    ['sfr_crafter.lua'] = 'sfr'
+    ['sfr_server.lua'] = 'sfr',
+    ['sfr_client.lua'] = 'sfr',
+    ['sfr_crafter.lua'] = 'sfr',
 	['sfrlib.lua'] = 'sfr'
 }
 local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main/'
