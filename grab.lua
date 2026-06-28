@@ -51,7 +51,7 @@ function grab.unserializeJSON(path)
 end
 
 local function getGitRepo(pasteID)
-    local link = 'https://pastebin.com/raw/'..pasteID
+    local link = 
     local request
 
     while not request do
@@ -72,7 +72,7 @@ end
 local function grabLib(name)
     local fileName = name..'.lua'
     write(' Grabbing '..name..'..')
-    grab.put('/libs/'..fileName, getGitRepo(name))
+    grab.put('/libs/'..fileName, getGitRepo(fileName))
     print(' Done.')
 
 end
