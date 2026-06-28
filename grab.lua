@@ -49,7 +49,7 @@ function grab.unserializeJSON(path)
     return text and textutils.unserializeJSON(text) or nil
 end
 
-local function getPaste(pasteID)
+local function getGitRepo(pasteID)
     local link = 'https://pastebin.com/raw/'..pasteID
     local request
 
@@ -70,7 +70,7 @@ end
 
 local function grabLib(name)
     write(' Grabbing '..name..'..')
-    grab.put('/libs/'..name..'.lua', getPaste(PASTEIDS[name]))
+    grab.put('/libs/'..name..'.lua', getGitRepo(PASTEIDS[name]))
     print(' Done.')
 
 end
