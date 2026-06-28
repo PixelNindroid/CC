@@ -50,7 +50,7 @@ function grab.unserializeJSON(path)
     return text and textutils.unserializeJSON(text) or nil
 end
 
-local function getGitRepo(pasteID)
+local function getGitRepo(fileName)
     local link = 
     local request
 
