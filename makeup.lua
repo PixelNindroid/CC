@@ -38,7 +38,8 @@ function m.multiv(name, current, values, altValues)
             currentWithColor
         },
         multivName = name,
-        values = values
+        values = values,
+        altValues = altValues
     }
 end
 
