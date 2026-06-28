@@ -10,6 +10,7 @@ local PASTEIDS = {
     redlib = 'ZTCVsg2p',
     makeup = 'BYuuS1M5'
 }
+local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main'
 
 local grab = {}
 
@@ -71,7 +72,7 @@ end
 local function grabLib(name)
     local fileName = name..'.lua'
     write(' Grabbing '..name..'..')
-    grab.put('/libs/'..name..'.lua', getGitRepo(PASTEIDS[name]))
+    grab.put('/libs/'..fileName, getGitRepo(PASTEIDS[name]))
     print(' Done.')
 
 end
