@@ -947,6 +947,7 @@ function menu.settings()
         local current = settings.get('request_container') == '' and 'Disabled' or settings.get('request_container')
         for id in pairs(C.Output) do
             table.insert(values, getContainerNameTxt(id))
+            table.insert(altValues, id)
         end
 
         local opt, _, newValue = menu.select('Settings', {
