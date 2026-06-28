@@ -956,6 +956,7 @@ function menu.settings()
         })
         if not (opt or newValue) then break end
         print(newValue, m.toString(newValue))
+        print(opt)
         read()
 
         if newValue then
