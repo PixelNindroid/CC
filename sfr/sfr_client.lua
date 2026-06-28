@@ -725,7 +725,7 @@ function menu.request(itemID, from)
 
     local to = settings.get('request_container') --TODO
     print(settings.get('request_container'))
-    sleep(1)
+    sleep(10)
     read()
     r.action(ServerID, {'moveItemsFromContainer', from, to, itemID, count}) --TODO
     
