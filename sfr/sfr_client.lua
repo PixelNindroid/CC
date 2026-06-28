@@ -249,7 +249,7 @@ do --select menu
 
             if options[i].values then --multivalue
                 local title = m.toString(options[i])--:gsub(':.+', '')
-                local _, j = menu.select(title, options[i].values) -- opt returns ""
+                local _, j = menu.select(title, options[i].values, options[i].altValues) -- opt returns ""
 
                 local newValue = j and options[i].values[j].text
                 return options[i].multivName, i, newValue
@@ -509,7 +509,7 @@ function menu.containerOptions(id)
 
         local options = {
             m.txt('Items', next(sortedItems) and colors.white or colors.lightGray),
-            m.multiv('Type', m.spacy(getContainerTypesTxt()), type),
+            m.multiv('Type', type, m.spacy(getContainerTypesTxt())),
             'Remap',
             'Rename',
             m.empty(),
@@ -845,11 +845,11 @@ function menu.priority(title, active, disabled)
     
     local options = {}
     for i, v in ipairs(active) do
-        table.insert(options, m.multiv(v, values, '#' .. i))
+        table.insert(options, m.multiv(v, '#' .. i, values))
     end
     table.sort(disabled)
     for _, v in ipairs(disabled) do
-        table.insert(options, m.multiv(v, values, 'Disabled'))
+        table.insert(options, m.multiv(v, 'Disabled', values))
     end
 
     while true do
@@ -949,7 +949,7 @@ function menu.settings()
         end
 
         local opt, _, newValue = menu.select('Settings', {
-            m.multiv('Request Container', values, current),
+            m.multiv('Request Container', current, values),
             'Keybinds'
         })
         if not opt then break end
