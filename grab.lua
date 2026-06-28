@@ -5,7 +5,7 @@ local DEPENDENCIES = {
     sfr_client = {'sfrlib', 'ninlib', 'redlib', 'makeup'},
     sfr_crafter = {'redlib'}
 }
-local PASTEIDS = {
+local CATEGORIES = {
     grab = '4iVMG0am',
 	sfrlib = 'SZ8WbcZ1',
     ninlib = 'xG3Juhci',
