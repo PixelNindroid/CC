@@ -510,6 +510,8 @@ function menu.containerOptions(id)
         local options = {
             m.txt('Items', next(sortedItems) and colors.white or colors.lightGray),
             m.multiv('Type', type, m.spacy(getContainerTypesTxt())),
+            m.noOpt('id: ', id),
+            m.empty(),
             'Remap',
             'Rename',
             m.empty(),
