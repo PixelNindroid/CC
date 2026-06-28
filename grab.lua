@@ -6,11 +6,7 @@ local DEPENDENCIES = {
     sfr_crafter = {'redlib'}
 }
 local CATEGORIES = {
-    grab = '4iVMG0am',
-	sfrlib = 'SZ8WbcZ1',
-    ninlib = 'xG3Juhci',
-    redlib = 'ZTCVsg2p',
-    makeup = 'BYuuS1M5'
+	sfrlib = 'sfr'
 }
 local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main/'
 local grab = {}
