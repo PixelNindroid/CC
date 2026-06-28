@@ -17,6 +17,7 @@ function m.txtr(text, n, color)
 end
 function m.noOpt(...)
     local args = {...}
+    if not next(args) then return m.empty() end
     if #args == 1 and type(args[1]) == 'string' then
         args = {m.txt(args[1])}
     end
