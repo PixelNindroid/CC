@@ -1,3 +1,5 @@
+pretty = require('cc.pretty')
+
 local DEPENDENCIES = {
     sfr_server = {'sfrlib', 'ninlib', 'redlib'},
     sfr_client = {'sfrlib', 'ninlib', 'redlib', 'makeup'},
