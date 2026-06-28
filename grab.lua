@@ -70,7 +70,7 @@ end
 
 local function grabLib(name)
     local fileName = name..'.lua'
-    write(' Grabbing '..name..'..')
+    write('  Grabbing '..name..'..')
     grab.put('/libs/'..fileName, getGitRepo(fileName))
     print(' Done.')
 
