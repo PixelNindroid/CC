@@ -954,10 +954,10 @@ function menu.settings()
             m.multiv('Request Container', current, values),
             'Keybinds'
         })
-        if not opt then break end
+        if not (opt or newValue) then break end
         print(newValue, m.toString(newValue))
         read()
-        
+
         if newValue then
             if newValue == 'Disabled' then
                 settings.set('request_container', '')
