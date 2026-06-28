@@ -72,7 +72,7 @@ end
 local function grabLib(name)
     local fileName = name..'.lua'
     write(' Grabbing '..name..'..')
-    grab.put('/libs/'..fileName, getGitRepo(PASTEIDS[name]))
+    grab.put('/libs/'..fileName, getGitRepo(name))
     print(' Done.')
 
 end
