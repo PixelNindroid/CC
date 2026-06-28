@@ -79,10 +79,11 @@ local function grabLib(name)
 
 end
 function grab.grabAll(main)
+    local mainFileName = main..'.lua'
     grabLib('grab')
     print('\nGrabbing '..main..'..')
 
-    grab.put(main..'.lua', getGitRepo(fileName))
+    grab.put(mainFileName, getGitRepo(mainFileName))
     print('Done.')
 
     for _, lib in pairs(DEPENDENCIES[main]) do
