@@ -251,7 +251,7 @@ do --select menu
                 local title = m.toString(options[i])
                 local _, j = menu.select(title, options[i].values, options[i].altValues) -- opt returns ""
 
-                local newValue = j and options[i].values[j].text
+                local newValue = j and m.toString(options[i].values[j])
                 return options[i].multivName, i, newValue
             end
 
