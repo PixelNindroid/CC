@@ -15,6 +15,12 @@ end
 function m.txtr(text, n, color) 
     return m.txt(string.format('%'..n..'s', text), color)
 end
+function m.empty()
+    return {
+        text = '',
+        noOpt = true
+    }
+end
 function m.noOpt(...)
     local args = {...}
     if not next(args) then return m.empty() end
@@ -22,12 +28,6 @@ function m.noOpt(...)
         args = {m.txt(args[1])}
     end
     return n.extend(args, {noOpt = true})
-end
-function m.empty()
-    return {
-        text = '',
-        noOpt = true
-    }
 end
 function m.multiv(name, current, values, altValues)
     local currentWithColor
