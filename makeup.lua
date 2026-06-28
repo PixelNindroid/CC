@@ -21,7 +21,7 @@ function m.empty()
         noOpt = true
     }
 end
-function m.multiv(name, values, current)
+function m.multiv(name, current, values)
     local currentWithColor
 
     for _, value in pairs(values) do
