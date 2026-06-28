@@ -957,7 +957,7 @@ function menu.settings()
         if not opt then break end
         print(newValue, m.toString(newValue))
         read()
-e
+        
         if newValue then
             if newValue == 'Disabled' then
                 settings.set('request_container', '')
