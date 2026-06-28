@@ -956,6 +956,7 @@ function menu.settings()
         })
         if not opt then break end
         print(newValue, m.toString(newValue))
+        read()
 
         if newValue then
             if newValue == 'Disabled' then
