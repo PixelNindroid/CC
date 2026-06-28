@@ -51,7 +51,7 @@ function grab.unserializeJSON(path)
 end
 
 local function getGitRepo(fileName)
-    local link = string.format('%s%s/%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName)
+    local link = string.format('%s%s/%s?t=%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName, os.epoch("utc"))
     local request
 
     while not request do
