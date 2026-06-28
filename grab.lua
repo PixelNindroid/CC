@@ -58,7 +58,7 @@ local function getGitRepo(fileName)
         request = http.get(link)
 
         if not request then
-            print('HTTP request for '..pasteID..' failed!')
+            print('HTTP request for '..fileName..' failed!')
             sleep(1)
         end
     end
