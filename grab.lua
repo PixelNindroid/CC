@@ -79,6 +79,9 @@ function grab.grabAll(main)
     grabLib('grab')
     print('\nGrabbing '..main..'..')
 
+    grab.put(main..'.lua', getGitRepo(fileName))
+    print('Done.')
+
     for _, lib in pairs(DEPENDENCIES[main]) do
         grabLib(lib)
     end
