@@ -52,7 +52,7 @@ function grab.unserializeJSON(path)
 end
 
 local function getGitRepo(fileName)
-    local link = GIT_REPO_URL..fileName
+    local link = GIT_REPO_URL .. fileName
     local request
 
     while not request do
