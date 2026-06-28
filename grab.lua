@@ -69,6 +69,7 @@ local function getGitRepo(pasteID)
 end
 
 local function grabLib(name)
+    local fileName = name..'.lua'
     write(' Grabbing '..name..'..')
     grab.put('/libs/'..name..'.lua', getGitRepo(PASTEIDS[name]))
     print(' Done.')
@@ -79,7 +80,7 @@ function grab.grabAll(main)
     print('\nGrabbing dependencies for '..main..'..')
 
     for _, lib in pairs(DEPENDENCIES[main]) do
-        grabLib(lib .. '.lua')
+        grabLib(lib)
     end
     print('\nLibs Updated Succesfully\n')
 end
