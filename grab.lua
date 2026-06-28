@@ -56,8 +56,6 @@ local function getGitRepo(fileName)
 
     while not request do
         request = http.get(link)
-        pretty.pretty_print(request)
-        --read()
 
         if not request then
             print('HTTP request for '..fileName..' failed!')
