@@ -77,7 +77,7 @@ local function grabLib(name)
 end
 function grab.grabAll(main)
     grabLib('grab')
-    print('\nGrabbing dependencies for '..main..'..')
+    print('\nGrabbing '..main..'..')
 
     for _, lib in pairs(DEPENDENCIES[main]) do
         grabLib(lib)
