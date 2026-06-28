@@ -79,7 +79,7 @@ function grab.grabAll(main)
     print('\nGrabbing dependencies for '..main..'..')
 
     for _, lib in pairs(DEPENDENCIES[main]) do
-        grabLib(lib)
+        grabLib(lib .. '.lua')
     end
     print('\nLibs Updated Succesfully\n')
 end
