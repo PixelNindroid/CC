@@ -15,7 +15,7 @@ end
 function m.txtr(text, n, color) 
     return m.txt(string.format('%'..n..'s', text), color)
 end
-function m.noOpt()
+function m.noOpt(...)
     local args = {...}
     return n.extend(args, {noOpt = true})
 end
