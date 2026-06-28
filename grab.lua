@@ -11,7 +11,6 @@ local PASTEIDS = {
     makeup = 'BYuuS1M5'
 }
 local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main/'
-
 local grab = {}
 
 
