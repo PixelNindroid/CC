@@ -6,7 +6,7 @@ peripheral.find("modem", rednet.open)
 print('Hosting..')
 rednet.host('SFR_CRAFTER', 'sfr_crafter')
 print('Done!')
-
+ 
 
 local function craft()
     turtle.craft()
