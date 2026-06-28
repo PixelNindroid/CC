@@ -1,4 +1,4 @@
-local pretty = require('cc.prettyeeeee')
+local pretty = require('cc.prettyeeeeeE')
 local strings = require('cc.strings')
 
 local n = {}
