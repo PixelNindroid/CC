@@ -939,7 +939,7 @@ function menu.tagInputItems(tag)
         r.action(ServerID, {'setSavedTagInputs', SavedTagInputs})
     end
 end
-
+e
 function menu.settings()
     while true do
         local values = {m.txt('Disabled', colors.red)}
