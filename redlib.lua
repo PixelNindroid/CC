@@ -95,7 +95,7 @@ function r.listen(id, msg, ptc, actions, vars)
         if actions[actionName] then
             r.confirm(id)
 
-            results = {actions[actionName](table.unpack(parameters))}
+            local results = {actions[actionName](table.unpack(parameters))}
             r.safeSend(id, results, 'ACTIONRESULT')
             
         else
