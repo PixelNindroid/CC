@@ -954,10 +954,7 @@ function menu.settings()
             m.multiv('Request Container', current, values, altValues),
             'Keybinds'
         })
-        if not (opt or newValue) then break end
-        print(newValue, m.toString(newValue))
-        print(opt)
-        read()
+        if not opt then break end
 
         if newValue then
             if newValue == 'Disabled' then
