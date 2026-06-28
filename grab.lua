@@ -58,7 +58,7 @@ local function getGitRepo(fileName)
 
         if not request then
             print('HTTP request for '..fileName..' failed!')
-            sleep(1)e
+            sleep(1)
         end
     end
 
