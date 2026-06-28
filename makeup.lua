@@ -24,9 +24,9 @@ end
 function m.multiv(name, current, values, altValues)
     local currentWithColor
 
-    for _, value in pairs(values) do
-        if value.text == current then
-            currentWithColor = value
+    for _, v in pairs(altValues or values) do
+        if v.text == current then
+            currentWithColor = v
             break
         end
     end
