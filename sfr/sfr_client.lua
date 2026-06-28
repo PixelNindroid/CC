@@ -943,6 +943,7 @@ end
 function menu.settings()
     while true do
         local values = {m.txt('Disabled', colors.red)}
+        local altValues = 'Disabled'
         local current = settings.get('request_container') == '' and 'Disabled' or settings.get('request_container')
         for id in pairs(C.Output) do
             table.insert(values, getContainerNameTxt(id))
