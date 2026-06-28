@@ -49,7 +49,7 @@ end
 
 local function getGitRepo(fileName)
     local link = GIT_REPO_URL .. (CATEGORIES[fileName] or '') .. '/' .. fileName
-    local request 
+    local request
 
     while not request do
         request = http.get(link)
