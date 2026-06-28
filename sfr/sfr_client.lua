@@ -951,7 +951,7 @@ function menu.settings()
         end
 
         local opt, _, newValue = menu.select('Settings', {
-            m.multiv('Request Container', current, values),
+            m.multiv('Request Container', current, values, altValues),
             'Keybinds'
         })
         if not (opt or newValue) then break end
