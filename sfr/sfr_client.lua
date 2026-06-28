@@ -724,6 +724,8 @@ function menu.request(itemID, from)
     if count == 0 then return end
 
     local to = settings.get('request_container') --TODO
+    print(settings.get('request_container'))
+    read()
     r.action(ServerID, {'moveItemsFromContainer', from, to, itemID, count}) --TODO
     
     local recentRequests = settings.get('recent_requests')
