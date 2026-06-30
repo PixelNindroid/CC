@@ -66,7 +66,6 @@ end
 --DECODE
 
 function m.exe(var)
-    pretty.pretty_print(var)
     if not var then 
         return
 
