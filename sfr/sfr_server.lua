@@ -70,10 +70,10 @@ local function moveItemsFromSlots(from, to, slots, limit, toSlot)
             speaker.playNote('iron_xylophone', 3, 8)
             lastMovementTime = os.epoch('utc')
             activeState = true
-            --print(('Moved %d items from %s to %s'):format(transferred, from, to))
+            print(('Moved %d items from %s to %s'):format(transferred, from, to))
         else
             speaker.playNote('xylophone', 1, 8)
-            --printError(('Failed to move slot %s from %s to %s'):format(slot, from, to))
+            printError(('Failed to move slot %s from %s to %s'):format(slot, from, to))
         end
 
         totalMoved = totalMoved + moved
