@@ -675,6 +675,7 @@ while true do
     elseif event == 'rednet_message' then
         local id, msg, ptc = table.unpack(eventData, 2)
         print(("C%d sent %s %s"):format(id, ptc, tostring(msg)))
+        pretty.pretty_print(msg)
         speaker.playNote('bell', 3)
 
         listen(id, msg, ptc)
