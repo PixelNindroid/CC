@@ -21,14 +21,6 @@ function m.empty()
         noOpt = true
     }
 end
-function m.noOpt(...)
-    local args = {...}
-    if not next(args) then return m.empty() end
-    if #args == 1 and type(args[1]) == 'string' then
-        args = {m.txt(args[1])}
-    end
-    return n.extend(args, {noOpt = true})
-end
 function m.multiv(name, current, values, altValues)
     local currentWithColor
 
