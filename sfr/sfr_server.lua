@@ -326,7 +326,7 @@ local function getTagInputs(rr)
             if count == yieldCount then
                 n.write('.')
                 coroutine.yield()
-
+                yieldCount = yieldCount + YIELD_INTERVAL
             end
 
             tagInputs[tag] = getItemsWithTag(tag)
