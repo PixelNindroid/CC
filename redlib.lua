@@ -91,7 +91,6 @@ function r.listen(id, msg, ptc, actions, vars)
             actionName = msg
             parameters = {}
         end
-        pretty.pretty_print('Received action', actionName, parameters)
 
         if actions[actionName] then
             r.confirm(id)
