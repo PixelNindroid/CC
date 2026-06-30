@@ -21,6 +21,9 @@ function m.empty()
         noOpt = true
     }
 end
+function m.noOpt(var)
+    return n.extend(var, {noOpt = true})
+end
 function m.multiv(name, current, values, altValues)
     local currentWithColor
 
