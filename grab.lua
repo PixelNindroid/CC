@@ -76,7 +76,13 @@ local function grabLib(name)
     print('  Done.')
 
 end
+local function refreshGit()
+    local url = "https://api.github.com/repos/PixelNindroid/CC/commits/main"
+    http.get(url, {["User-Agent"] = "ComputerCraft"})
+end
 function grab.grabAll(main)
+    refreshGit()
+    
     local mainFileName = main..'.lua'
     grabLib('grab')
     print('\nGrabbing '..main..'..')
