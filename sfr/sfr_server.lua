@@ -311,6 +311,8 @@ end
 
 local function getTagInputs(rr)
     local count = 0
+    local yieldCount = 0
+    local YIELD_INTERVAL = 100
 
     write('Mapping tag inputs')
     local craftingRecipeIDs = rr.list('crafting')
@@ -321,9 +323,10 @@ local function getTagInputs(rr)
 
         local function addTag(tag)
             count = count + 1
-            if math.fmod(count, 100) == 0 then
+            if count == yieldCount then
                 n.write('.')
                 coroutine.yield()
+
             end
 
             tagInputs[tag] = getItemsWithTag(tag)
