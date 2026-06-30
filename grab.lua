@@ -9,9 +9,9 @@ local CATEGORIES = {
     ['sfr_server.lua'] = 'sfr',
     ['sfr_client.lua'] = 'sfr',
     ['sfr_crafter.lua'] = 'sfr',
-	['sfrlib.lua'] = 'sfr'
+    ['sfrlib.lua'] = 'sfr'
 }
-local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main/'
+local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/main/'
 local grab = {}
 
 
@@ -20,8 +20,8 @@ function grab.put(path, text)
     if not f then
         printError("Failed to open file for writing: " .. path)
     end
-	f.write(text)
-	f.close()
+    f.write(text)
+    f.close()
 end
 function grab.serialize(path, data)
     grab.put(path, textutils.serialize(data))
@@ -51,9 +51,11 @@ function grab.unserializeJSON(path)
 end
 
 local function getGitRepo(fileName)
-    local url = string.format('%s%s/%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName)
-    local request
+    local category = CATEGORIES[fileName]
+    local subfolder = category and (category .. '/') or ''
+    local url = string.format('%s%s%s', GIT_REPO_URL, subfolder, fileName)
 
+    local request
     repeat
         request = http.get(url, {["Cache-Control"] = "no-cache", ["Pragma"] = "no-cache"})
 
@@ -77,8 +79,22 @@ local function grabLib(name)
 
 end
 local function refreshGit()
+    write('Checking API for latest push... ')
     local url = "https://api.github.com/repos/PixelNindroid/CC/commits/main"
-    http.get(url, {["User-Agent"] = "ComputerCraft"})
+    local response = http.get(url, {["User-Agent"] = "ComputerCraft"})
+    
+    if response then
+        local data = textutils.unserializeJSON(response.readAll())
+        response.close()
+        
+        if data and data.sha then
+            -- The Magic: Overwrite the URL to use the exact commit hash instead of 'main'
+            GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/' .. data.sha .. '/'
+            print(string.sub(data.sha, 1, 7))
+            return
+        end
+    end
+    print('Failed. Falling back to cached main.')
 end
 function grab.grabAll(main)
     refreshGit()
@@ -98,7 +114,7 @@ end
 
 
 if not fs.exists('startup.lua') then 
-	grabLib('grab')
+    grabLib('grab')
 
     print('Choose the main program:')
     local main = read()
