@@ -66,8 +66,10 @@ end
 --DECODE
 
 function m.exe(var)
+    if not var then 
+        return
 
-    if type(var) == 'string' then
+    elseif type(var) == 'string' then
         n.writeStriped(var)
 
     elseif var[1] then
