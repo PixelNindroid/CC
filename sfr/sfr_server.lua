@@ -321,10 +321,10 @@ local function getTagInputs(rr)
 
         local function addTag(tag)
             count = count + 1
-            --if math.fmod(count, 100) == 0 then
-            --    n.write('.')
-            --    coroutine.yield()
-            --end
+            if math.fmod(count, 100) == 0 then
+                n.write('.')
+                coroutine.yield()
+            end
 
             tagInputs[tag] = getItemsWithTag(tag)
         end
