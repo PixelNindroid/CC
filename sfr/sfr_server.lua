@@ -93,6 +93,7 @@ local function moveItemsFromContainers(froms, to, itemID, limit, toSlot)
         local from = froms[i]
         local moved = sfr.getContainerType(from) == 'BulkInterface' and pullFromBulk(to, from, itemID, limit - 64) or moveItemsFromSlots(from, to, sfr.getSlots(itemID, from), limit, toSlot)
 
+        print(sfr.getSlots(itemID, from), itemID, from, limit, toSlot)
         totalMoved = totalMoved + moved
         limit = limit - moved
         if limit <= 0 then break end
