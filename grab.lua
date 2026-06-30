@@ -12,8 +12,6 @@ local CATEGORIES = {
 	['sfrlib.lua'] = 'sfr'
 }
 local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/refs/heads/main/'
-local VERSION_FILE_NAME = 'version.txt'
-local VERSION_FILE_PATH = '/version.txt'
 local grab = {}
 
 
@@ -52,10 +50,6 @@ function grab.unserializeJSON(path)
     return text and textutils.unserializeJSON(text) or nil
 end
 
-local function trim(str)
-    return (string.gsub(str or '', '^%s*(.-)%s*$', '%1'))
-end
-
 local function getGitRepo(fileName)
     local link = string.format('%s%s/%s?t=%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName, os.epoch("utc"))
     local request
@@ -75,56 +69,23 @@ local function getGitRepo(fileName)
     return fileContents
 end
 
-local function getRemoteVersion()
-    local versionText = getGitRepo(VERSION_FILE_NAME)
-    return trim(versionText)
-end
-
-local function shouldUpdateFiles(remoteVersion)
-    if not fs.exists(VERSION_FILE_PATH) then
-        return true
-    end
-
-    local localVersion = grab.pull(VERSION_FILE_PATH)
-    return trim(localVersion) ~= remoteVersion
-end
-
-local function grabLib(name, updateNeeded)
+local function grabLib(name)
     local fileName = name..'.lua'
-    local destinationPath = '/libs/'..fileName
-
-    if not updateNeeded and fs.exists(destinationPath) then
-        return
-    end
-
     write('  Grabbing '..name..'..')
-    grab.put(destinationPath, getGitRepo(fileName))
+    grab.put('/libs/'..fileName, getGitRepo(fileName))
     print('  Done.')
-end
 
+end
 function grab.grabAll(main)
     local mainFileName = main..'.lua'
-    local remoteVersion = getRemoteVersion()
-    local updateNeeded = shouldUpdateFiles(remoteVersion)
-
-    if updateNeeded then
-        grab.put(VERSION_FILE_PATH, remoteVersion)
-    else
-        print('Repo version unchanged ('..remoteVersion..'); using existing files.\n')
-    end
-
-    grabLib('grab', updateNeeded)
+    grabLib('grab')
     print('\nGrabbing '..main..'..')
 
-    if updateNeeded or not fs.exists(mainFileName) then
-        grab.put(mainFileName, getGitRepo(mainFileName))
-        print('Done.')
-    else
-        print('Up to date.')
-    end
+    grab.put(mainFileName, getGitRepo(mainFileName))
+    print('Done.')
 
     for _, lib in pairs(DEPENDENCIES[main]) do
-        grabLib(lib, updateNeeded)
+        grabLib(lib)
     end
     print('\nLibs Updated Succesfully\n')
 end
