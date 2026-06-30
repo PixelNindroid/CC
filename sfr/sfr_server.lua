@@ -311,8 +311,8 @@ end
 
 local function getTagInputs(rr)
     local count = 0
-    local yieldCount = 0
     local YIELD_INTERVAL = 100
+    local yieldCount = YIELD_INTERVAL
 
     write('Mapping tag inputs')
     local craftingRecipeIDs = rr.list('crafting')
