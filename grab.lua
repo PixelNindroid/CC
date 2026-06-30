@@ -51,11 +51,11 @@ function grab.unserializeJSON(path)
 end
 
 local function getGitRepo(fileName)
-    local link = string.format('%s%s/%s?t=%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName, os.epoch("utc"))
+    local url = string.format('%s%s/%s?t=%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName, os.epoch("utc"))
     local request
 
     while not request do
-        request = http.get(link)
+        request = http.get(url, {["Cache-Control"] = "no-cache", ["Pragma"] = "no-cache"})
 
         if not request then
             print('HTTP request for '..fileName..' failed!')
@@ -82,7 +82,7 @@ local function refreshGit()
 end
 function grab.grabAll(main)
     refreshGit()
-    
+
     local mainFileName = main..'.lua'
     grabLib('grab')
     print('\nGrabbing '..main..'..')
