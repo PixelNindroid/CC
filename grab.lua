@@ -54,14 +54,14 @@ local function getGitRepo(fileName)
     local url = string.format('%s%s/%s', GIT_REPO_URL, CATEGORIES[fileName] or '', fileName)
     local request
 
-    while not request do
+    repeat
         request = http.get(url, {["Cache-Control"] = "no-cache", ["Pragma"] = "no-cache"})
 
         if not request then
             print('HTTP request for '..fileName..' failed!')
             sleep(1)
         end
-    end
+    until request
 
     local fileContents = request.readAll()
     request.close()
