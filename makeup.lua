@@ -22,6 +22,7 @@ function m.empty()
     }
 end
 function m.noOpt(var)
+    pretty.pretty_print(var)
     if not var then return m.empty() end
     if type(var) == 'string' then
         var = {var}
