@@ -99,7 +99,9 @@ function sfr.getTagLoc(itemID)
 
     for id, data in pairs(C.Storage) do
         term.clear()
-        pretty.pretty_print(tags, data.whitelistedTags)
+        pretty.pretty_print(tags)
+        print('e')
+        pretty.pretty_print(data.whitelistedTags)
         local matchingTags = n.getMatchingValues(tags, data.whitelistedTags)
         
         if next(matchingTags) then return id end
