@@ -127,7 +127,7 @@ local function findStorage(itemID)
     local itemLoc = sfr.getItemLoc(itemID)
     if itemLoc then return itemLoc end
 end
-print(findStorage('minecraft:iron_ingot'))
+print(findStorage('minecraft:redstone'))
 read()
 
 local function pushToBulk(from, bulkInterfaceID, slot, count)
