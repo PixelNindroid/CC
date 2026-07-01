@@ -65,6 +65,17 @@ function n.settleList(list)
     end
     return newList
 end
+function n.getMatchingKeys(list1, list2)
+    local matches = {}
+
+    for k in pairs(list1) do
+        if list2[k] then
+            table.insert(matches, k)
+        end
+    end
+
+    return matches
+end
 function n.getMatchingValues(list1, list2)
     local matches = {}
 
