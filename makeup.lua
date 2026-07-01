@@ -22,8 +22,6 @@ function m.empty()
     }
 end
 function m.noOpt(var)
-    term.clear()
-    pretty.pretty_print(var)
     if not var then return m.empty() end
     if type(var) == 'string' then
         var = {var}
