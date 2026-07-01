@@ -240,6 +240,9 @@ local function getItemDetails(ir)
 end
 ItemDetails = getItemDetails(informativeRegistry)
 
+print(findStorage('minecraft:redstone'))
+read()
+
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
     write(('Mapping %s crafting recipes..'):format(#craftingRecipeIDs))
@@ -518,8 +521,7 @@ local function mapAllStorageItems()
     end
 end
 
-print(findStorage('minecraft:redstone'))
-read()
+
 --CRAFT
 
 local function getGridPosSlot(gridPos) 
