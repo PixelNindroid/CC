@@ -240,7 +240,7 @@ local function getItemDetails(ir)
 end
 ItemDetails = getItemDetails(informativeRegistry)
 
-print(findStorage('minecraft:redstone'))
+print(sfr.getTagLoc('minecraft:redstone'))
 read()
 
 local function getAllRecipes(rr)
