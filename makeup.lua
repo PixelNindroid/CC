@@ -28,7 +28,7 @@ function m.noOpt(var)
     if type(var) == 'string' then
         var = {var}
     end
-    var[noOpt] = true
+    var.noOpt = true
     return var
 end
 function m.multiv(name, current, values, altValues)
