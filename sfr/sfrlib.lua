@@ -1,4 +1,5 @@
 local n = require('libs.ninlib')
+local pretty = require('cc.pretty')
 
 local C_TYPES = {
     {
