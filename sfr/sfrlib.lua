@@ -102,7 +102,7 @@ function sfr.getTagLoc(itemID)
         pretty.pretty_print(tags)
         print('e')
         pretty.pretty_print(data.whitelistedTags)
-        local matchingTags = n.getMatchingValues(tags, data.whitelistedTags)
+        local matchingTags = n.getMatchingKeys(tags, data.whitelistedTags)
         
         if next(matchingTags) then return id end
     end
