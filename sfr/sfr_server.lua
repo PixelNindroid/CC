@@ -127,8 +127,6 @@ local function findStorage(itemID)
     local itemLoc = sfr.getItemLoc(itemID)
     if itemLoc then return itemLoc end
 end
-print(findStorage('minecraft:redstone'))
-read()
 
 local function pushToBulk(from, bulkInterfaceID, slot, count)
     local bulks = C.BulkInterface[bulkInterfaceID].bulks
@@ -520,7 +518,8 @@ local function mapAllStorageItems()
     end
 end
 
-
+print(findStorage('minecraft:redstone'))
+read()
 --CRAFT
 
 local function getGridPosSlot(gridPos) 
