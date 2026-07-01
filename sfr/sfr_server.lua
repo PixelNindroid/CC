@@ -128,6 +128,7 @@ local function findStorage(itemID)
     if itemLoc then return itemLoc end
 end
 print(findStorage('minecraft:iron_ingot'))
+read()
 
 local function pushToBulk(from, bulkInterfaceID, slot, count)
     local bulks = C.BulkInterface[bulkInterfaceID].bulks
