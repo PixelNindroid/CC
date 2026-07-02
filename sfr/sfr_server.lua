@@ -519,11 +519,15 @@ local function mapAllStorageItems()
     addAllNewContainers()
     removeAllDisconnectedContainers()
 
-    for id in pairs(C.BulkInterface) do
-        C.BulkInterface[id].items = mapBulkItems(id)
+    if C.BulkInterface then
+        for id in pairs(C.BulkInterface) do
+            C.BulkInterface[id].items = mapBulkItems(id)
+        end
     end
-    for id in pairs(C.Storage) do
-        C.Storage[id].items = getContainerItemCounts(id)
+    if C.Storage then
+        for id in pairs(C.Storage) do
+            C.Storage[id].items = getContainerItemCounts(id)
+        end
     end
 end
 
