@@ -431,12 +431,13 @@ local function addAllNewContainers()
             containersAdded = containersAdded + 1
         end
     end
-    if containersAdded > 0 then
-        saveC('Storage')
-    end
+
     n.printRight(containersAdded)
 end
 local function removeAllDisconnectedContainers()
+    local containersRemoved = 0
+    print('Removing disconnected containers..')
+
     for cType in pairs(C) do
         for id in pairs(C[cType]) do
             if not peripheral.wrap(id) then
