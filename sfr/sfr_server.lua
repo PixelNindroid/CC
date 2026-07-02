@@ -432,7 +432,7 @@ local function addAllNewContainers()
         end
     end
 
-    n.printRight(containersAdded)
+    n.printRight(containersAdded, colors.green)
 end
 local function removeAllDisconnectedContainers()
     local containersRemoved = 0
@@ -446,6 +446,8 @@ local function removeAllDisconnectedContainers()
             end
         end
     end
+
+    n.printRight(containersRemoved, colors.green)
 end
 local function changeContainerType(id, newType)
     local oldType = sfr.getContainerType(id)
@@ -497,7 +499,7 @@ local function getContainerItemCounts(id, dontLog)
     return itemCounts
 end
 local function mapBulkItems(id)
-    write(string.format('Mapping %s.. ', sfr.getContainerName(id)))
+    write(string.format('Mapping Bulk %s.. ', sfr.getContainerName(id)))
 
     local bulks = C.BulkInterface[id].bulks
     local itemCounts = C.BulkInterface[id].items
