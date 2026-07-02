@@ -469,7 +469,6 @@ end
 
 local function getContainerItemCounts(id, dontLog)
     local container = peripheral.wrap(id)
-    print(id)
 
     if not container then
         printError('Failed to wrap container: ' .. id)
@@ -535,12 +534,12 @@ local function mapAllStorageItems()
     addAllNewContainers()
     removeAllDisconnectedContainers()
 
-    if C.BulkInterface then
+    if next(C.BulkInterface) then
         for id in pairs(C.BulkInterface) do
             C.BulkInterface[id].items = mapBulkItems(id)
         end
     end
-    if C.Storage then
+    if next(C.Storage) then
         for id in pairs(C.Storage) do
             C.Storage[id].items = getContainerItemCounts(id)
         end
