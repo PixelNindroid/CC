@@ -427,12 +427,12 @@ local function addNewContainer(id, cType)
 end
 local function addAllNewContainers()
     local containersAdded = 0
-    print('Adding new containers..')
+    write('Adding new containers..')
 
     for _, id in pairs(Peripherals.containers) do
         if sfr.getContainerType(id) == nil then
             addNewContainer(id, 'Storage')
-            print('Found new container: ' .. id)
+            n.write('\nFound new container: ' .. id, colors.green)
             containersAdded = containersAdded + 1
         end
     end
@@ -441,13 +441,13 @@ local function addAllNewContainers()
 end
 local function removeAllDisconnectedContainers()
     local containersRemoved = 0
-    print('Removing disconnected containers..')
+    write('Removing disconnected containers..')
 
     for cType in pairs(C) do
         for id in pairs(C[cType]) do
             if not peripheral.wrap(id) then
                 C[cType][id] = nil
-                printError('Removed disconnected container: ' .. id)
+                n.write('\nRemoved disconnected container: ' .. id, colors.red)
             end
         end
     end
