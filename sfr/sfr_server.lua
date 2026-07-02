@@ -342,7 +342,7 @@ local function getTagInputs(rr)
             tagInputs[tag] = getItemsWithTag(tag)
         end
 
-        if data and data.result then
+        if data and ItemDetails[data.result] then
             if data.type == 'minecraft:crafting_shaped' then
                 for _, input in pairs(data.key) do
                     if input.tag then
