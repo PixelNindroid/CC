@@ -395,6 +395,8 @@ local function isUsableInput(input, result)
 end
 
 local function getCompactableItems()
+    local count = 0
+    print('Mapping compactableItems..')
 
     local compactableItems = {}
     for decomp, recipeList in pairs(AllRecipes) do
@@ -410,11 +412,13 @@ local function getCompactableItems()
                         comp = comp,
                         factor = decompRecipe.resultCount,
                     }
+                    count = count + 1
                 end
             end
         end
     end
 
+    n.printRight(count, colors.green)
     return compactableItems
 end
 local compactableItems = getCompactableItems()
