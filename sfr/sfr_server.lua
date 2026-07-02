@@ -222,7 +222,9 @@ local function getItemDetails(ir)
     
     local details = {}
     for _, id in ipairs(itemIDs) do
-        local describe = ir.describe('item', id)
+        local _, describe = pcall(function() 
+            return ir.describe('item', id) 
+        end)
 
         details[id] = describe and {
             displayName = describe.displayName or id, --string.gsub(describe.displayName, "§.", ""),
