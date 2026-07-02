@@ -422,7 +422,7 @@ local function addNewContainer(id, cType)
 end
 local function addAllNewContainers()
     local containersAdded = 0
-    print('Checking for new containers..')
+    print('Adding new containers..')
 
     for _, id in pairs(Peripherals.containers) do
         if sfr.getContainerType(id) == nil then
