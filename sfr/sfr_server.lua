@@ -286,7 +286,7 @@ local function getAllRecipes(rr)
             end
 
             if not ItemDetails[itemID] then
-                printError('Recipe for unknown item: ' .. id .. ' -> ' .. data.result.item)
+                n.write('\nRecipe for unknown item: ' .. id .. ' -> ' .. data.result.item, colors.red)
             end
             local mapped = mapRecipe(id, data)
             if mapped then
