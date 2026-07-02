@@ -469,6 +469,7 @@ end
 
 local function getContainerItemCounts(id, dontLog)
     local container = peripheral.wrap(id)
+    print(id)
 
     if not container then
         printError('Failed to wrap container: ' .. id)
