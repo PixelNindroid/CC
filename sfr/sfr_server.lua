@@ -242,9 +242,6 @@ local function getItemDetails(ir)
 end
 ItemDetails = getItemDetails(informativeRegistry)
 
-print(sfr.getTagLoc('minecraft:redstone'))
-read()
-
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
     write(('Mapping %s crafting recipes..'):format(#craftingRecipeIDs))
