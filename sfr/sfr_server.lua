@@ -375,7 +375,7 @@ local function autoSaveTagInputForTagsWithOneItem()
         end
     end
 
-    n.printRight(count, colors.green)
+    n.printRight(tostring(count), colors.green)
     save('data/saved_tag_inputs.dat', SavedTagInputs)
 end
 autoSaveTagInputForTagsWithOneItem()
@@ -418,7 +418,7 @@ local function getCompactableItems()
         end
     end
 
-    n.printRight(count, colors.green)
+    n.printRight(tostring(count), colors.green)
     return compactableItems
 end
 local compactableItems = getCompactableItems()
@@ -441,7 +441,7 @@ local function addAllNewContainers()
         end
     end
 
-    n.printRight(containersAdded, colors.green)
+    n.printRight(tostring(containersAdded), colors.green)
 end
 local function removeAllDisconnectedContainers()
     local containersRemoved = 0
