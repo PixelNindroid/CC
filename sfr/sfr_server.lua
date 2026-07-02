@@ -244,7 +244,6 @@ local function getItemDetails(ir)
     return details
 end
 ItemDetails = getItemDetails(informativeRegistry)
-read()
 
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
@@ -309,6 +308,9 @@ local function getItemsWithTag(tag)
     local itemIDs = {}
 
     for itemID, details in pairs(ItemDetails) do
+        if not details.tags then
+            pretty.pretty_print(details)
+        end
         if details.tags[tag] then
             table.insert(itemIDs, itemID)
         end
