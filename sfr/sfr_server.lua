@@ -427,6 +427,7 @@ local function addAllNewContainers()
             print('Found new container: ' .. id)
         end
     end
+    saveC('Storage')
 end
 local function removeAllDisconnectedContainers()
     for cType in pairs(C) do
