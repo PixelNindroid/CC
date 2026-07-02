@@ -364,7 +364,7 @@ local AllTagInputs = getTagInputs(recipeRegistry)
 
 local function autoSaveTagInputForTagsWithOneItem()
     local count = 0
-    print('Autosaving tags with one item..')
+    write('Autosaving tags with one item..')
 
     for tag, itemIDs in pairs(AllTagInputs) do
         if #itemIDs == 1 then
@@ -393,7 +393,7 @@ end
 
 local function getCompactableItems()
     local count = 0
-    print('Mapping compactableItems..')
+    write('Mapping compactableItems..')
 
     local compactableItems = {}
     for decomp, recipeList in pairs(AllRecipes) do
