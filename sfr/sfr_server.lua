@@ -366,6 +366,7 @@ end
 local AllTagInputs = getTagInputs(recipeRegistry)
 
 local function autoSaveTagInputForTagsWithOneItem()
+    print('Autosaving tags with one item..')
     for tag, itemIDs in pairs(AllTagInputs) do
         if #itemIDs == 1 then
             SavedTagInputs[tag] = itemIDs
