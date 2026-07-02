@@ -421,6 +421,7 @@ local function addNewContainer(id, cType)
     C[cType][id] = data
 end
 local function addAllNewContainers()
+    print('Checking for new containers..')
     for _, id in pairs(Peripherals.containers) do
         if sfr.getContainerType(id) == nil then
             addNewContainer(id, 'Storage')
