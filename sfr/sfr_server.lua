@@ -456,7 +456,7 @@ local function removeAllDisconnectedContainers()
         end
     end
 
-    n.printRight(containersRemoved, colors.green)
+    n.printRight(tostring(containersRemoved), colors.green)
 end
 local function changeContainerType(id, newType)
     local oldType = sfr.getContainerType(id)
