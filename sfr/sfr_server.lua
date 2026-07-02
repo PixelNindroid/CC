@@ -240,6 +240,7 @@ local function getItemDetails(ir)
 end
 ItemDetails = getItemDetails(informativeRegistry)
 pretty.pretty_print(ItemDetails)
+read()
 
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
