@@ -308,9 +308,6 @@ local function getItemsWithTag(tag)
     local itemIDs = {}
 
     for itemID, details in pairs(ItemDetails) do
-        if not details.tags then
-            pretty.pretty_print(details)
-        end
         if details.tags[tag] then
             table.insert(itemIDs, itemID)
         end
@@ -368,6 +365,7 @@ local AllTagInputs = getTagInputs(recipeRegistry)
 local function autoSaveTagInputForTagsWithOneItem()
     local count = 0
     print('Autosaving tags with one item..')
+
     for tag, itemIDs in pairs(AllTagInputs) do
         if #itemIDs == 1 then
             SavedTagInputs[tag] = itemIDs
@@ -401,7 +399,6 @@ local function getCompactableItems()
     local compactableItems = {}
     for decomp, recipeList in pairs(AllRecipes) do
         for _, decompRecipe in ipairs(recipeList) do
-            print(decompRecipe.id)
             local comp = decompRecipe.grid[1] and decompRecipe.grid[1].item
 
             if comp and #decompRecipe.grid == 1 and decompRecipe.resultCount > 1 then
