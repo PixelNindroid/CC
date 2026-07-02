@@ -379,7 +379,6 @@ end
 autoSaveTagInputForTagsWithOneItem()
 
 local function isUsableInput(input, result)
-    print(result)
     if input.item == result or (ItemDetails[result] and ItemDetails[result].tags[input.item]) then return end
 
     if not AllRecipes[result] then return end
@@ -589,8 +588,6 @@ local function compContainer(id)
         end
     end
 end
-
-compContainer('minecraft:chest_2')
 
 
 --setup
