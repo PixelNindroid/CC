@@ -421,14 +421,20 @@ local function addNewContainer(id, cType)
     C[cType][id] = data
 end
 local function addAllNewContainers()
+    local containersAdded = 0
     print('Checking for new containers..')
+
     for _, id in pairs(Peripherals.containers) do
         if sfr.getContainerType(id) == nil then
             addNewContainer(id, 'Storage')
             print('Found new container: ' .. id)
+            containersAdded = containersAdded + 1
         end
     end
-    saveC('Storage')
+    if containersAdded > 0 then
+        saveC('Storage')
+    end
+    n.printRight(containersAdded)
 end
 local function removeAllDisconnectedContainers()
     for cType in pairs(C) do
