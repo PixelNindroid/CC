@@ -114,6 +114,8 @@ end
 
 local function simpleSelect(options)
     local firstY = term.getCursorPos[2]
+    local lastY = firstY + #options - 1
+
     for _, opt in ipairs(options) do
         print('   ' .. opt)
     end
