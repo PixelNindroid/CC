@@ -121,14 +121,18 @@ local function installer()
     os.reboot()
 end
 
-settings.load()
-if not settings.get('grab.grab_scripts_on_startup') then
-    settings.define('grab.grab_scripts_on_startup', {default = true})
-    settings.save()
+local function setup()
+    settings.load()
+    if not settings.get('grab.grab_scripts_on_startup') then
+        settings.define('grab.grab_scripts_on_startup', {default = true})
+        settings.save()
+    end
+
+    if not fs.exists('startup.lua') then 
+        installer()
+    end
 end
 
-if not fs.exists('startup.lua') then 
-    installer()
-end
+setup()
 
 return grab
