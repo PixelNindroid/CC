@@ -112,27 +112,37 @@ function grab.grabAll(main)
     print('\nLibs Updated Succesfully\n')
 end
 
-local function installer()
-    print('Choose the main program:')
-    local main = read()
+local function simpleSelect(options)
+    local firstY = term.getCursorPos[2]
+    for _, opt in ipairs(options) do
+        print('   ' .. opt)
+    end
+
+    while true do
+        
+    end
+
+    return opt
+end
+
+settings.load()
+if not settings.get('grab.grab_scripts_on_startup') then
+    settings.define('grab.grab_scripts_on_startup', {default = true})
+    settings.save()
+end
+
+if not settings.get('grab.main') then 
+    print('Programs:')
+    local mains = {}
+    for main in pairs(DEPENDENCIES) do
+        print('  ' .. main)
+        table.insert(mains, main)
+    end
+    local main = simpleSelect(mains)
 
     os.setComputerLabel(main)
 
     os.reboot()
 end
-
-local function setup()
-    settings.load()
-    if not settings.get('grab.grab_scripts_on_startup') then
-        settings.define('grab.grab_scripts_on_startup', {default = true})
-        settings.save()
-    end
-
-    if not settings.get('grab.main') then 
-        installer()
-    end
-end
-
-setup()
 
 return grab
