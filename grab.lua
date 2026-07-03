@@ -128,7 +128,7 @@ local function setup()
         settings.save()
     end
 
-    if not fs.exists('startup.lua') then 
+    if not settings.get('grab.main') then 
         installer()
     end
 end
