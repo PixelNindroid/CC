@@ -112,6 +112,7 @@ function grab.grabAll(main)
     print('\nLibs Updated Succesfully\n')
 end
 
+settings.load()
 if not settings.get('grab_scripts_on_startup') then
     settings.define('grab_scripts_on_startup', {default = true})
     settings.save()
