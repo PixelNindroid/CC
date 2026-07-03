@@ -112,35 +112,23 @@ function grab.grabAll(main)
     print('\nLibs Updated Succesfully\n')
 end
 
-settings.load()
-if not settings.get('grab_scripts_on_startup') then
-    settings.define('grab_scripts_on_startup', {default = true})
-    settings.save()
-end
-
-if not fs.exists('startup.lua') then 
-    grabLib('grab')
-
+local function installer()
     print('Choose the main program:')
     local main = read()
-
-    grab.put('/startup.lua', 
-        ([[
-local grab = require('libs.grab')
-local main = '%s'
-
-term.clear()
-grab.grabAll(main)
-
-print('Running ' .. main .. '..\n')
-shell.run(main)
-
-        ]]):format(main)
-    )
 
     os.setComputerLabel(main)
 
     os.reboot()
+end
+
+settings.load()
+if not settings.get('grab.grab_scripts_on_startup') then
+    settings.define('grab.grab_scripts_on_startup', {default = true})
+    settings.save()
+end
+
+if not fs.exists('startup.lua') then 
+    installer()
 end
 
 return grab
