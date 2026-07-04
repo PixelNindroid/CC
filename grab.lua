@@ -122,6 +122,9 @@ local function simpleSelect(options)
     end
 
     while true do
+        term.setCursorPos(1, currentY)
+        print('>')
+
         local key = os.pullEvent('key')
         print('\b ')
 
@@ -140,12 +143,7 @@ local function simpleSelect(options)
         elseif key == keys.enter then
             return options[currentY - firstY + 1]
         end
-        
-        term.setCursorPos(1, firstY)
-        print('>')
     end
-
-    return opt
 end
 
 settings.load()
