@@ -115,13 +115,34 @@ end
 local function simpleSelect(options)
     local firstY = term.getCursorPos[2]
     local lastY = firstY + #options - 1
+    local currentY = firstY
 
     for _, opt in ipairs(options) do
         print('   ' .. opt)
     end
 
     while true do
+        local key = os.pullEvent('key')
+        print('\b ')
+
+        if key == keys.up or key == keys.w then
+            if currentY > firstY then
+                currentY = currentY - 1
+            else
+                currentY = lastY
+            end
+        elseif key == keys.down or key == keys.s then
+            if currentY < lastY then
+                currentY = currentY + 1
+            else
+                currentY = firstY
+            end
+        elseif key == keys.enter then
+            return options[currentY - firstY + 1]
+        end
         
+        term.setCursorPos(1, firstY)
+        print('>')
     end
 
     return opt
