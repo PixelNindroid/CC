@@ -112,7 +112,7 @@ function grab.grabAll(main)
 end
 
 local function simpleSelect(options)
-    local firstY = select(term.getCursorPos(), 2)
+    local _, firstY = term.getCursorPos()
     local lastY = firstY + #options - 1
     local currentY = firstY
 
@@ -124,7 +124,7 @@ local function simpleSelect(options)
         term.setCursorPos(1, currentY)
         print('>')
 
-        local key = os.pullEvent('key')
+        local _, key = os.pullEvent('key')
         term.setCursorPos(1, currentY)
         print(' ')
 
