@@ -156,7 +156,6 @@ if not settings.get('grab.main') then
     print('Select the Main program:')
     local mains = {}
     for main in pairs(DEPENDENCIES) do
-        print('  ' .. main)
         table.insert(mains, main)
     end
     local main = simpleSelect(mains)
