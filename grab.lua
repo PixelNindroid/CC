@@ -122,11 +122,11 @@ local function simpleSelect(options)
 
     while true do
         term.setCursorPos(1, currentY)
-        print('>')
+        write('>')
 
         local _, key = os.pullEvent('key')
         term.setCursorPos(1, currentY)
-        print(' ')
+        write(' ')
 
         if key == keys.up or key == keys.w then
             if currentY > firstY then
@@ -141,6 +141,7 @@ local function simpleSelect(options)
                 currentY = firstY
             end
         elseif key == keys.enter then
+            write('>>')
             return options[currentY - firstY + 1]
         end
     end
