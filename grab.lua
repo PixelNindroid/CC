@@ -159,6 +159,8 @@ if not settings.get('grab.main') then
         table.insert(mains, main)
     end
     local main = simpleSelect(mains)
+    print(main)
+    read()
 
     os.setComputerLabel(main)
 
