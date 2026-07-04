@@ -163,8 +163,10 @@ if not settings.get('grab.main') then
         table.insert(mains, main)
     end
     local main = simpleSelect(mains)
-    print(main)
-    read()
+
+    settings.set('grab.main', main)
+    settings.set('grab.run_main_on_startup', true)
+    settings.save()
 
     os.setComputerLabel(main)
 
