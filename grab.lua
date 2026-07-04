@@ -152,6 +152,7 @@ if not settings.get('grab.grab_scripts_on_startup') then
 end
 
 if not settings.get('grab.main') then 
+    clear()
     print('Welcome to grab installer\174!\n')
     print('Select the Main program:')
     local mains = {}
