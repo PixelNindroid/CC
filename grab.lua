@@ -88,7 +88,6 @@ local function refreshGit()
         response.close()
         
         if data and data.sha then
-            -- The Magic: Overwrite the URL to use the exact commit hash instead of 'main'
             GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/' .. data.sha .. '/'
             print(string.sub(data.sha, 1, 7))
             return
