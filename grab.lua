@@ -125,7 +125,8 @@ local function simpleSelect(options)
         print('>')
 
         local key = os.pullEvent('key')
-        print('\b ')
+        term.setCursorPos(1, currentY)
+        print(' ')
 
         if key == keys.up or key == keys.w then
             if currentY > firstY then
