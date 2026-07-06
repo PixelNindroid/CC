@@ -136,14 +136,19 @@ local function pushToBulk(from, bulkInterfaceID, slot, count)
         if count <= 0 then return end
     end
 end
+local function isContainerEmpty(id)
+    return next(peripheral.wrap(id).list()) == nil
+end
 pullFromBulk = function(to, bulkInterfaceID, itemID, count)
     local bulks = C.BulkInterface[bulkInterfaceID].bulks
 
     for i = #bulks, 1, -1 do
         local bulk = bulks[i]
 
-        count = count - moveItemsFromContainers(bulk, to, itemID, count)
-        if count <= 0 then return end
+        if not isContainerEmpty(bulk) then
+            count = count - moveItemsFromContainers(bulk, to, itemID, count)
+            if count <= 0 then return end
+        end
     end
 end
 
