@@ -709,7 +709,7 @@ local function listen(id, msg, ptc)
         end,
         setSavedResultRecipeIDs = function (value)
             SavedResultRecipeIDs = value
-            save('data/saved_recipes.dat', SavedResultRecipeIDs)
+            save('data/saved_result_recipes.dat', SavedResultRecipeIDs)
         end,
         setSavedTagInputs = function (value)
             SavedTagInputs = value
