@@ -325,7 +325,7 @@ local function getRecipes(rr)
         end
     end
 
-    printSuccesCount()
+    printSucces(#recipes, #craftingRecipeIDs - #recipes)
     return recipes
 end
 local Recipes = getRecipes(recipeRegistry)
