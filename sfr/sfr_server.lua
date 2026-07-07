@@ -86,7 +86,7 @@ local function moveItemsFromSlots(from, to, slots, limit, toSlot)
 end
 local function hasEmptySlots(id)
     local container = peripheral.wrap(id)
-    return container.size > #container.list()
+    return container.size() > #container.list()
 end
 local function canPush(itemID, to)
     if hasEmptySlots(to) then return true end
