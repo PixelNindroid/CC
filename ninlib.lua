@@ -15,6 +15,15 @@ function n.keyFromValue(table, _value)
         if value == _value then return key end
     end
 end
+function n.getTableLength(table)
+    local count = 0
+    
+    for _ in pairs(table) do
+        count = count + 1
+    end
+
+    return count
+end
 function n.isEven(n)
     return n % 2 == 0
 end
