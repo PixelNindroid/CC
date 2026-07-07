@@ -481,8 +481,8 @@ local function autoWhitelistComp()
 
     for _, data in pairs(C.Storage) do
         for itemID in pairs(data.items) do
-            if compactableItems[itemID] and not data.items[itemID] then
-                data.items[itemID] = 0
+            if compactableItems[itemID] and not data.items[compactableItems[itemID].comp] then
+                data.items[compactableItems[itemID].comp] = 0
                 count = count + 1
             end
         end
