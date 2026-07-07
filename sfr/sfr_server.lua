@@ -237,11 +237,9 @@ end
 
 --MAP
 
-local function printSuccesCount(succesCount, failCount)
-    if not failCount then
-        n.printRight(tostring(succesCount), colors.green)
-        return
-    end
+local function printSucces(succesCount, failCount)
+    if not succesCount then n.printRight('Done', colors.green) return end
+    if not failCount then n.printRight(tostring(succesCount), colors.green) return end
 
     local succesStr = tostring(succesCount)
     local failStr = tostring(failCount)
@@ -327,7 +325,7 @@ local function getRecipes()
         end
     end
 
-    n.printRight(tostring(#recipes))
+    printSuccesCount()
     return recipes
 end
 local Recipes = getRecipes()
