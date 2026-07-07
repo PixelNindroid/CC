@@ -626,7 +626,6 @@ local function craftRecipe(recipeID, craftsCount)
         moveItemsFromAnywhere(crafterContainerID, input.item, maxCraftsPerBatch, getGridPosSlot(gridPos))
     end
     
-    
     r.action(crafterID, 'craft')
     sortContainer(crafterContainerID)
 end
@@ -647,6 +646,7 @@ local function compContainer(id)
             local comp = compactableItems[itemID].comp
             local factor = compactableItems[itemID].factor
 
+            local craftsCount = math.ciel((count - maxCount) / factor)
             craftRecipe(compDetails.compRecipeID)
         end
     end
