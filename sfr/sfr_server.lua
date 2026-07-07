@@ -415,7 +415,7 @@ local AllTagInputs = getTagInputs(recipeRegistry)
 
 local function autoSaveTagInputForTagsWithOneItem()
     write('Autosaving tags with one item..')
-    
+
     local count = 0
 
     for tag, itemIDs in pairs(AllTagInputs) do
@@ -443,9 +443,9 @@ local function isUsableInput(input, result)
     end
 end
 
-local function getCompactableItems()
+local function mapCompactableItems()
     local count = 0
-    write('Mapping compactableItems..')
+    write('Mapping compactable items..')
 
     local compactableItems = {}
     for decomp, recipeList in pairs(AllRecipes) do
@@ -468,10 +468,10 @@ local function getCompactableItems()
         end
     end
 
-    n.printRight(tostring(count), colors.green)
+    printSucces(count)
     return compactableItems
 end
-local compactableItems = getCompactableItems()
+local compactableItems = mapCompactableItems()
 
 
 local function addNewContainer(id, cType)
