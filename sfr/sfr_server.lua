@@ -101,6 +101,7 @@ end
 local pullFromBulk
 local function moveItemsFromContainers(froms, to, itemID, limit, toSlot)
     if not canPush(itemID, to) then return 0 end
+    
     local totalMoved = 0
     if type(froms) == 'string' then froms = {froms} end
     limit = limit or 10000
