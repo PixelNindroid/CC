@@ -329,10 +329,21 @@ local function getRecipes()
     return recipes
 end
 local Recipes = getRecipes()
-local function getResultRecipes()
+local function getResultRecipeIDs()
     write('Mapping result recipes..')
+
+    local resultRecipeIDs
+    for id, data in pairs(Recipes) do
+        if not resultRecipeIDs[data.result] then
+            resultRecipeIDs[data.result] = {}
+        end
+        resultRecipeIDs[data.result][id] = data
+    end
+
+    printSucces(#resultRecipeIDs)
+    return resultRecipeIDs
 end
-local ResultRecipeIDs
+local ResultRecipeIDs = getResultRecipeIDs()
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
     write(('Mapping %s crafting recipes..'):format(#craftingRecipeIDs))
