@@ -614,21 +614,10 @@ local function getGridPosSlot(gridPos)
 end
 
 local function getCraftCount(resultCount, recipeResultCount)
-    print(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
-local function craftRecipe(recipeID, resultCount)
+local function craftRecipe(recipeID, craftsCount)
     local recipe = Recipes[recipeID]
-    local craftsCount = getCraftCount(resultCount, recipe.resultCount)
-    local maxCraftsPerBatch = 3 --TODO
-
-    sortContainer(crafterContainerID)
-
-    
-end
-local function craftResult(result, resultCount)
-    local recipe = Recipes[ResultRecipeIDs[result][1]] --TODO
-    local crafts = math.ceil(resultCount / recipe.resultCount)
     local maxCraftsPerBatch = 3 --TODO
 
     sortContainer(crafterContainerID)
@@ -640,6 +629,11 @@ local function craftResult(result, resultCount)
     
     r.action(crafterID, 'craft')
     sortContainer(crafterContainerID)
+end
+local function craftResult(result, resultCount)
+    local recipeID = ResultRecipeIDs[result][1] --TODO
+    local craftsCount = getCraftCount(resultCount, Recipes[recipeID].resultCount)
+    return craftRecipe(recipeID, craftsCount)
 end
 
 local function compContainer(id)
@@ -653,7 +647,6 @@ local function compContainer(id)
             local comp = compactableItems[itemID].comp
             local factor = compactableItems[itemID].factor
 
-            local craftCount = math.floor((count - maxCount) / factor) + 1
             craftRecipe(compDetails.compRecipeID)
         end
     end
