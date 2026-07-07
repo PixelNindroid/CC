@@ -530,7 +530,7 @@ local function mapBulkItems(id)
     local bulks = C.BulkInterface[id].bulks
     local itemCounts = C.BulkInterface[id].items
 
-    sortContainer(id)
+    --sortContainer(id)
 
     for itemName in pairs(itemCounts) do
         itemCounts[itemName] = 0
