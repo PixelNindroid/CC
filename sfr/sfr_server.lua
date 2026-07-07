@@ -86,7 +86,7 @@ local function moveItemsFromSlots(from, to, slots, limit, toSlot)
 end
 local function hasEmptySlots(id)
     local container = peripheral.wrap(id)
-    return container.size > #container.list
+    return container.size > #container.list()
 end
 local function canPush(itemID, to)
     if hasEmptySlots(to) then return true end
@@ -101,7 +101,7 @@ end
 local pullFromBulk
 local function moveItemsFromContainers(froms, to, itemID, limit, toSlot)
     if not canPush(itemID, to) then return 0 end
-    
+
     local totalMoved = 0
     if type(froms) == 'string' then froms = {froms} end
     limit = limit or 10000
