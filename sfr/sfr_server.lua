@@ -32,7 +32,7 @@ local crafterID = r.getHostID('SFR_CRAFTER')
 for type in pairs(C) do -- load containers
     C[type] = grab.unserialize(sfr.path[type]) or {}
 end
-local SavedResultRecipeIDs = grab.unserialize('data/saved_recipes.dat') or {}
+local SavedResultRecipeIDs = grab.unserialize('data/saved_result_recipes.dat') or {}
 local SavedTagInputs = grab.unserialize('data/saved_tag_inputs.dat') or {}
 
 local function save(path, data)
