@@ -32,7 +32,7 @@ local crafterID = r.getHostID('SFR_CRAFTER')
 for type in pairs(C) do -- load containers
     C[type] = grab.unserialize(sfr.path[type]) or {}
 end
-local SavedRecipes = grab.unserialize('data/saved_recipes.dat') or {}
+local SavedResultRecipeIDs = grab.unserialize('data/saved_recipes.dat') or {}
 local SavedTagInputs = grab.unserialize('data/saved_tag_inputs.dat') or {}
 
 local function save(path, data)
@@ -673,8 +673,9 @@ saveAllC()
 local listenvars = {
     ItemDetails = ItemDetails,
 
-    AllRecipes = AllRecipes,
-    SavedRecipes = SavedRecipes,
+    Recipes = Recipes,
+    ResultRecipeIDs = ResultRecipeIDs,
+    SavedResultRecipeIDs = SavedResultRecipeIDs,
 
     AllTagInputs = AllTagInputs,
     SavedTagInputs = SavedTagInputs,
@@ -707,8 +708,8 @@ local function listen(id, msg, ptc)
             saveC(type)
         end,
         setSavedRecipes = function (value)
-            SavedRecipes = value
-            save('data/saved_recipes.dat', SavedRecipes)
+            SavedResultRecipeIDs = value
+            save('data/saved_recipes.dat', SavedResultRecipeIDs)
         end,
         setSavedTagInputs = function (value)
             SavedTagInputs = value
