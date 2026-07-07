@@ -335,7 +335,7 @@ local Recipes = getRecipes(recipeRegistry)
 local function getResultRecipeIDs(rr)
     write('Mapping result recipes..')
 
-    local resultRecipeIDs
+    local resultRecipeIDs = {}
     for id, data in pairs(Recipes) do
         if not resultRecipeIDs[data.result] then
             resultRecipeIDs[data.result] = {}
