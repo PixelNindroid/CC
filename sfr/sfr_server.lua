@@ -707,7 +707,7 @@ local function listen(id, msg, ptc)
             C[type] = value
             saveC(type)
         end,
-        setSavedRecipes = function (value)
+        setSavedResultRecipeIDs = function (value)
             SavedResultRecipeIDs = value
             save('data/saved_recipes.dat', SavedResultRecipeIDs)
         end,
