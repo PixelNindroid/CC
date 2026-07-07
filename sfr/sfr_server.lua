@@ -325,7 +325,9 @@ local function getRecipes(rr)
         end
     end
 
-    printSucces(#recipes, #craftingRecipeIDs - #recipes)
+    local succesCount = n.getTableLength(recipes)
+    local failCount = #craftingRecipeIDs - succesCount
+    printSucces(succesCount, failCount)
     return recipes
 end
 local Recipes = getRecipes(recipeRegistry)
