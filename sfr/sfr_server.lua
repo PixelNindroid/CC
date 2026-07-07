@@ -609,6 +609,11 @@ local function compContainer(id)
         end
     end
 end
+local function compAllContainers()
+    for id in pairs(C.Storage) do
+        compContainer(id)
+    end
+end
 
 
 --setup
@@ -699,6 +704,7 @@ end
 local function tick()
     sortInputContainers()
     updateBulkInterfaces()
+    compAllContainers()
 end
 
 
