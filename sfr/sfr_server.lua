@@ -614,6 +614,7 @@ local function getGridPosSlot(gridPos)
 end
 
 local function getCraftCount(resultCount, recipeResultCount)
+    print(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
 local function craftRecipe(recipeID, resultCount)
