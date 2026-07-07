@@ -257,7 +257,7 @@ local function printSucces(succesCount, failCount, totalCount)
     n.write(failStr, colors.red)
 end
 local function mapItemDetails(ir)
-    write('Mapping items..')
+    write('Mapping item details..')
     local itemIDs = ir.list('item')
     
     local details = {}
@@ -333,9 +333,7 @@ local function mapRecipes(rr)
         end
     end
 
-    local succesCount = n.getTableLength(recipes)
-    local failCount = #craftingRecipeIDs - succesCount
-    printSucces(succesCount, failCount)
+    printSucces(n.getTableLength(recipes), nil, #craftingRecipeIDs)
     return recipes
 end
 local Recipes = mapRecipes(recipeRegistry)
@@ -371,11 +369,11 @@ local function getItemsWithTag(tag)
 end
 
 local function getTagInputs(rr)
+    write('Mapping tag inputs')
+
     local count = 0
     local YIELD_INTERVAL = 500
     local yieldCount = YIELD_INTERVAL
-
-    write('Mapping tag inputs')
     local craftingRecipeIDs = rr.list('crafting')
     
     local tagInputs = {}
@@ -410,15 +408,14 @@ local function getTagInputs(rr)
         end
     end
 
-    n.printRight(tostring(count), colors.green)
-
+    printSucces(count)
     return tagInputs
 end
 local AllTagInputs = getTagInputs(recipeRegistry)
 
 local function autoSaveTagInputForTagsWithOneItem()
-    local count = 0
     write('Autosaving tags with one item..')
+    local count = 0
 
     for tag, itemIDs in pairs(AllTagInputs) do
         if #itemIDs == 1 then
@@ -427,7 +424,7 @@ local function autoSaveTagInputForTagsWithOneItem()
         end
     end
 
-    n.printRight(tostring(count), colors.green)
+    printSucces(count)
     save('data/saved_tag_inputs.dat', SavedTagInputs)
 end
 autoSaveTagInputForTagsWithOneItem()
