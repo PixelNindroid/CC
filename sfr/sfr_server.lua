@@ -434,7 +434,8 @@ local function isUsableInput(input, result)
     if input.item == result or (ItemDetails[result] and ItemDetails[result].tags[input.item]) then return end
 
     if not ResultRecipeIDs[result] then return end
-    for _, recipe in ipairs(AllRecipes[result]) do
+    for _, recipeID in ipairs(ResultRecipeIDs[result]) do
+        local recipe = Recipes[recipeID]
         for _, recipeInput in ipairs(recipe.grid) do
             if recipeInput and (recipeInput.item == input.item or (recipeInput.tag and ItemDetails[input.item].tags[recipeInput.tag])) then
                 return recipe
@@ -448,8 +449,9 @@ local function mapCompactableItems()
     write('Mapping compactable items..')
 
     local compactableItems = {}
-    for decomp, recipeList in pairs(AllRecipes) do
-        for _, decompRecipe in ipairs(recipeList) do
+    for decomp, recipeIDs in pairs(ResultRecipeIDs) do
+        for _, recipeID in ipairs(recipeIDs) do
+            local decompRecipe = Recipes[recipeID]
             local comp = decompRecipe.grid[1] and decompRecipe.grid[1].item
 
             if comp and #decompRecipe.grid == 1 and decompRecipe.resultCount > 1 then
