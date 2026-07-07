@@ -343,7 +343,7 @@ local function getResultRecipeIDs(rr)
         resultRecipeIDs[data.result][id] = data
     end
 
-    printSucces(#resultRecipeIDs)
+    printSucces(n.getTableLength(resultRecipeIDs))
     return resultRecipeIDs
 end
 local ResultRecipeIDs = getResultRecipeIDs(recipeRegistry)
