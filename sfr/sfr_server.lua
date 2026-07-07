@@ -266,35 +266,66 @@ local function getItemDetails(ir)
 end
 ItemDetails = getItemDetails(informativeRegistry)
 
+
+local function mapRecipe(id, data)
+    local grid = {}
+
+    if data.type == 'minecraft:crafting_shaped' then
+        for r, row in ipairs(data.pattern) do
+            for c = 1, #row do
+                local char = row:sub(c, c)
+                local slot = (r - 1) * 3 + c
+                local input = data.key[char]
+
+                if input and not (input.item or input.tag) then return end
+                grid[slot] = data.key[char]
+            end
+        end
+    elseif data.type == 'minecraft:crafting_shapeless' then
+        grid = data.ingredients
+    else return end
+
+    return {
+        id = id,
+        grid = grid,
+        resultCount = data.result.count or 1
+    }
+end
+local function getRecipes()
+    write('Mapping crafting recipes..')
+    local craftingRecipeIDs = rr.list('crafting')
+
+    local recipes = {}
+    for _, id in ipairs(craftingRecipeIDs) do
+        local data = rr.getRaw(id)
+        if data and data.result then
+            local itemID = data.result.item
+
+            if not itemID:find(':') then
+                itemID = 'minecraft:' .. itemID
+            end
+
+            if not ItemDetails[itemID] then
+                n.write('\nRecipe for unknown item: ' .. id .. ' -> ' .. data.result.item, colors.red)
+            end
+            
+            recipes[id] = mapRecipe(id, data)
+        end
+    end
+
+    n.printRight(tostring(#recipes))
+    return recipes
+end
+local Recipes = getRecipes()
+local function getResultRecipes()
+    
+end
+local ResultRecipeIDs
 local function getAllRecipes(rr)
     local craftingRecipeIDs = rr.list('crafting')
     write(('Mapping %s crafting recipes..'):format(#craftingRecipeIDs))
 
-    local function mapRecipe(id, data)
-
-        local grid = {}
-        if data.type == 'minecraft:crafting_shaped' then
-            for r, row in ipairs(data.pattern) do
-                for c = 1, #row do
-                    local char = row:sub(c, c)
-                    local slot = (r - 1) * 3 + c
-                    local input = data.key[char]
-
-                    if input and not (input.item or input.tag) then return end
-                    grid[slot] = data.key[char]
-                end
-            end
-        elseif data.type == 'minecraft:crafting_shapeless' then
-            grid = data.ingredients
-        else return end
-
-        return {
-            id = id,
-            --type = data.type,
-            grid = grid,
-            resultCount = data.result.count or 1
-        }
-    end
+    
     
     local recipes = {}
     for _, id in ipairs(craftingRecipeIDs) do
@@ -580,7 +611,19 @@ local function getGridPosSlot(gridPos)
     return gridPos
 end
 
-local function craft(result, resultCount)
+local function getCraftCount(resultCount, recipeResultCount)
+    return math.ceil(resultCount / recipeResultCount)
+end
+local function craftRecipe(recipeID, resultCount)
+    local recipe = AllRecipes[result][1] --TODO
+    local craftsCount = getCraftCount(resultCount, recipe.resultCount)
+    local maxCraftsPerBatch = 3 --TODO
+
+    sortContainer(crafterContainerID)
+
+    
+end
+local function craftResult(result, resultCount)
     local recipe = AllRecipes[result][1] --TODO
     local crafts = math.ceil(resultCount / recipe.resultCount)
     local maxCraftsPerBatch = 3 --TODO
@@ -603,11 +646,12 @@ local function compContainer(id)
         local maxCount = ItemDetails[itemID].maxCount
 
         if count > maxCount and compactableItems[itemID] then
+            local compDetails = compactableItems[itemID]
             local comp = compactableItems[itemID].comp
             local factor = compactableItems[itemID].factor
 
             local craftCount = math.floor((count - maxCount) / factor) + 1
-            print(itemID, craftCount)
+            craftRecipe(compDetails.compRecipeID)
         end
     end
 end
