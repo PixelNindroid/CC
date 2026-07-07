@@ -617,7 +617,7 @@ local function getCraftCount(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
 local function craftRecipe(recipeID, resultCount)
-    local recipe = AllRecipes[result][1] --TODO
+    local recipe = Recipes[recipeID]
     local craftsCount = getCraftCount(resultCount, recipe.resultCount)
     local maxCraftsPerBatch = 3 --TODO
 
@@ -626,7 +626,7 @@ local function craftRecipe(recipeID, resultCount)
     
 end
 local function craftResult(result, resultCount)
-    local recipe = AllRecipes[result][1] --TODO
+    local recipe = Recipes[ResultRecipeIDs[result][1]] --TODO
     local crafts = math.ceil(resultCount / recipe.resultCount)
     local maxCraftsPerBatch = 3 --TODO
 
