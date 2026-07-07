@@ -257,8 +257,8 @@ local function printSucces(succesCount, failCount, totalCount)
     n.write(failStr, colors.red)
 end
 local function mapItemDetails(ir)
+    write('Mapping items..')
     local itemIDs = ir.list('item')
-    write(('Mapping %s items..'):format(#itemIDs))
     
     local details = {}
     for _, id in ipairs(itemIDs) do
@@ -280,7 +280,7 @@ local function mapItemDetails(ir)
         }
     end
 
-    printSucces(n.getTableLength(details))
+    printSucces(n.getTableLength(details), nil, #itemIDs)
     return details
 end
 ItemDetails = mapItemDetails(informativeRegistry)
