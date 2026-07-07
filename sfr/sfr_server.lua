@@ -490,6 +490,7 @@ local function autoWhitelistComp()
 
     printSucces(count)
 end
+autoWhitelistComp()
 
 
 local function addNewContainer(id, cType)
