@@ -344,40 +344,8 @@ local function getResultRecipeIDs()
     return resultRecipeIDs
 end
 local ResultRecipeIDs = getResultRecipeIDs()
-local function getAllRecipes(rr)
-    local craftingRecipeIDs = rr.list('crafting')
-    write(('Mapping %s crafting recipes..'):format(#craftingRecipeIDs))
 
-    
-    
-    local recipes = {}
-    for _, id in ipairs(craftingRecipeIDs) do
-        local data = rr.getRaw(id)
-        if data and data.result then
-            local itemID = data.result.item
-
-            if not itemID:find(':') then
-                itemID = 'minecraft:' .. itemID
-            end
-
-            if not ItemDetails[itemID] then
-                n.write('\nRecipe for unknown item: ' .. id .. ' -> ' .. data.result.item, colors.red)
-            end
-            local mapped = mapRecipe(id, data)
-            if mapped then
-                local badabim = recipes[data.result.item] or {}
-                table.insert(badabim, mapped)
-                recipes[data.result.item] = badabim
-            end
-            
-        end
-    end
-
-    n.printRight('Done', colors.green)
-    
-    return recipes
-end
-local AllRecipes = getAllRecipes(recipeRegistry)
+local AllRecipes
 
 local function getItemsWithTag(tag)
     local itemIDs = {}
