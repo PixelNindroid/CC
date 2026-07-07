@@ -427,6 +427,8 @@ local function getCompactableItems()
                 if compactingRecipe then
                     compactableItems[decomp] = {
                         comp = comp,
+                        compRecipeID = compactingRecipe.id,
+                        decompRecipeID = decompRecipe.id,
                         factor = decompRecipe.resultCount,
                     }
                     count = count + 1
