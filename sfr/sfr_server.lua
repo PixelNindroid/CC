@@ -237,9 +237,16 @@ end
 
 --MAP
 
-local function printSucces(succesCount, failCount)
+local function printSucces(succesCount, failCount, totalCount)
     if not succesCount then n.printRight('Done', colors.green) return end
-    if not failCount then n.printRight(tostring(succesCount), colors.green) return end
+    if not failCount then 
+        if totalCount then 
+            failCount = totalCount - succesCount
+        else
+            n.printRight(tostring(succesCount), colors.green) 
+            return 
+        end
+    end
 
     local succesStr = tostring(succesCount)
     local failStr = tostring(failCount)
@@ -249,7 +256,7 @@ local function printSucces(succesCount, failCount)
     write(' ')
     n.write(failStr, colors.red)
 end
-local function getItemDetails(ir)
+local function mapItemDetails(ir)
     local itemIDs = ir.list('item')
     write(('Mapping %s items..'):format(#itemIDs))
     
@@ -272,11 +279,11 @@ local function getItemDetails(ir)
             tags = {}
         }
     end
-    n.printRight('Done', colors.green)
 
+    printSucces(n.getTableLength(details))
     return details
 end
-ItemDetails = getItemDetails(informativeRegistry)
+ItemDetails = mapItemDetails(informativeRegistry)
 
 
 local function mapRecipe(id, data)
@@ -304,7 +311,7 @@ local function mapRecipe(id, data)
         resultCount = data.result.count or 1
     }
 end
-local function getRecipes(rr)
+local function mapRecipes(rr)
     write('Mapping crafting recipes..')
     local craftingRecipeIDs = rr.list('crafting')
 
@@ -331,9 +338,9 @@ local function getRecipes(rr)
     printSucces(succesCount, failCount)
     return recipes
 end
-local Recipes = getRecipes(recipeRegistry)
+local Recipes = mapRecipes(recipeRegistry)
 
-local function getResultRecipeIDs(rr)
+local function mapResultRecipeIDs(rr)
     write('Mapping result recipes..')
 
     local resultRecipeIDs = {}
@@ -347,7 +354,7 @@ local function getResultRecipeIDs(rr)
     printSucces(n.getTableLength(resultRecipeIDs))
     return resultRecipeIDs
 end
-local ResultRecipeIDs = getResultRecipeIDs(recipeRegistry)
+local ResultRecipeIDs = mapResultRecipeIDs(recipeRegistry)
 
 local AllRecipes
 
