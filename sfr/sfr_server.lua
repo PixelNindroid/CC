@@ -647,7 +647,7 @@ local function compContainer(id)
             local factor = compactableItems[itemID].factor
 
             local craftsCount = math.ciel((count - maxCount) / factor)
-            craftRecipe(compDetails.compRecipeID)
+            craftRecipe(compDetails.compRecipeID, craftsCount)
         end
     end
 end
