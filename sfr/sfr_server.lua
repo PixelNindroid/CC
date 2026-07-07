@@ -346,7 +346,7 @@ local function mapResultRecipeIDs(rr)
         if not resultRecipeIDs[data.result] then
             resultRecipeIDs[data.result] = {}
         end
-        resultRecipeIDs[data.result][id] = data
+        table.insert(resultRecipeIDs[data.result], id)
     end
 
     printSucces(n.getTableLength(resultRecipeIDs))
@@ -433,7 +433,7 @@ autoSaveTagInputForTagsWithOneItem()
 local function isUsableInput(input, result)
     if input.item == result or (ItemDetails[result] and ItemDetails[result].tags[input.item]) then return end
 
-    if not AllRecipes[result] then return end
+    if not ResultRecipeIDs[result] then return end
     for _, recipe in ipairs(AllRecipes[result]) do
         for _, recipeInput in ipairs(recipe.grid) do
             if recipeInput and (recipeInput.item == input.item or (recipeInput.tag and ItemDetails[input.item].tags[recipeInput.tag])) then
