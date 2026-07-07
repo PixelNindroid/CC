@@ -303,7 +303,7 @@ local function mapRecipe(id, data)
         resultCount = data.result.count or 1
     }
 end
-local function getRecipes()
+local function getRecipes(rr)
     write('Mapping crafting recipes..')
     local craftingRecipeIDs = rr.list('crafting')
 
@@ -328,8 +328,9 @@ local function getRecipes()
     printSuccesCount()
     return recipes
 end
-local Recipes = getRecipes()
-local function getResultRecipeIDs()
+local Recipes = getRecipes(recipeRegistry)
+
+local function getResultRecipeIDs(rr)
     write('Mapping result recipes..')
 
     local resultRecipeIDs
@@ -343,7 +344,7 @@ local function getResultRecipeIDs()
     printSucces(#resultRecipeIDs)
     return resultRecipeIDs
 end
-local ResultRecipeIDs = getResultRecipeIDs()
+local ResultRecipeIDs = getResultRecipeIDs(recipeRegistry)
 
 local AllRecipes
 
