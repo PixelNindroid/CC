@@ -337,7 +337,7 @@ local function getResultRecipeIDs(rr)
 
     local resultRecipeIDs = {}
     for id, data in pairs(Recipes) do
-        if not data then print(id) end
+        if not data then print('eee') end
         if not resultRecipeIDs[data.result] then
             resultRecipeIDs[data.result] = {}
         end
