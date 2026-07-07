@@ -415,6 +415,7 @@ local AllTagInputs = getTagInputs(recipeRegistry)
 
 local function autoSaveTagInputForTagsWithOneItem()
     write('Autosaving tags with one item..')
+    
     local count = 0
 
     for tag, itemIDs in pairs(AllTagInputs) do
