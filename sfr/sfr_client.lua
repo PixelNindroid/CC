@@ -85,7 +85,7 @@ getAllC()
 local ItemDetails = r.getVar(ServerID, 'ItemDetails')
 
 local AllRecipes = r.getVar(ServerID, 'AllRecipes')
-local SavedRecipes = r.getVar(ServerID, 'SavedRecipes')
+local SavedResultRecipeIDs = r.getVar(ServerID, 'SavedResultRecipeIDs')
 
 local AllTagInputs = r.getVar(ServerID, 'AllTagInputs')
 local SavedTagInputs = r.getVar(ServerID, 'SavedTagInputs')
@@ -814,8 +814,8 @@ function menu.recipeResults()
         end
 
         table.sort(altOptions, function (a, b)
-            local aSavedCount = SavedRecipes[a] and #SavedRecipes[a] or 0
-            local bSavedCount = SavedRecipes[b] and #SavedRecipes[b] or 0
+            local aSavedCount = SavedResultRecipeIDs[a] and #SavedResultRecipeIDs[a] or 0
+            local bSavedCount = SavedResultRecipeIDs[b] and #SavedResultRecipeIDs[b] or 0
 
             if aSavedCount == bSavedCount then
                 return ItemDetails[a] and ItemDetails[a].displayName or a < (ItemDetails[b] and ItemDetails[b].displayName or b)
@@ -825,7 +825,7 @@ function menu.recipeResults()
         end)
 
         for _, result in ipairs(altOptions) do
-            table.insert(options, m.txt(ItemDetails[result] and ItemDetails[result].displayName or result, SavedRecipes[result] and colors.white or colors.lightGray))
+            table.insert(options, m.txt(ItemDetails[result] and ItemDetails[result].displayName or result, SavedResultRecipeIDs[result] and colors.white or colors.lightGray))
         end
 
         local opt = menu.select('Recipes', options, altOptions)
@@ -874,7 +874,7 @@ function menu.priority(title, active, disabled)
 end
 function menu.resultRecipes(result)
     while true do
-        local active = SavedRecipes[result] or {}
+        local active = SavedResultRecipeIDs[result] or {}
         local disabled = {}
 
         for _, recipe in ipairs(AllRecipes[result]) do
@@ -886,8 +886,8 @@ function menu.resultRecipes(result)
         local newActive = menu.priority('Recipes: ' .. ItemDetails[result].displayName, active, disabled)
         if not newActive then break end
 
-        SavedRecipes[result] = newActive
-        r.action(ServerID, {'setSavedRecipes', SavedRecipes})
+        SavedResultRecipeIDs[result] = newActive
+        r.action(ServerID, {'setSavedResultRecipeIDs', SavedResultRecipeIDs})
     end
 end
 
