@@ -49,6 +49,7 @@ local function saveAllC()
     end
 end
 
+
 --SORT
 
 local function moveItemsFromSlots(from, to, slots, limit, toSlot)
@@ -82,6 +83,20 @@ local function moveItemsFromSlots(from, to, slots, limit, toSlot)
     end
 
     return totalMoved
+end
+local function hasEmptySlots(id)
+    local container = peripheral.wrap(id)
+    return container.size > #container.list
+end
+local function canPush(itemID, to)
+    if hasEmptySlots(to) then return true end
+
+    for _, item in pairs(peripheral.wrap(to).list()) do
+        if item.name == itemID and item.count < ItemDetails[itemID].maxCount then
+            return true
+        end
+    end
+    return false
 end
 local pullFromBulk
 local function moveItemsFromContainers(froms, to, itemID, limit, toSlot)
