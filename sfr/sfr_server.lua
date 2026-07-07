@@ -475,6 +475,22 @@ local function mapCompactableItems()
 end
 local compactableItems = mapCompactableItems()
 
+local function autoWhitelistComp()
+    write('Autowhitelisting compacted items..')
+    local count = 0
+
+    for _, data in pairs(C.Storage) do
+        for itemID in pairs(data.items) do
+            if compactableItems[itemID] and not data.items[itemID] then
+                data.items[itemID] = 0
+                count = count + 1
+            end
+        end
+    end
+
+    printSucces(count)
+end
+
 
 local function addNewContainer(id, cType)
     local data = sfr.defaultData[cType] and sfr.defaultData[cType](id) or {}
