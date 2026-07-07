@@ -237,6 +237,20 @@ end
 
 --MAP
 
+local function printSuccesCount(succesCount, failCount)
+    if not failCount then
+        n.printRight(tostring(succesCount), colors.green)
+        return
+    end
+
+    local succesStr = tostring(succesCount)
+    local failStr = tostring(failCount)
+
+    n.setCursorX(n.termWith - succesStr:len() - failStr:len())
+    n.write(succesStr, colors.green)
+    write(' ')
+    n.write(failStr, colors.red)
+end
 local function getItemDetails(ir)
     local itemIDs = ir.list('item')
     write(('Mapping %s items..'):format(#itemIDs))
@@ -318,7 +332,7 @@ local function getRecipes()
 end
 local Recipes = getRecipes()
 local function getResultRecipes()
-    
+    write('Mapping result recipes..')
 end
 local ResultRecipeIDs
 local function getAllRecipes(rr)
