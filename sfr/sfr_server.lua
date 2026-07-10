@@ -541,7 +541,7 @@ local function changeContainerType(id, newType)
 end
 
 
-local function getContainerItemCounts(id, dontLog)
+local function mapContainerItemCounts(id, dontLog)
     local container = peripheral.wrap(id)
 
     if not container then
@@ -577,8 +577,8 @@ local function getContainerItemCounts(id, dontLog)
     
     return itemCounts
 end
-local function getContainerItems(containerID)
-    return sfr.getContainerData(containerID).items or getContainerItemCounts(containerID)
+local function getContainerItemCounts(containerID)
+    return sfr.getContainerData(containerID).items or mapContainerItemCounts(containerID)
 end
 local function mapBulkItems(id)
     write(string.format('Mapping Bulk %s.. ', sfr.getContainerName(id)))
@@ -593,7 +593,7 @@ local function mapBulkItems(id)
     end
 
     for _, bulk in pairs(bulks) do
-        for name, count in pairs(getContainerItemCounts(bulk, true)) do
+        for name, count in pairs(mapContainerItemCounts(bulk, true)) do
             if not itemCounts[name] then 
                 itemCounts[name] = 0 
             end
@@ -618,7 +618,7 @@ local function mapAllStorageItems()
     end
     if next(C.Storage) then
         for id in pairs(C.Storage) do
-            C.Storage[id].items = getContainerItemCounts(id)
+            C.Storage[id].items = mapContainerItemCounts(id)
         end
     end
 end
@@ -657,7 +657,7 @@ local function craftResult(result, resultCount)
 end
 
 local function compContainer(id)
-    local itemCounts = getContainerItems(id)
+    local itemCounts = getContainerItemCounts(id)
 
     for itemID, count in pairs(itemCounts) do
         local maxCount = ItemDetails[itemID].maxCount
@@ -707,7 +707,7 @@ local function listen(id, msg, ptc)
                 local type = sfr.getContainerType(id)
                 
                 if type == 'Storage' then
-                    C.Storage[id].items = getContainerItemCounts(id)
+                    C.Storage[id].items = mapContainerItemCounts(id)
                 elseif type == 'BulkInterface' then
                     C.BulkInterface[id].items = mapBulkItems(id)
                 end
@@ -730,7 +730,7 @@ local function listen(id, msg, ptc)
             save('data/saved_tag_inputs.dat', SavedTagInputs)
         end,
         
-        getContainerItems = getContainerItemCounts,
+        getContainerItems = mapContainerItemCounts,
         changeContainerType = changeContainerType,
         moveItemsFromContainer = moveItemsFromContainers,
 
