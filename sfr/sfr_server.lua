@@ -656,8 +656,8 @@ local function craftResult(result, resultCount)
     return craftRecipe(recipeID, craftsCount)
 end
 
-local function compContainer(id)
-    local itemCounts = getContainerItemCounts(id)
+local function compStorage(id)
+    local itemCounts = C.Storage[id].items
 
     for itemID, count in pairs(itemCounts) do
         local maxCount = ItemDetails[itemID].maxCount
@@ -675,7 +675,7 @@ local function compContainer(id)
 end
 local function compAllStorages()
     for id in pairs(C.Storage) do
-        compContainer(id)
+        compStorage(id)
     end
 end
 
