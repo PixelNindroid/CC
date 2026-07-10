@@ -683,6 +683,7 @@ end
 --setup
 
 mapAllStorageItems()
+compAllStorages()
 saveAllC()
 
 
@@ -710,11 +711,15 @@ local function listen(id, msg, ptc)
                 
                 if type == 'Storage' then
                     C.Storage[id].items = mapContainerItemCounts(id)
+                    compStorage(id)
                 elseif type == 'BulkInterface' then
                     C.BulkInterface[id].items = mapBulkItems(id)
                 end
 
-            else mapAllStorageItems() end
+            else 
+                mapAllStorageItems() 
+                compAllStorages()
+            end
 
             saveAllC()
         end,
@@ -769,7 +774,6 @@ end
 local function tick()
     sortInputContainers()
     updateBulkInterfaces()
-    compAllStorages()
 end
 
 
