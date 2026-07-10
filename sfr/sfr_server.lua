@@ -625,7 +625,6 @@ local function getItemCount(itemID)
             return container.items[itemID]
         end
     end
-
     for _, container in pairs(C.BulkInterface) do
         if container.items[itemID] then
             return container.items[itemID]
