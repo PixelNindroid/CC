@@ -84,7 +84,8 @@ end
 getAllC()
 local ItemDetails = r.getVar(ServerID, 'ItemDetails')
 
-local AllRecipes = r.getVar(ServerID, 'AllRecipes')
+local Recipes = r.getVar(ServerID, 'Recipes')
+local ResultRecipeIDs = r.getVar(ServerID, 'ResultRecipeIDs')
 local SavedResultRecipeIDs = r.getVar(ServerID, 'SavedResultRecipeIDs')
 
 local AllTagInputs = r.getVar(ServerID, 'AllTagInputs')
