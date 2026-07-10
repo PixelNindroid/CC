@@ -577,6 +577,9 @@ local function getContainerItemCounts(id, dontLog)
     
     return itemCounts
 end
+local function getContainerItems(containerID)
+    return sfr.getContainerData(containerID).items or getContainerItemCounts(containerID)
+end
 local function mapBulkItems(id)
     write(string.format('Mapping Bulk %s.. ', sfr.getContainerName(id)))
 
@@ -654,7 +657,7 @@ local function craftResult(result, resultCount)
 end
 
 local function compContainer(id)
-    local itemCounts = getContainerItemCounts(id)
+    local itemCounts = getContainerItems(id)
 
     for itemID, count in pairs(itemCounts) do
         local maxCount = ItemDetails[itemID].maxCount
