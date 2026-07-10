@@ -810,7 +810,7 @@ function menu.recipeResults()
         local options = {}
         local altOptions = {}
 
-        for result in pairs(AllRecipes) do
+        for result in pairs(ResultRecipeIDs) do
             table.insert(altOptions, result)
         end
 
@@ -878,7 +878,9 @@ function menu.resultRecipes(result)
         local active = SavedResultRecipeIDs[result] or {}
         local disabled = {}
 
-        for _, recipe in ipairs(AllRecipes[result]) do
+        for _, recipeID in ipairs(ResultRecipeIDs[result]) do
+            local recipe = Recipes[recipeID]
+            
             if not n.listContains(active, recipe.id) then
                 table.insert(disabled, recipe.id)
             end
