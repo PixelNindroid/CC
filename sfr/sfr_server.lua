@@ -576,9 +576,6 @@ local function mapContainerItemCounts(id, dontLog)
     
     return itemCounts
 end
-local function getContainerItemCounts(containerID)
-    return sfr.getContainerData(containerID).items or mapContainerItemCounts(containerID)
-end
 local function mapBulkItems(id)
     write(string.format('Mapping Bulk %s.. ', sfr.getContainerName(id)))
 
@@ -622,6 +619,24 @@ local function mapAllStorageItems()
     end
 end
 
+local function getItemCount(itemID)
+    for _, container in pairs(C.Storage) do
+        if container.items[itemID] then
+            return container.items[itemID]
+        end
+    end
+
+    for _, container in pairs(C.BulkInterface) do
+        if container.items[itemID] then
+            return container.items[itemID]
+        end
+    end
+end
+
+local function getContainerItemCounts(containerID)
+    return sfr.getContainerData(containerID).items or mapContainerItemCounts(containerID)
+end
+
 
 --CRAFT
 
@@ -638,11 +653,17 @@ local function getCraftCount(resultCount, recipeResultCount)
 end
 local function craftRecipe(recipeID, craftsCount)
     local recipe = Recipes[recipeID]
-    local maxCraftsPerBatch = 3 --TODO
+
+    local maxCraftsPerBatch = 64
+    for _, input in pairs(recipe.grid) do
+        local itemID = input.item or (input.tag and SavedTagInputs[input.tag] and SavedTagInputs[input.tag][1])
+        
+        maxCraftsPerBatch = math.min(maxCraftsPerBatch, ItemDetails[itemID].maxCount)
+    end
 
     sortContainer(crafterContainerID)
 
-    for gridPos, input in pairs(recipe.grid) do
+    for gridPos, input in pairs(recipe.grid) do --TODO
         moveItemsFromAnywhere(crafterContainerID, input.item, maxCraftsPerBatch, getGridPosSlot(gridPos))
     end
     
