@@ -668,10 +668,12 @@ local function compContainer(id)
             local factor = compactableItems[itemID].factor
 
             craftRecipe(compDetails.compRecipeID, getCraftCount(count - maxCount, factor))
+
+            C.Storage[id].items = mapContainerItemCounts(id)
         end
     end
 end
-local function compAllContainers()
+local function compAllStorages()
     for id in pairs(C.Storage) do
         compContainer(id)
     end
@@ -767,7 +769,7 @@ end
 local function tick()
     sortInputContainers()
     updateBulkInterfaces()
-    compAllContainers()
+    compAllStorages()
 end
 
 
