@@ -650,23 +650,36 @@ end
 local function getCraftCount(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
+local function getInputItemCounts(grid)
+    local counts = {}
+
+    for _, input in pairs(grid) do
+        local itemID = input.item or (input.tag and SavedTagInputs[input.tag] and SavedTagInputs[input.tag][1])
+        counts[itemID] = (counts[itemID] or 0) + 1
+    end
+
+    return counts
+end
 local function craftRecipe(recipeID, craftsCount)
     local recipe = Recipes[recipeID]
+    local inputItemCounts = getInputItemCounts(recipe.grid)
 
     local maxCraftsPerBatch = 64
-    for _, input in pairs(recipe.grid) do
-        local itemID = input.item or (input.tag and SavedTagInputs[input.tag] and SavedTagInputs[input.tag][1])
-        
+    for itemID in pairs(inputItemCounts) do
         maxCraftsPerBatch = math.min(maxCraftsPerBatch, ItemDetails[itemID].maxCount)
     end
 
     sortContainer(crafterContainerID)
 
-    for gridPos, input in pairs(recipe.grid) do --TODO
-        moveItemsFromAnywhere(crafterContainerID, input.item, maxCraftsPerBatch, getGridPosSlot(gridPos))
+    local batches = math.ceil(craftsCount / maxCraftsPerBatch)
+    for _ = 1, batches do
+        for gridPos, input in pairs(recipe.grid) do --TODO
+            moveItemsFromAnywhere(crafterContainerID, input.item, maxCraftsPerBatch, getGridPosSlot(gridPos))
+        end
+        
+        r.action(crafterID, 'craft')
     end
-    
-    r.action(crafterID, 'craft')
+
     sortContainer(crafterContainerID)
 end
 local function craftResult(result, resultCount)
