@@ -148,7 +148,7 @@ local function simpleSelect(options)
 end
 
 settings.load()
-if not settings.get('grab.grab_scripts_on_startup') then
+if settings.get('grab.grab_scripts_on_startup') == nil then
     settings.define('grab.grab_scripts_on_startup', {default = true})
     settings.save()
 end
@@ -171,6 +171,10 @@ if not settings.get('grab.main') then
     os.setComputerLabel(main)
 
     os.reboot()
+end
+
+if not fs.exists('startup.lua') then
+    grab.put('startup.lua', getGitRepo('grab_startup.lua'))
 end
 
 return grab
