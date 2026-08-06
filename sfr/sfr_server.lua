@@ -662,6 +662,7 @@ local function getInputItemCounts(grid)
 end
 local function craftRecipe(recipeID, craftsCount)
     print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
+    read()
 
     local recipe = Recipes[recipeID]
     local inputItemCounts = getInputItemCounts(recipe.grid)
