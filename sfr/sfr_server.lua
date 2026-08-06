@@ -691,7 +691,7 @@ local function craftResult(result, resultCount)
     local craftsCount = getCraftCount(resultCount, Recipes[recipeID].resultCount)
     return craftRecipe(recipeID, craftsCount)
 end
-
+e
 local function compStorage(id)
     local itemCounts = C.Storage[id].items
 
