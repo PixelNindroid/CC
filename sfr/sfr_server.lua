@@ -661,6 +661,8 @@ local function getInputItemCounts(grid)
     return counts
 end
 local function craftRecipe(recipeID, craftsCount)
+    print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
+
     local recipe = Recipes[recipeID]
     local inputItemCounts = getInputItemCounts(recipe.grid)
 
@@ -681,6 +683,8 @@ local function craftRecipe(recipeID, craftsCount)
     end
 
     sortContainer(crafterContainerID)
+
+    printSucces()
 end
 local function craftResult(result, resultCount)
     local recipeID = ResultRecipeIDs[result][1] --TODO
