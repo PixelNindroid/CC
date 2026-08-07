@@ -662,7 +662,6 @@ local function getInputItemCounts(grid)
 end
 local function craftRecipe(recipeID, craftsCount)
     print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
-    read()
 
     local recipe = Recipes[recipeID]
     local inputItemCounts = getInputItemCounts(recipe.grid)
@@ -677,7 +676,7 @@ local function craftRecipe(recipeID, craftsCount)
     local batches = math.ceil(craftsCount / maxCraftsPerBatch)
     for _ = 1, batches do
         for gridPos, input in pairs(recipe.grid) do --TODO
-            moveItemsFromAnywhere(crafterContainerID, input.item, maxCraftsPerBatch, getGridPosSlot(gridPos))
+            moveItemsFromAnywhere(crafterContainerID, input.item, math.min(craftsCount, maxCraftsPerBatch), getGridPosSlot(gridPos))
         end
         
         r.action(crafterID, 'craft')
