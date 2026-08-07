@@ -9,10 +9,16 @@ print('Done!')
 
 
 local function craft()
-    turtle.craft()
-    print('Craft!')
+    local craftSucces = turtle.craft()
+
+    if craftSucces then
+        print('Craft!')
+    else
+        printError('Couldn\'t craft :(')
+    end
+    
+    return craftSucces
 end
-print('jee')
 
 while true do
     local id, msg = rednet.receive('ACTION')
