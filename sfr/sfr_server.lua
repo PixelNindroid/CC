@@ -52,11 +52,17 @@ end
 
 --SORT
 
+local updatedContainers = {}
+
 local function moveItemsFromSlots(from, to, slots, limit, toSlot)
     if not slots then 
         printError('Needs slot.')
         return 0
     end
+
+    updatedContainers[from] = true
+    updatedContainers[to] = true
+
     local fromContainer = peripheral.wrap(from)
     local totalMoved = 0
 
@@ -618,6 +624,18 @@ local function mapAllStorageItems()
         end
     end
 end
+local function mapUpdatedStorageItems()
+    for id in pairs(updatedContainers) do
+        local type = sfr.getContainerType(id)
+        if type == 'Storage' then
+            C.Storage[id].items = mapContainerItemCounts(id)
+        elseif type == 'BulkInterface' then
+            C.BulkInterface[id].items = mapBulkItems(id)
+        end
+    end
+
+    updatedContainers = {}
+end
 
 local function getItemCount(itemID)
     for _, container in pairs(C.Storage) do
@@ -650,17 +668,88 @@ end
 local function getCraftCount(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
-local function getInputItemCounts(grid)
+local function getRecipeInputCounts(grid)
     local counts = {}
 
     for _, input in pairs(grid) do
-        local itemID = input.item or (input.tag and SavedTagInputs[input.tag] and SavedTagInputs[input.tag][1])
-        counts[itemID] = (counts[itemID] or 0) + 1
+        counts[input] = (counts[input] or 0) + 1
     end
 
     return counts
 end
+local function getInputItemID(input)
+    if input.item then 
+        return input.item, getItemCount(input.item) 
+
+    elseif input.tag and SavedTagInputs[input.tag] then
+        for _, itemID in ipairs(SavedTagInputs[input.tag]) do
+            local count = getItemCount(itemID) 
+            
+            if count > 0 then return itemID, count end
+        end
+    end
+
+    return nil, 0
+end
+
+
+local function craftBatch(itemGrid, count)
+    for gridPos, itemID in pairs(itemGrid) do
+        local slot = getGridPosSlot(gridPos)
+        local moved = moveItemsFromAnywhere(crafterContainerID, itemID, count, slot)
+
+        if moved < count then
+            printError('Not enough items for crafting. Paused.')
+            read()
+
+            sortContainer(crafterContainerID)
+            return false
+        end
+    end
+
+    local craftSucces = r.action(crafterID, 'craft')
+    if craftSucces then
+        sortContainer(crafterContainerID)
+        return true
+    end
+
+    printError('Couldn\'t craft. Paused.')
+    read()
+
+    return false
+end
+
 local function craftRecipe(recipeID, craftsCount)
+    print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
+
+    local recipe = Recipes[recipeID]
+    local getRecipeInputCounts = getRecipeInputCounts(recipe.grid)
+    
+    local craftedCount = 0
+    repeat
+        for input, inputCount in ipairs(getRecipeInputCounts) do
+            local itemID, itemCount = getInputItemID(input)
+
+            if not itemID or itemCount < inputCount then
+                printError('Not enough items for crafting. Paused.')
+                read()
+
+                sortContainer(crafterContainerID)
+                return false
+            end
+        end
+
+        local itemGrid = {}
+        local batchSize
+
+        craftBatch(itemGrid, batchSize)
+        mapUpdatedStorageItems()
+
+        
+    until craftsCount == 0
+end
+
+local function _craftRecipe(recipeID, craftsCount)
     print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
 
     local recipe = Recipes[recipeID]
@@ -676,7 +765,8 @@ local function craftRecipe(recipeID, craftsCount)
     local batches = math.ceil(craftsCount / maxCraftsPerBatch)
     for _ = 1, batches do
         for gridPos, input in pairs(recipe.grid) do --TODO
-            moveItemsFromAnywhere(crafterContainerID, input.item, math.min(craftsCount, maxCraftsPerBatch), getGridPosSlot(gridPos))
+            local itemID = getInputItemID(input)
+            moveItemsFromAnywhere(crafterContainerID, itemID, math.min(craftsCount, maxCraftsPerBatch), getGridPosSlot(gridPos))
         end
         
         r.action(crafterID, 'craft')
