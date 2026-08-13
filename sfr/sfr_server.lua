@@ -664,7 +664,6 @@ local function getGridPosSlot(gridPos)
         return gridPos + 1 end
     return gridPos
 end
-
 local function getCraftCount(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
@@ -672,12 +671,22 @@ local function getRecipeInputCounts(grid)
     local counts = {}
 
     for _, input in pairs(grid) do
-        counts[input] = (counts[input] or 0) + 1
+        local name = input.item or input.tag
+        local type = input.item and 'item' or input.tag and 'tag'
+
+        if not counts[name] then
+            counts[name] = {
+                type = type,
+                count = 1
+            }
+        else
+            counts[name].count = counts[name].count + 1
+        end
     end
 
     return counts
 end
-local function getInputItemID(input)
+local function _getInputItemID(input) --TODO
     if input.item then 
         return input.item, getItemCount(input.item) 
 
@@ -692,6 +701,31 @@ local function getInputItemID(input)
     return nil, 0
 end
 
+local function getAllItemInputsForTag(tag)
+    local itemInputs = {}
+
+    if not SavedTagInputs[tag] then return end
+
+    for _, itemID in ipairs(SavedTagInputs[tag]) do
+        local count = getItemCount(itemID)
+        
+        if count > 0 then
+            table.insert(itemInputs, {itemID = itemID, count = count})
+        end
+    end
+    
+    return itemInputs
+end
+local function getAllPossibleRecipeInputs(recipeInputCounts)
+    
+end
+local function getMaxCraftsCount(inputCounts)
+    local maxCraftsCount = 10000
+
+
+    
+    return maxCraftsCount
+end
 
 local function craftBatch(itemGrid, count)
     for gridPos, itemID in pairs(itemGrid) do
@@ -718,7 +752,6 @@ local function craftBatch(itemGrid, count)
 
     return false
 end
-
 local function craftRecipe(recipeID, craftsCount)
     print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
 
@@ -728,7 +761,7 @@ local function craftRecipe(recipeID, craftsCount)
     local craftedCount = 0
     repeat
         for input, inputCount in ipairs(getRecipeInputCounts) do
-            local itemID, itemCount = getInputItemID(input)
+            local itemID, itemCount = getInputItemID(input) --TODO
 
             if not itemID or itemCount < inputCount then
                 printError('Not enough items for crafting. Paused.')
