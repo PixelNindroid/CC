@@ -648,6 +648,8 @@ local function getItemCount(itemID)
             return container.items[itemID]
         end
     end
+
+    return 0
 end
 
 local function getContainerItemCounts(containerID)
@@ -668,41 +670,28 @@ local function getCraftCount(resultCount, recipeResultCount)
     return math.ceil(resultCount / recipeResultCount)
 end
 local function getRecipeInputCounts(grid)
-    local counts = {}
+    local recipeInputCounts = {}
 
     for _, input in pairs(grid) do
         local name = input.item or input.tag
         local type = input.item and 'item' or input.tag and 'tag'
 
-        if not counts[name] then
-            counts[name] = {
+        if not recipeInputCounts[name] then
+            recipeInputCounts[name] = {
                 type = type,
                 count = 1
             }
         else
-            counts[name].count = counts[name].count + 1
+            recipeInputCounts[name].count = recipeInputCounts[name].count + 1
         end
     end
 
-    return counts
-end
-local function _getInputItemID(input) --TODO
-    if input.item then 
-        return input.item, getItemCount(input.item) 
-
-    elseif input.tag and SavedTagInputs[input.tag] then
-        for _, itemID in ipairs(SavedTagInputs[input.tag]) do
-            local count = getItemCount(itemID) 
-            
-            if count > 0 then return itemID, count end
-        end
-    end
-
-    return nil, 0
+    return recipeInputCounts
 end
 
 local function getAllItemInputsForTag(tag)
     local itemInputs = {}
+    local totalCount = 0
 
     if not SavedTagInputs[tag] then return end
 
@@ -711,20 +700,83 @@ local function getAllItemInputsForTag(tag)
         
         if count > 0 then
             table.insert(itemInputs, {itemID = itemID, count = count})
+            totalCount = totalCount + count
         end
     end
     
-    return itemInputs
+    return itemInputs, totalCount
 end
 local function getAllPossibleRecipeInputs(recipeInputCounts)
-    
+    local allPossibleRecipeInputs = {}
+
+    for name, v in pairs(recipeInputCounts) do
+        local type = v.type
+
+        if type == 'item' then
+            local count = getItemCount(name)
+
+            allPossibleRecipeInputs[name] = {
+                type = 'item',
+                count = count
+            }
+
+        elseif type == 'tag' then
+            local itemInputs, totalCount = getAllItemInputsForTag(name)
+
+            allPossibleRecipeInputs[name] = {
+                type = 'tag',
+                count = totalCount,
+                itemInputs = itemInputs
+            }   
+        end
+    end
+
+    return allPossibleRecipeInputs
 end
-local function getMaxCraftsCount(inputCounts)
+local function getMaxCraftsCount(recipeInputCounts, allPossibleRecipeInputs)
     local maxCraftsCount = 10000
+    local limitingInputs = {}
 
+    for name, v in pairs(recipeInputCounts) do
+        local requiredCount = v.count
+        local availableCount = allPossibleRecipeInputs[name].count
 
-    
-    return maxCraftsCount
+        local maxCraftsCountPerInput = math.floor(availableCount / requiredCount)
+
+        if maxCraftsCountPerInput < maxCraftsCount then
+            maxCraftsCount = maxCraftsCountPerInput
+            limitingInputs = {name}
+        elseif maxCraftsCountPerInput == maxCraftsCount then
+            table.insert(limitingInputs, name)
+        end
+    end
+
+    return maxCraftsCount, limitingInputs
+end
+local function getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craftsLeft)
+    local batchSize = craftsLeft
+
+    for name, v in pairs(recipeInputCounts) do
+        local itemID
+        local count
+
+        if v.type == 'item' then
+            itemID = name
+            count = allPossibleRecipeInputs[name].count
+        elseif v.type == 'tag' then
+            itemID = next(allPossibleRecipeInputs[name].itemInputs).itemID
+            count = next(allPossibleRecipeInputs[name].itemInputs).count
+        end
+
+        local maxCount = ItemDetails[itemID].maxCount
+        local availableCount = math.floor(count / v.count)
+
+        batchSize = math.min(batchSize, maxCount, availableCount)
+
+        if batchSize == 1 then break end
+    end
+
+    return batchSize
 end
 
 local function craftBatch(itemGrid, count)
@@ -753,61 +805,26 @@ local function craftBatch(itemGrid, count)
     return false
 end
 local function craftRecipe(recipeID, craftsCount)
+    --TODO: check if possible
     print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
 
     local recipe = Recipes[recipeID]
-    local getRecipeInputCounts = getRecipeInputCounts(recipe.grid)
+    local recipeInputCounts = getRecipeInputCounts(recipe.grid)
+    local allPossibleRecipeInputs = getAllPossibleRecipeInputs(recipeInputCounts)
     
-    local craftedCount = 0
     repeat
-        for input, inputCount in ipairs(getRecipeInputCounts) do
-            local itemID, itemCount = getInputItemID(input) --TODO
+        local crafts
+        local batchSize = getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craftsCount)
 
-            if not itemID or itemCount < inputCount then
-                printError('Not enough items for crafting. Paused.')
-                read()
-
-                sortContainer(crafterContainerID)
-                return false
-            end
-        end
+        
 
         local itemGrid = {}
-        local batchSize
 
         craftBatch(itemGrid, batchSize)
         mapUpdatedStorageItems()
 
         
     until craftsCount == 0
-end
-
-local function _craftRecipe(recipeID, craftsCount)
-    print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
-
-    local recipe = Recipes[recipeID]
-    local inputItemCounts = getInputItemCounts(recipe.grid)
-
-    local maxCraftsPerBatch = 64
-    for itemID in pairs(inputItemCounts) do
-        maxCraftsPerBatch = math.min(maxCraftsPerBatch, ItemDetails[itemID].maxCount)
-    end
-
-    sortContainer(crafterContainerID)
-
-    local batches = math.ceil(craftsCount / maxCraftsPerBatch)
-    for _ = 1, batches do
-        for gridPos, input in pairs(recipe.grid) do --TODO
-            local itemID = getInputItemID(input)
-            moveItemsFromAnywhere(crafterContainerID, itemID, math.min(craftsCount, maxCraftsPerBatch), getGridPosSlot(gridPos))
-        end
-        
-        r.action(crafterID, 'craft')
-    end
-
-    sortContainer(crafterContainerID)
-
-    printSucces()
 end
 local function craftResult(result, resultCount)
     local recipeID = ResultRecipeIDs[result][1] --TODO
