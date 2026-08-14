@@ -764,8 +764,8 @@ local function getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craft
             itemID = name
             count = allPossibleRecipeInputs[name].count
         elseif v.type == 'tag' then
-            itemID = next(allPossibleRecipeInputs[name].itemInputs).itemID
-            count = next(allPossibleRecipeInputs[name].itemInputs).count
+            itemID = allPossibleRecipeInputs[name].itemInputs[1].itemID
+            count = allPossibleRecipeInputs[name].itemInputs[1].count
         end
 
         local maxCount = ItemDetails[itemID].maxCount
@@ -777,6 +777,31 @@ local function getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craft
     end
 
     return batchSize
+end
+
+local function getItemGrid(grid, allPossibleRecipeInputs)
+    local itemGrid = {}
+    local usesMultipleInputItemsForSameTag = false
+
+    for gridPos, input in pairs(grid) do
+        local name = input.item or input.tag
+        
+        if input.item then
+            itemGrid[gridPos] = name
+            
+        elseif input.tag then
+            if allPossibleRecipeInputs[name].itemInputs[1].count <= 0 then 
+                table.remove(allPossibleRecipeInputs[name].itemInputs, 1)
+
+                usesMultipleInputItemsForSameTag = true
+            end
+
+            itemGrid[gridPos] = allPossibleRecipeInputs[name].itemInputs[1].itemID
+            allPossibleRecipeInputs[name].itemInputs[1].count = allPossibleRecipeInputs[name].itemInputs[1].count - 1
+        end
+    end
+
+    return itemGrid, usesMultipleInputItemsForSameTag
 end
 
 local function craftBatch(itemGrid, count)
@@ -806,25 +831,33 @@ local function craftBatch(itemGrid, count)
 end
 local function craftRecipe(recipeID, craftsCount)
     --TODO: check if possible
-    print('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
+    write('Crafting' .. craftsCount .. 'x ' .. recipeID .. '..')
 
     local recipe = Recipes[recipeID]
     local recipeInputCounts = getRecipeInputCounts(recipe.grid)
     local allPossibleRecipeInputs = getAllPossibleRecipeInputs(recipeInputCounts)
     
     repeat
-        local crafts
-        local batchSize = getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craftsCount)
+        local itemGrid, usesMultipleInputItemsForSameTag = getItemGrid(recipe.grid, allPossibleRecipeInputs)
+        local batchSize = usesMultipleInputItemsForSameTag and 1 or getMaxBatchSize(recipeInputCounts, allPossibleRecipeInputs, craftsCount)
 
-        
+        for name, v in pairs(recipeInputCounts) do
+            if v.type == 'tag' then
+                allPossibleRecipeInputs[name].itemInputs[1].count = allPossibleRecipeInputs[name].itemInputs[1].count - (v.count * batchSize)
+                if allPossibleRecipeInputs[name].itemInputs[1].count <= 0 then table.remove(allPossibleRecipeInputs[name].itemInputs, 1) end
+            end
 
-        local itemGrid = {}
+            allPossibleRecipeInputs[name].count = allPossibleRecipeInputs[name].count - (v.count * batchSize)
+            if allPossibleRecipeInputs[name].count <= 0 then allPossibleRecipeInputs[name] = nil end
+        end
 
         craftBatch(itemGrid, batchSize)
         mapUpdatedStorageItems()
 
         
     until craftsCount == 0
+
+    printSucces()
 end
 local function craftResult(result, resultCount)
     local recipeID = ResultRecipeIDs[result][1] --TODO
