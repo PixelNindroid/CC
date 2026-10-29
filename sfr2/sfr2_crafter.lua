@@ -4,9 +4,9 @@ local pretty = require('cc.pretty')
 
 peripheral.find("modem", rednet.open)
 
-write('Hosting..')
+--[[write('Hosting..')
 rednet.host('SFR2_CRAFTER', 'crafter')
-n.printSucces()
+n.printSucces()]]
 
 local controllerID = r.getHostID('SFR2_CONTROLLER')
 
