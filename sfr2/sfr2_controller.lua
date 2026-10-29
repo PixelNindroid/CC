@@ -135,7 +135,6 @@ local function addToItemMap(map, itemID, count, containerID)
 
     return map
 end
-
 local function getItemMap() 
     write('Mapping items..')
     local map = {}
