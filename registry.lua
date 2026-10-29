@@ -72,7 +72,7 @@ local function mapCraftingRecipes(rr)
                 itemID = 'minecraft:' .. itemID
             end
 
-            if not ItemDetails[itemID] then
+            if not registry.itemDetails[itemID] then
                 n.write('\nRecipe for unknown item: ' .. id .. ' -> ' .. data.result.item, colors.red)
             end
             
@@ -105,10 +105,12 @@ end
 
 if informativeRegistry then
     registry.itemDetails = mapItemDetails(informativeRegistry)
+
+    if recipeRegistry then
+        registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
+        registry.resultCraftingRecipeIDs, registry.craftable = mapResultCraftingRecipeIDs(recipeRegistry)
+    end
 end
-if recipeRegistry then
-    registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
-    registry.resultCraftingRecipeIDs, registry.craftable = mapResultCraftingRecipeIDs(recipeRegistry)
-end
+
 
 return registry
