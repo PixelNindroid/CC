@@ -12,4 +12,4 @@ local controllerID = r.getHostID('SFR2_CONTROLLER')
 
 local registry = r.getVar(controllerID, 'registry')
 
-read(nil, nil, registry.craftable)
+local a = read(nil, nil, registry.craftable)
