@@ -20,6 +20,9 @@ write('Hosting..')
 rednet.host('SFR_SERVER', 'sfr_server')
 n.printRight('Done', colors.green)
 
+
+
+
 --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
 local function addToItemMap(map, itemID, count, containerID)
     if not map[itemID] then
@@ -52,4 +55,53 @@ local function getItemMap()
     return map
 end
 
-pretty.pretty_print(getItemMap())
+local function mapRecipe(id, data)
+    local grid = {}
+
+    if data.type == 'minecraft:crafting_shaped' then
+        for r, row in ipairs(data.pattern) do
+            for c = 1, #row do
+                local char = row:sub(c, c)
+                local slot = (r - 1) * 3 + c
+                local input = data.key[char]
+
+                if input and not (input.item or input.tag) then return end
+                grid[slot] = data.key[char]
+            end
+        end
+    elseif data.type == 'minecraft:crafting_shapeless' then
+        grid = data.ingredients
+    else return end
+
+    return {
+        id = id,
+        grid = grid,
+        result = data.result.item,
+        resultCount = data.result.count or 1
+    }
+end
+local function mapRecipes(rr)
+    write('Mapping crafting recipes..')
+    local craftingRecipeIDs = rr.list('crafting')
+
+    local recipes = {}
+    for _, id in ipairs(craftingRecipeIDs) do
+        local data = rr.getRaw(id)
+        if data and data.result then
+            local itemID = data.result.item
+
+            if not itemID:find(':') then
+                itemID = 'minecraft:' .. itemID
+            end
+
+            if not ItemDetails[itemID] then
+                n.write('\nRecipe for unknown item: ' .. id .. ' -> ' .. data.result.item, colors.red)
+            end
+            
+            recipes[id] = mapRecipe(id, data)
+        end
+    end
+
+    printSucces(n.getTableLength(recipes), nil, #craftingRecipeIDs)
+    return recipes
+end
