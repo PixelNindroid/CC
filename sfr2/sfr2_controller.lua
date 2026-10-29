@@ -62,3 +62,24 @@ local function getItemMap()
     printSucces(n.getTableLength(map), nil, totalTotalCount)
     return map
 end
+
+while true do
+    local eventData = {os.pullEvent()}
+    local event = eventData[1]
+
+    redstone.setOutput('left', true)
+
+    if event == 'rednet_message' then
+        local id, msg, ptc = table.unpack(eventData, 2)
+        print(("C%d sent %s %s"):format(id, ptc, tostring(msg)))
+        pretty.pretty_print(msg)
+        speaker.playNote('bell', 3)
+
+        listen(id, msg, ptc)
+
+        os.cancelTimer(tickTimerID)
+        tickTimerID = os.startTimer(TICK_DELAY)
+    end
+
+    redstone.setOutput('left', false)
+end
