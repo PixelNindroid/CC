@@ -1,5 +1,6 @@
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
+local completion = require "cc.completion"
 local pretty = require('cc.pretty')
 
 peripheral.find("modem", rednet.open)
