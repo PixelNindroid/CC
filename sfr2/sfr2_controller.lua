@@ -41,44 +41,6 @@ local function printSucces(succesCount, failCount, totalCount)
 end
 
 
---{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
-local function addToItemMap(map, itemID, count, containerID)
-    if not map[itemID] then
-        map[itemID] = {containerCount = {}, totalCount = 0}
-    end
-    if not map[itemID].containerCount[containerID] then
-        map[itemID].containerCount[containerID] = 0
-    end
-    map[itemID].containerCount[containerID] = map[itemID].containerCount[containerID] + count
-    map[itemID].totalCount = map[itemID].totalCount + count
-
-    return map
-end
-local function getItemMap() 
-    write('Mapping items..')
-    local map = {}
-    local totalTotalCount = 0
-
-    for _, containerID in pairs(peripherals.containers) do
-        local container = peripheral.wrap(containerID)
-        if container.list then
-            for _, v in pairs(container.list()) do
-                addToItemMap(map, v.name, v.count, containerID)
-                totalTotalCount = totalTotalCount + v.count
-            end
-        elseif container.items then
-            for _, v in pairs(container.items()) do
-                addToItemMap(map, v.name, v.count, containerID)
-                totalTotalCount = totalTotalCount + v.count
-            end
-        end
-    end
-
-    printSucces(n.getTableLength(map), nil, totalTotalCount)
-    return map
-end
-
-
 local function mapItemDetails(ir)
     write('Mapping item details..')
     local itemIDs = ir.list('item')
@@ -159,3 +121,40 @@ local function mapRecipes(rr)
     return recipes
 end
 local recipes = mapRecipes(recipeRegistry)
+
+--{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
+local function addToItemMap(map, itemID, count, containerID)
+    if not map[itemID] then
+        map[itemID] = {containerCount = {}, totalCount = 0}
+    end
+    if not map[itemID].containerCount[containerID] then
+        map[itemID].containerCount[containerID] = 0
+    end
+    map[itemID].containerCount[containerID] = map[itemID].containerCount[containerID] + count
+    map[itemID].totalCount = map[itemID].totalCount + count
+
+    return map
+end
+local function getItemMap() 
+    write('Mapping items..')
+    local map = {}
+    local totalTotalCount = 0
+
+    for _, containerID in pairs(peripherals.containers) do
+        local container = peripheral.wrap(containerID)
+        if container.list then
+            for _, v in pairs(container.list()) do
+                addToItemMap(map, v.name, v.count, containerID)
+                totalTotalCount = totalTotalCount + v.count
+            end
+        elseif container.items then
+            for _, v in pairs(container.items()) do
+                addToItemMap(map, v.name, v.count, containerID)
+                totalTotalCount = totalTotalCount + v.count
+            end
+        end
+    end
+
+    printSucces(n.getTableLength(map), nil, totalTotalCount)
+    return map
+end
