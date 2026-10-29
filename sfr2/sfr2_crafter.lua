@@ -15,6 +15,7 @@ local registry = r.getVar(controllerID, 'registry')
 
 local craftableDisplayNames = {}
 for i, id in ipairs(registry.craftable) do
+    print(#registry.itemDetails)
     print(id)
     craftableDisplayNames[i] = registry.itemDetails[id].displayName
 end
