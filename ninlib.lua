@@ -183,6 +183,25 @@ function n.printRight(text, color)
     n.writeRight(text, color)
     write('\n')
 end
+function n.printSucces(succesCount, failCount, totalCount)
+    if not succesCount then n.printRight('Done', colors.green) return end
+    if not failCount then 
+        if totalCount then 
+            failCount = totalCount - succesCount
+        else
+            n.printRight(tostring(succesCount), colors.green) 
+            return 
+        end
+    end
+
+    local succesStr = tostring(succesCount)
+    local failStr = tostring(failCount)
+
+    n.setCursorX(n.termWith - succesStr:len() - failStr:len())
+    n.write(succesStr, colors.green)
+    write(' ')
+    n.write(failStr, colors.red)
+end
 
 
 function n.getStripedColor(y)
