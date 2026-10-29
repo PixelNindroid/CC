@@ -88,19 +88,24 @@ local function mapResultCraftingRecipeIDs(rr)
 
     local resultRecipeIDs = {}
     local craftable = {}
+    local craftableDisplayNames = {}
     for id, data in pairs(registry.craftingRecipes) do
-        if not resultRecipeIDs[data.result] then
-            resultRecipeIDs[data.result] = {}
-        end
-        table.insert(resultRecipeIDs[data.result], id)
+        if ItemDetails[data.result] then
+            if not resultRecipeIDs[data.result] then
+                resultRecipeIDs[data.result] = {}
+            end
+            table.insert(resultRecipeIDs[data.result], id)
 
-        table.insert(craftable, data.result)
+            table.insert(craftable, data.result)
+            table.insert(craftableDisplayNames, registry.itemDetails[data.result].displayName)
+        end
+        
     end
 
     n.removeDuplicates(craftable)
 
     n.printSucces(n.getTableLength(resultRecipeIDs))
-    return resultRecipeIDs, craftable
+    return resultRecipeIDs, craftable, craftableDisplayNames
 end
 
 if informativeRegistry then
@@ -108,7 +113,7 @@ if informativeRegistry then
 
     if recipeRegistry then
         registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
-        registry.resultCraftingRecipeIDs, registry.craftable = mapResultCraftingRecipeIDs(recipeRegistry)
+        registry.resultCraftingRecipeIDs, registry.craftable, registry.craftableDisplayNames = mapResultCraftingRecipeIDs(recipeRegistry)
     end
 end
 
