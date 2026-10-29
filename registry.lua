@@ -2,6 +2,9 @@ local n = require('libs.ninlib')
 
 local registry = {}
 
+local informativeRegistry = peripheral.find('informative_registry')
+local recipeRegistry = peripheral.find('recipe_registry')
+
 local function mapItemDetails(ir)
     write('Mapping item details..')
     local itemIDs = ir.list('item')
@@ -29,7 +32,6 @@ local function mapItemDetails(ir)
     n.printSucces(n.getTableLength(details), nil, #itemIDs)
     return details
 end
-local itemDetails = mapItemDetails(informativeRegistry)
 
 local function mapCraftingRecipe(id, data)
     local grid = {}
@@ -81,22 +83,35 @@ local function mapCraftingRecipes(rr)
     n.printSucces(n.getTableLength(recipes), nil, #craftingRecipeIDs)
     return recipes
 end
-local craftingRecipes = mapCraftingRecipes(recipeRegistry)
-
 local function mapResultCraftingRecipeIDs(rr)
     write('Mapping result recipes..')
 
     local resultRecipeIDs = {}
+    local craftable = {}
     for id, data in pairs(craftingRecipes) do
         if not resultRecipeIDs[data.result] then
             resultRecipeIDs[data.result] = {}
         end
         table.insert(resultRecipeIDs[data.result], id)
+
+        table.insert(craftable, data.result)
     end
 
-    n.printSucces(n.getTableLength(resultRecipeIDs))
-    return resultRecipeIDs
-end
-local resultCraftingRecipeIDs = mapResultCraftingRecipeIDs(recipeRegistry)
+    n.removesDuplicates(craftable)
 
-local map
+    n.printSucces(n.getTableLength(resultRecipeIDs))
+    return resultRecipeIDs, craftable
+end
+local function mapCraftable()
+    
+end
+
+if informativeRegistry then
+    registry.itemDetails = mapItemDetails(informativeRegistry)
+end
+if recipeRegistry then
+    registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
+    registry.resultCraftingRecipeIDs, registry.craftable = mapResultCraftingRecipeIDs(recipeRegistry)
+end
+
+return registry
