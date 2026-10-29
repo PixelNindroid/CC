@@ -180,7 +180,7 @@ if not settings.get('grab.main') then
 end
 
 if not fs.exists('startup.lua') then
-    grab.put('startup.lua', getGitRepo('grab_startup.lua'))
+    grab.put('startup.lua', string.format(getGitRepo('grab_startup.lua'), settings.get('grab.main')))
 end
 
 return grab
