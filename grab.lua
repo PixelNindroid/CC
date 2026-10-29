@@ -12,7 +12,10 @@ local CATEGORIES = {
     ['sfr_server.lua'] = 'sfr',
     ['sfr_client.lua'] = 'sfr',
     ['sfr_crafter.lua'] = 'sfr',
-    ['sfrlib.lua'] = 'sfr'
+    ['sfrlib.lua'] = 'sfr',
+
+    ['sfr2_controller.lua'] = 'sfr2',
+    ['sfr2_crafter.lua'] = 'sfr2'
 }
 local GIT_REPO_URL = 'https://raw.githubusercontent.com/PixelNindroid/CC/main/'
 local grab = {}
