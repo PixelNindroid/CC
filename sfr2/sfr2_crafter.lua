@@ -12,4 +12,4 @@ local controllerID = r.getHostID('SFR2_CONTROLLER')
 
 local craftable = r.getVar(controllerID, 'craftable')
 
-pretty.pretty_print(craftable)
+pretty.pretty_print(#craftable)
