@@ -853,7 +853,6 @@ local function craftRecipe(recipeID, craftsCount)
 
         craftBatch(itemGrid, batchSize)
         mapUpdatedStorageItems()
-
         
     until craftsCount == 0
 
