@@ -1,6 +1,7 @@
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
 local grab = require('libs.grab')
+local registry = require('libs.registry')
 local pretty = require('cc.pretty')
 
 local crafter = peripheral.find('turtle')
