@@ -102,9 +102,6 @@ local function mapResultCraftingRecipeIDs(rr)
     n.printSucces(n.getTableLength(resultRecipeIDs))
     return resultRecipeIDs, craftable
 end
-local function mapCraftable()
-    
-end
 
 if informativeRegistry then
     registry.itemDetails = mapItemDetails(informativeRegistry)
