@@ -3,7 +3,10 @@ local pretty = require('cc.pretty')
 local DEPENDENCIES = {
     sfr_server = {'sfrlib', 'ninlib', 'redlib'},
     sfr_client = {'sfrlib', 'ninlib', 'redlib', 'makeup'},
-    sfr_crafter = {'redlib'}
+    sfr_crafter = {'redlib'},
+
+    sfr2_controller = {},
+    sfr2_crafter = {}
 }
 local CATEGORIES = {
     ['sfr_server.lua'] = 'sfr',
