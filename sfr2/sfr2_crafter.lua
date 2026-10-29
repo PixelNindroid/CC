@@ -18,4 +18,4 @@ for i, id in ipairs(registry.craftable) do
     craftableDisplayNames[i] = registry.itemDetails[id].displayName
 end
 
-local a = read(nil, nil, function(text) return completion.choice(text, registry.craftable) end)
+local a = read(nil, nil, function(text) return completion.choice(text, craftableDisplayNames) end)
