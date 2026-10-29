@@ -10,6 +10,6 @@ n.printSucces()]]
 
 local controllerID = r.getHostID('SFR2_CONTROLLER')
 
-local craftable = r.getVar(controllerID, 'craftable')
+local registry = r.getVar(controllerID, 'registry')
 
-pretty.pretty_print(#craftable)
+read(nil, nil, registry.craftable)
