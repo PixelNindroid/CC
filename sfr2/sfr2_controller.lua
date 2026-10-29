@@ -1,3 +1,8 @@
+local n = require('libs.ninlib')
+local r = require('libs.redlib')
+local grab = require('libs.grab')
+local pretty = require('cc.pretty')
+
 local informativeRegistry = peripheral.find('informative_registry')
 local recipeRegistry = peripheral.find('recipe_registry')
 local crafter = peripheral.find('turtle')
@@ -25,7 +30,7 @@ local function addToItemMap(map, itemID, count, containerID)
     end
     map[itemID].containerCount[containerID] = map[itemID].containerCount[containerID] + count
     map[itemID].totalCount = map[itemID].totalCount + count
-    
+
     return map
 end
 local function getItemMap() 
