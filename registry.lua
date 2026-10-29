@@ -90,7 +90,7 @@ local function mapResultCraftingRecipeIDs(rr)
     local craftable = {}
     local craftableDisplayNames = {}
     for id, data in pairs(registry.craftingRecipes) do
-        if ItemDetails[data.result] then
+        if registry.itemDetails[data.result] then
             if not resultRecipeIDs[data.result] then
                 resultRecipeIDs[data.result] = {}
             end
