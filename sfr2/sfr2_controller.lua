@@ -51,3 +51,5 @@ local function getItemMap()
 
     return map
 end
+
+pretty.pretty_print(getItemMap())
