@@ -122,6 +122,23 @@ local function mapRecipes(rr)
 end
 local recipes = mapRecipes(recipeRegistry)
 
+local function mapResultRecipeIDs(rr)
+    write('Mapping result recipes..')
+
+    local resultRecipeIDs = {}
+    for id, data in pairs(Recipes) do
+        if not resultRecipeIDs[data.result] then
+            resultRecipeIDs[data.result] = {}
+        end
+        table.insert(resultRecipeIDs[data.result], id)
+    end
+
+    printSucces(n.getTableLength(resultRecipeIDs))
+    return resultRecipeIDs
+end
+local resultRecipeIDs = mapResultRecipeIDs(recipeRegistry)
+
+
 --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
 local function addToItemMap(map, itemID, count, containerID)
     if not map[itemID] then
