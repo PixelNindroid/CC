@@ -5,8 +5,8 @@ local DEPENDENCIES = {
     sfr_client = {'sfrlib', 'ninlib', 'redlib', 'makeup'},
     sfr_crafter = {'redlib'},
 
-    sfr2_controller = {},
-    sfr2_crafter = {}
+    sfr2_controller = {'ninlib', 'redlib'},
+    sfr2_crafter = {'ninlib', 'redlib'}
 }
 local CATEGORIES = {
     ['sfr_server.lua'] = 'sfr',
