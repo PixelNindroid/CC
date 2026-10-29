@@ -15,7 +15,7 @@ end
 rednet.open(peripherals.wirelessModems[1])
 
 write('Hosting..')
-rednet.host('SFR_SERVER', 'sfr_server')
+rednet.host('SFR2_CONTROLLER', 'controller')
 n.printRight('Done', colors.green)
 
 
