@@ -1,4 +1,4 @@
-local pretty = require('cc.pretty')
+local pretty = require('cc.pretty') -- wget https://raw.githubusercontent.com/PixelNindroid/CC/main/grab.lua libs/grab.lua
 
 local DEPENDENCIES = {
     sfr_server = {'sfrlib', 'ninlib', 'redlib'},
