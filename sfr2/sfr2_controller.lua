@@ -1,6 +1,5 @@
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
-local grab = require('libs.grab')
 local registry = require('libs.registry')
 local pretty = require('cc.pretty')
 
@@ -64,7 +63,11 @@ local function getItemMap()
 end
 
 local function listen(id, msg, ptc)
-    r.listen(id, msg, ptc, {}, {})
+    r.listen(id, msg, ptc, {
+
+    }, {
+        craftable = registry.craftable,
+    })
 end
 
 while true do
