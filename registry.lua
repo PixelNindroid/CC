@@ -97,7 +97,7 @@ local function mapResultCraftingRecipeIDs(rr)
         table.insert(craftable, data.result)
     end
 
-    n.removesDuplicates(craftable)
+    n.removeDuplicates(craftable)
 
     n.printSucces(n.getTableLength(resultRecipeIDs))
     return resultRecipeIDs, craftable
