@@ -88,7 +88,7 @@ local function mapResultCraftingRecipeIDs(rr)
 
     local resultRecipeIDs = {}
     local craftable = {}
-    for id, data in pairs(craftingRecipes) do
+    for id, data in pairs(registry.craftingRecipes) do
         if not resultRecipeIDs[data.result] then
             resultRecipeIDs[data.result] = {}
         end
