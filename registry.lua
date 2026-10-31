@@ -5,17 +5,27 @@ local registry = {}
 local informativeRegistry = peripheral.find('informative_registry')
 local recipeRegistry = peripheral.find('recipe_registry')
 
-local function mapItemDetails(ir)
+local function mapItemDetailsAndTags(ir)
     write('Mapping item details..')
     local itemIDs = ir.list('item')
     
     local details = {}
+    local tags = {}
     for _, id in ipairs(itemIDs) do
         local success, describe = pcall(function() 
             return ir.describe('item', id) 
         end)
         if not success then
             printError('Failed to describe item: ' .. id)
+        end
+
+        if describe and describe.tags then
+            for _, tag in ipairs(describe.tags) do
+                if not tags[tag] then
+                    tags[tag] = {}
+                end
+                table.insert(tags[tag], id)
+            end
         end
 
         details[id] = describe and {
@@ -30,7 +40,7 @@ local function mapItemDetails(ir)
     end
 
     n.printSucces(n.getTableLength(details), nil, #itemIDs)
-    return details
+    return details, tags
 end
 
 local function mapCraftingRecipe(id, data)
@@ -109,7 +119,7 @@ local function mapResultCraftingRecipeIDs(rr)
 end
 
 if informativeRegistry then
-    registry.itemDetails = mapItemDetails(informativeRegistry)
+    registry.itemDetails = mapItemDetailsAndTags(informativeRegistry)
 
     if recipeRegistry then
         registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
