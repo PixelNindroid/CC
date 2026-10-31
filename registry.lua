@@ -119,7 +119,7 @@ local function mapResultCraftingRecipeIDs(rr)
 end
 
 if informativeRegistry then
-    registry.itemDetails = mapItemDetailsAndTags(informativeRegistry)
+    registry.itemDetails, registry.itemTags = mapItemDetailsAndTags(informativeRegistry)
 
     if recipeRegistry then
         registry.craftingRecipes = mapCraftingRecipes(recipeRegistry)
