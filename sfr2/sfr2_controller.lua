@@ -106,6 +106,8 @@ local function moveItemTo(itemID, to, toSlot, limit)
 end
 
 remap()
+pretty.pretty_print(itemMap)
+read()
 local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
 
