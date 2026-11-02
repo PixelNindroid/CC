@@ -21,7 +21,7 @@ n.printRight('Done', colors.green)
 
 --MAP
 
---{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
+local itemMap --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
 local function addToItemMap(map, itemID, count, containerID)
     if not map[itemID] then
         map[itemID] = {containerCount = {}, totalCount = 0}
@@ -57,11 +57,59 @@ local function getItemMap()
     n.printSucces(n.getTableLength(map), nil, totalTotalCount)
     return map
 end
+local function remap()
+    itemMap = getItemMap()
+    return itemMap
+end
+
+local function getSlots(itemID, containerID)
+    local slots = {}
+
+    for slot, item in pairs(peripheral.wrap(containerID).list()) do
+        if item.name == itemID then table.insert(slots, slot) end
+    end
+
+    return slots
+end
+local function moveItem(from, to, toSlot, limit)
+    local toMove = limit or registry.itemDetails[itemID].maxCount
+    local fromContainer = peripheral.wrap(from)
+    local slots = getSlots(itemID, from)
+
+    for i = #slots, 1, -1 do
+        local fromSlot = slots[i]
+        local moved = fromContainer.pushItems(to, fromSlot, limit, toSlot)
+
+        if moved > 0 then
+            print(('Moved %d items from %s to %s'):format(moved, from, to))
+        else
+            printError(('Failed to move slot %s from %s to %s'):format(fromSlot, from, to))
+        end
+
+        toMove = toMove - moved
+        if toMove <= 0 then break end
+    end
+end
+
+local function moveItemTo(itemID, to, toSlot, limit)
+    local toMove = limit or registry.itemDetails[itemID].maxCount
+
+    for from in pairs(itemMap[itemID].containerCount) do
+        if from ~= to then
+            local moved = moveItem(from, to, toSlot, toMove)
+        end
+
+        toMove = toMove - moved
+        if toMove <= 0 then break end
+    end
+end
+
 
 local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
 
-        remap = getItemMap
+        remap = remap,
+        moveItemTo = moveItemTo
 
     }, {
         registry = registry,
