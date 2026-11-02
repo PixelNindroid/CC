@@ -41,6 +41,9 @@ local function getItemGrid(grid)
                 printError('No item found for tag: ' .. input.tag)
                 return
             end
+        else
+            printError('Invalid input: ' .. pretty.serialize(input))
+            return
         end
     end
 
