@@ -71,11 +71,12 @@ local function getGridPosSlot(gridPos)
     elseif gridPos == 6 then return 7
     elseif gridPos == 7 then return 9
     elseif gridPos == 8 then return 10
-    elseif gridPos == 9 then return 11
+    elseif gridPos == 9 then return 11 end
 end
 local function moveItemsToGrid(itemGrid)
-    for gridPos, value in pairs(itemGrid) do
-        
+    for gridPos, itemID in pairs(itemGrid) do
+        local slot = getGridPosSlot(gridPos)
+        r.action(controllerID, {'moveItemToCrafter', itemID, slot})
     end
 end
 
