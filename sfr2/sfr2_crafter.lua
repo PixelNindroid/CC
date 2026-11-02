@@ -37,4 +37,5 @@ local function getBestCraftingRecipe(result)
 end
 
 
-local a = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+local result = registry.craftable[table.find(registry.craftableDisplayNames, resultName)]
