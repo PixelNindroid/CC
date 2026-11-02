@@ -97,7 +97,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
     for from in pairs(itemMap[itemID].containerCount) do
         if from ~= to then
             local moved = moveItem(from, to, toSlot, toMove)
-            
+
             toMove = toMove - moved
             if toMove <= 0 then break end
         end
@@ -109,7 +109,10 @@ local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
 
         remap = remap,
-        moveItemTo = moveItemTo
+        moveItemToCrafter = function (itemID, toSlot, limit)
+            moveItemTo(itemID, crafterContainerID, toSlot, limit)
+            
+        end
 
     }, {
         registry = registry,
