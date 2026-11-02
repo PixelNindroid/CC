@@ -22,6 +22,17 @@ n.printRight('Done', colors.green)
 
 --MAP
 
+local function getContainerItemList(container)
+    if container.list then
+        return container.list()
+    elseif container.items then
+        return container.items()
+    else
+        printError('Container ' .. containerID .. ' does not have a list or items method')
+        return {}
+    end
+end
+
 local itemMap --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
 local function addToItemMap(map, itemID, count, containerID)
     if not map[itemID] then
@@ -42,16 +53,9 @@ local function getItemMap()
 
     for _, containerID in pairs(peripherals.containers) do
         local container = peripheral.wrap(containerID)
-        if container.list then
-            for _, v in pairs(container.list()) do
-                addToItemMap(map, v.name, v.count, containerID)
-                totalTotalCount = totalTotalCount + v.count
-            end
-        elseif container.items then
-            for _, v in pairs(container.items()) do
-                addToItemMap(map, v.name, v.count, containerID)
-                totalTotalCount = totalTotalCount + v.count
-            end
+        for _, v in pairs(getContainerItemList(container)) do
+            addToItemMap(map, v.name, v.count, containerID)
+            totalTotalCount = totalTotalCount + v.count
         end
     end
 
@@ -66,7 +70,7 @@ end
 local function getSlots(itemID, containerID)
     local slots = {}
 
-    for slot, item in pairs(peripheral.wrap(containerID).list()) do
+    for slot, item in pairs(getContainerItemList(peripheral.wrap(containerID))) do
         if item.name == itemID then table.insert(slots, slot) end
     end
 
@@ -107,9 +111,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
 end
 
 remap()
-grab.serialize('itemMap', itemMap)
-pretty.pretty_print(itemMap['neepmeat:enlightened_brain'])
-read()
+
 local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
 
