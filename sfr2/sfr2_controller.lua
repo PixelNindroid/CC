@@ -94,6 +94,7 @@ end
 local function moveItemTo(itemID, to, toSlot, limit)
     local toMove = limit or registry.itemDetails[itemID].maxCount
 
+    print(itemID)
     for from in pairs(itemMap[itemID].containerCount) do
         if from ~= to then
             local moved = moveItem(from, to, toSlot, toMove)
