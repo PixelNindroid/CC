@@ -82,7 +82,7 @@ end
 
 
 local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
-local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
+local result = 'Builder'--registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 print('Result: ' .. result)
 
 moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))
