@@ -27,6 +27,26 @@ local function getMostPlentifulItemForTagInput(tag)
     return itemID, count
 end
 
+local function getItemGrid(grid)
+    local itemGrid = {}
+
+    for i, input in pairs(grid) do
+        if input.item then
+            itemGrid[i] = input.item
+        elseif input.tag then
+            local itemID, count = getMostPlentifulItemForTagInput(input.tag)
+            if itemID then
+                itemGrid[i] = itemID
+            else
+                printError('No item found for tag: ' .. input.tag)
+                return
+            end
+        end
+    end
+
+    return itemGrid
+end
+
 local function getBestCraftingRecipe(result)
     if not registry.resultCraftingRecipeIDs[result] then
         return
@@ -34,9 +54,17 @@ local function getBestCraftingRecipe(result)
     if #registry.resultCraftingRecipeIDs[result] == 1 then
         return registry.resultCraftingRecipeIDs[result][1]
     end
+    local recipeID
+
+    return recipeID
+end
+
+local function moveItemsToGrid()
+    
 end
 
 
 local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 print('Result: ' .. result)
+
