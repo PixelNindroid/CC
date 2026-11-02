@@ -61,7 +61,7 @@ end
 local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
 
-        remap = getItemMap()
+        remap = getItemMap
 
     }, {
         registry = registry,
