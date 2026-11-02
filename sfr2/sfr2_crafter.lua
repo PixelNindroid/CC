@@ -30,13 +30,13 @@ end
 local function getItemGrid(grid)
     local itemGrid = {}
 
-    for i, input in pairs(grid) do
+    for gridPos, input in pairs(grid) do
         if input.item then
-            itemGrid[i] = input.item
+            itemGrid[gridPos] = input.item
         elseif input.tag then
             local itemID, count = getMostPlentifulItemForTagInput(input.tag)
             if itemID then
-                itemGrid[i] = itemID
+                itemGrid[gridPos] = itemID
             else
                 printError('No item found for tag: ' .. input.tag)
                 return
@@ -62,8 +62,21 @@ local function getBestCraftingRecipe(result)
     return recipeID
 end
 
-local function moveItemsToGrid()
-    
+local function getGridPosSlot(gridPos)
+    if gridPos == 1 then return 1
+    elseif gridPos == 2 then return 2
+    elseif gridPos == 3 then return 3
+    elseif gridPos == 4 then return 5
+    elseif gridPos == 5 then return 6
+    elseif gridPos == 6 then return 7
+    elseif gridPos == 7 then return 9
+    elseif gridPos == 8 then return 10
+    elseif gridPos == 9 then return 11
+end
+local function moveItemsToGrid(itemGrid)
+    for gridPos, value in pairs(itemGrid) do
+        
+    end
 end
 
 
