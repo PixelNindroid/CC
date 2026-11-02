@@ -106,7 +106,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
 end
 
 remap()
-pretty.pretty_print(itemMap)
+pretty.pretty_print(itemMap['neepmeat:enlightened_brain'])
 read()
 local function listen(id, msg, ptc)
     r.listen(id, msg, ptc, {
