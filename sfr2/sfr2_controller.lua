@@ -19,11 +19,7 @@ rednet.host('SFR2_CONTROLLER', 'controller')
 n.printRight('Done', colors.green)
 
 
-
-
 --MAP
-
-
 
 --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
 local function addToItemMap(map, itemID, count, containerID)
