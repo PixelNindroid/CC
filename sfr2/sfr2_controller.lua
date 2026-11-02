@@ -107,7 +107,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
 end
 
 remap()
-grab.serialize()
+grab.serialize('itemMap', itemMap)
 pretty.pretty_print(itemMap['neepmeat:enlightened_brain'])
 read()
 local function listen(id, msg, ptc)
