@@ -103,7 +103,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
     for from in pairs(itemMap[itemID].containerCount) do
         if from ~= to then
             local moved = moveItem(from, to, toSlot, toMove)
-            if moved > 0 then
+            if moved and (moved > 0) then
                 toMove = toMove - moved
                 if toMove <= 0 then break end
             end
