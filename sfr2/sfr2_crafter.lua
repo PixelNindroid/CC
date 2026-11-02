@@ -39,3 +39,4 @@ end
 
 local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[table.find(registry.craftableDisplayNames, resultName)]
+print('Result: ' .. result)
