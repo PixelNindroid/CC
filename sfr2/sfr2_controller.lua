@@ -1,3 +1,4 @@
+local grab = require('libs.grab')
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
 local registry = require('libs.registry')
@@ -106,6 +107,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
 end
 
 remap()
+grab.serialize()
 pretty.pretty_print(itemMap['neepmeat:enlightened_brain'])
 read()
 local function listen(id, msg, ptc)
