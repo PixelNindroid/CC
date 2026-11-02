@@ -27,5 +27,14 @@ local function getMostPlentifulItemForTagInput(tag)
     return itemID, count
 end
 
+local function getBestCraftingRecipe(result)
+    if not registry.resultCraftingRecipeIDs[result] then
+        return
+    end
+    if #registry.resultCraftingRecipeIDs[result] == 1 then
+        return registry.resultCraftingRecipeIDs[result][1]
+    end
+end
+
 
 local a = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
