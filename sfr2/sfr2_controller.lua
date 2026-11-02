@@ -54,7 +54,7 @@ local function getItemMap()
         end
     end
 
-    n.printSucces(n.getTableLength(map), nil, totalTotalCount)
+    n.printSucces(totalTotalCount)
     return map
 end
 local function remap()
