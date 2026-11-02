@@ -42,7 +42,7 @@ local function getItemGrid(grid)
                 return
             end
         else
-            printError('Invalid input: ' .. pretty.serialize(input))
+            printError('Invalid input: ' .. pretty.pretty_print(input))
             return
         end
     end
