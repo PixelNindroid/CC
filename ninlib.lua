@@ -243,7 +243,7 @@ function n.setNeonColors()
     }
     for name, hex in pairs(neonColors) do
         term.setPaletteColor(colors[name], hex)
-        --n.write(' ', nil, colors[name])
+        n.write(' ', nil, colors[name])
     end
 end
 
