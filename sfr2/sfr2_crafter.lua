@@ -28,9 +28,9 @@ local function getSlotDrawPos(slot)
 
     return x, y
 end
-local function drawEmptyGridSlot(gridPos, slotColor)
+local function drawEmptyGridSlot(slot, slotColor)
     local bgColor = colors.gray
-    local x, y = getSlotDrawPos(gridPos)
+    local x, y = getSlotDrawPos(slot)
 
     term.setCursorPos(x, y)
     n.write('  ', nil, slotColor)
@@ -76,13 +76,13 @@ end
 local function getItemGrid(grid)
     local itemGrid = {}
 
-    for gridPos, input in pairs(grid) do
+    for slot, input in pairs(grid) do
         if input.item then
-            itemGrid[gridPos] = input.item
+            itemGrid[slot] = input.item
         elseif input.tag then
             local itemID, count = getMostPlentifulItemForTagInput(input.tag)
             if itemID then
-                itemGrid[gridPos] = itemID
+                itemGrid[slot] = itemID
             else
                 printError('No item found for tag: ' .. input.tag)
                 return
@@ -108,29 +108,31 @@ local function getBestCraftingRecipe(result)
     return recipeID
 end
 
-local function getGridPosSlot(gridPos)
-    if gridPos == 1 then return 1
-    elseif gridPos == 2 then return 2
-    elseif gridPos == 3 then return 3
-    elseif gridPos == 4 then return 5
-    elseif gridPos == 5 then return 6
-    elseif gridPos == 6 then return 7
-    elseif gridPos == 7 then return 9
-    elseif gridPos == 8 then return 10
-    elseif gridPos == 9 then return 11 end
+local function getCrafterSlot(slot)
+    if slot == 1 then return 1
+    elseif slot == 2 then return 2
+    elseif slot == 3 then return 3
+    elseif slot == 4 then return 5
+    elseif slot == 5 then return 6
+    elseif slot == 6 then return 7
+    elseif slot == 7 then return 9
+    elseif slot == 8 then return 10
+    elseif slot == 9 then return 11 end
 end
 local function moveItemsToGrid(itemGrid)
-    for gridPos, itemID in pairs(itemGrid) do
-        local slot = getGridPosSlot(gridPos)
-        r.action(controllerID, {'moveItemToCrafter', itemID, slot})
+    for slot, itemID in pairs(itemGrid) do
+        local crafterSlot = getCrafterSlot(slot)
+        r.action(controllerID, {'moveItemToCrafter', itemID, crafterSlot})
 
-        local x, y = getSlotDrawPos(gridPos)
+        local x, y = getSlotDrawPos(slot)
 
-        buttox.define('slot_' .. gridPos, {
+        buttox.define('slot_' .. slot, {
             x = x,
             y = y,
             text = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
-            fancy = true
+            fancy = true,
+            data = {itemID = itemID, slot = crafterSlot},
+            onClick = 
         })
     end
 end
