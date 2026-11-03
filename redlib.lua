@@ -54,7 +54,7 @@ end
 function r.action(id, action)
     r.safeSend(id, action, 'ACTION')
 
-    print('Waiting for action result..')
+    --print('Waiting for action result..')
     local _, results = rednet.receive('ACTIONRESULT')
     
     r.confirm(id)
