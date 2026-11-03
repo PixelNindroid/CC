@@ -57,13 +57,15 @@ function buttox.handleClick(p1, p2, p3)
     local y = p3
 
     for _, b in pairs(buttons) do
-        if b.onClick and (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
+        if (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
             buttox.draw(b, true)
 
             lastClicked.b = b
             lastClicked.mouseButton = mouseButton
 
-            b.onClick(b, mouseButton)
+            if b.onClick then
+                b.onClick(b, mouseButton)
+            end
             
             return b
         end
@@ -73,7 +75,9 @@ function buttox.handleUp()
     if lastClicked.b then
         buttox.draw(lastClicked.b)
 
-        lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
+        if lastClicked.b.onUp then
+            lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
+        end
     end
 end
 function buttox.run()
