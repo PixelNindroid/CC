@@ -130,7 +130,7 @@ end
 
 local function drawGrid(itemGrid)
     local startX = 22
-    local startY = 1
+    local startY = 2
 
     for slot in pairs(itemGrid) do
         local position = slot - 1
