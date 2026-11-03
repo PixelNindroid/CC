@@ -68,7 +68,11 @@ function buttox.remove(name)
     else
         buttons = {}
     end
-    
+end
+function buttox.removeGroup(group)
+    for _, b in pairs(getButtonsInGroup(group)) do
+        buttox.remove(b.name)
+    end
 end
 
 local mouseButtonMap = {
