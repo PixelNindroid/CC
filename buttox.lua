@@ -49,7 +49,7 @@ local mouseButtonMap = {
     'right',
     'middle'
 }
-local clicked = {}
+local lastClicked = {}
 function buttox.handleClick(p1, p2, p3)
     local mouseButton = mouseButtonMap[p1]
     local x = p2
@@ -57,16 +57,20 @@ function buttox.handleClick(p1, p2, p3)
 
     for _, b in pairs(buttons) do
         if b.onClick and (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
-            clicked.b = b
-            clicked.mouseButton = mouseButton
+            buttox.draw(b, true)
+
+            lastClicked.b = b
+            lastClicked.mouseButton = mouseButton
             
             return b
         end
     end    
 end
 function buttox.handleUp()
-    if clicked.b then
-        clicked.b.onClick(clicked.mouseButton)
+    if lastClicked.b then
+        buttox.draw(lastClicked.b, false)
+
+        lastClicked.b.onClick(lastClicked.mouseButton)
     end
 end
 function buttox.run()
