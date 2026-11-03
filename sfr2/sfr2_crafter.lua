@@ -112,7 +112,7 @@ end
 local function clearGridGUI()
     for y = 0, 3 do
         for x = 0, 3 do
-            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), (x == 3 or x == 3) and colors.gray or colors.lightGray)
+            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), (x == 3 or y == 3) and colors.gray or colors.lightGray)
         end
     end
 end
@@ -123,7 +123,7 @@ local function drawGrid(itemGrid)
         local position = slot - 1
         local x = gridStartX + (math.fmod(position, 3) * slotWidth)
         local y = gridStartY + (math.floor(position / 3) * slotHeight)
-        drawSlot(x, y, colors.lightGray)
+        drawSlot(x, y, colors.orange)
     end
 end
 
