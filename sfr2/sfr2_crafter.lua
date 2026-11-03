@@ -175,7 +175,7 @@ end
 
 
 buttox.define('refil', {
-    x       = 28,
+    x       = 25,
     y       = 13,
     buttonColor = colors.lightGray,
     onUp    = function()
@@ -184,6 +184,15 @@ buttox.define('refil', {
 })
 buttox.define('craft1', {
     text    = 'c1',
+    x       = 31,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        craftAndEject(1)
+    end
+})
+buttox.define('craft8', {
+    text    = 'c8',
     x       = 34,
     y       = 13,
     buttonColor = colors.lightGray,
