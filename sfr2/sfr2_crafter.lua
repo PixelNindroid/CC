@@ -92,7 +92,7 @@ moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(resul
 
 
 local gridStartX = 28
-local gridStartY = 7
+local gridStartY = 6
 local slotWidth = 3
 local slotHeight = 2
 
