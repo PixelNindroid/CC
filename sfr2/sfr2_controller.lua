@@ -81,6 +81,10 @@ local function getSlots(itemID, containerID)
     return slots
 end
 local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be slotted
+    if not itemMap[itemID] then
+        printError('Item not found in any container: ' .. itemID)
+        return
+    end
     local toMove = limit or registry.itemDetails[itemID].maxCount
     local fromContainer = peripheral.wrap(from)
 
@@ -110,6 +114,10 @@ end
     
 
 local function moveItemTo(itemID, to, toSlot, limit)
+    if not itemMap[itemID] then
+        printError('Item not found in any container: ' .. itemID)
+        return
+    end
     local toMove = limit or registry.itemDetails[itemID].maxCount
 
     print(itemID)
