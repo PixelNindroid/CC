@@ -99,24 +99,8 @@ local function drawSlot(x, y)
     n.write('\143\143\133', slotColor, bgColor)
 
 end
-
-local function drawSlot(x, y)
-    local slotColor = colors.gray
-    local bgColor = colors.black
-
-    for i = 0, 2 do
-        term.setCursorPos(x, y + i)
-        n.write('     ', slotColor, slotColor)
-        n.write('\149', slotColor, bgColor)
-    end
-
-    term.setCursorPos(x, y + 3)
-    n.write('\143\143\143\143\143\133', slotColor, bgColor)
-
-end
-
 local function drawGrid(itemGrid)
-    local startX = 20
+    local startX = 28
     local startY = 5
 
     for slot in pairs(itemGrid) do
@@ -128,18 +112,7 @@ local function drawGrid(itemGrid)
     end
 end
 
-local function drawGrid(itemGrid)
-    local startX = 22
-    local startY = 2
 
-    for slot in pairs(itemGrid) do
-        local position = slot - 1
-        local x = startX + (math.fmod(position, 3) * 6)
-        local y = startY + (math.floor(position / 3) * 4)
-        drawSlot(x, y)
-        read()
-    end
-end
 
 local resultName = 'Builder'
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
