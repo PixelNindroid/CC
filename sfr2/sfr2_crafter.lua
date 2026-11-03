@@ -105,7 +105,7 @@ local function drawGrid(itemGrid)
     local startY = 5
 
     for slot in pairs(itemGrid) do
-        local x = startX + (slot % 3 * 3)
+        local x = startX + (math.fmod(slot, 3) * 3)
         local y = startY + (math.floor(slot / 3) * 2)
         drawSlot(x, y)
     end
