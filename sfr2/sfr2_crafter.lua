@@ -36,6 +36,7 @@ local function drawSlot(gridPos, slotColor, text)
     buttox.define('slot_' .. gridPos, {
         x = x,
         y = y,
+        text = text,
         fancy = true
     })
 
