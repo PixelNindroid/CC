@@ -19,13 +19,13 @@ function buttox.draw(b, isSelected)
 end
 
 function buttox.define(name, opts)
-    local label = opts.label or name
+    local text = opts.text or name
     local b = {
         name        = name,
-        text        = label,
+        text        = text,
         x           = opts.x or 1,
         y           = opts.y or 1,
-        w           = string.len(label),
+        w           = string.len(text),
         h           = 1,
         textColor   = opts.textColor or colors.white,
         buttonColor = opts.buttonColor or colors.orange,
