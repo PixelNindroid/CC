@@ -22,30 +22,22 @@ local gridStartY = 7
 local slotWidth = 3
 local slotHeight = 2
 
-local function getSlotGuiPos(slot)
+local function getSlotDrawPos(slot)
     local x = gridStartX + (math.fmod(slot - 1, 3) * slotWidth)
     local y = gridStartY + (math.floor((slot - 1) / 3) * slotHeight)
 
     return x, y
 end
-local function drawSlot(gridPos, slotColor, text)
+local function drawEmptyGridSlot(gridPos, slotColor)
     local bgColor = colors.gray
-    local x, y = getSlotGuiPos(gridPos)
-    text = text and strings.ensure_width(text, 2) or '  '
+    local x, y = getSlotDrawPos(gridPos)
 
-    buttox.define('slot_' .. gridPos, {
-        x = x,
-        y = y,
-        text = text,
-        fancy = true
-    })
-
-    --[[term.setCursorPos(x, y)
-    n.write(text, colors.white, slotColor)
+    term.setCursorPos(x, y)
+    n.write('  ', nil, slotColor)
     n.write('\149', slotColor, bgColor)
 
     term.setCursorPos(x, y + 1)
-    n.write('\143\143\133', slotColor, bgColor)]]
+    n.write('\143\143\133', slotColor, bgColor)
 end
 local function drawEmptyGrid()
     term.setCursorPos(gridStartX - 1, gridStartY - 1)
@@ -57,7 +49,7 @@ local function drawEmptyGrid()
     end
 
     for slot = 1, 9 do
-        drawSlot(slot, colors.black)
+        drawEmptyGridSlot(slot, colors.black)
     end
 end
 
@@ -131,8 +123,15 @@ local function moveItemsToGrid(itemGrid)
     for gridPos, itemID in pairs(itemGrid) do
         local slot = getGridPosSlot(gridPos)
         r.action(controllerID, {'moveItemToCrafter', itemID, slot})
-        
-        drawSlot(gridPos, colors.orange, registry.itemDetails[itemID].displayName)
+
+        local x, y = getSlotDrawPos(gridPos)
+
+        buttox.define('slot_' .. gridPos, {
+            x = x,
+            y = y,
+            text = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
+            fancy = true
+        })
     end
 end
 
