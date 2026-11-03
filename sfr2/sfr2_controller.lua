@@ -90,6 +90,8 @@ local function getSlots(itemID, containerID)
     return slots
 end
 local function moveItemsFromSlotsTo(slots, from, to, toMove, toSlot)
+    local fromContainer = peripheral.wrap(from)
+
     for i = #slots, 1, -1 do
         local fromSlot = slots[i]
         local moved = fromContainer.pushItems(to, fromSlot, toMove, toSlot)
