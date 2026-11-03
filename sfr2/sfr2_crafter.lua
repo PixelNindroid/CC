@@ -2,6 +2,7 @@ local n = require('libs.ninlib')
 local r = require('libs.redlib')
 local completion = require('cc.completion')
 local pretty = require('cc.pretty')
+local strings = require('cc.strings')
 
 n.setNeonColors()
 
@@ -11,6 +12,49 @@ local controllerID = r.getHostID('SFR2_CONTROLLER')
 
 local registry = r.getVar(controllerID, 'registry')
 local itemMap = r.action(controllerID, 'remap')
+
+
+--GUI
+
+local gridStartX = 29
+local gridStartY = 7
+local slotWidth = 3
+local slotHeight = 2
+
+local function getSlotGuiPos(slot)
+    local x = gridStartX + (math.fmod(slot - 1, 3) * slotWidth)
+    local y = gridStartY + (math.floor((slot - 1) / 3) * slotHeight)
+
+    return x, y
+end
+local function drawSlot(slot, slotColor, text)
+    local bgColor = colors.gray
+    local x, y = getSlotGuiPos(slot)
+    text = text and strings.ensure_width(text, 2) or '  '
+
+    term.setCursorPos(x, y)
+    n.write(text, colors.white, slotColor)
+    n.write('\149', slotColor, bgColor)
+
+    term.setCursorPos(x, y + 1)
+    n.write('\143\143\133', slotColor, bgColor)
+end
+local function drawEmptyGrid()
+    term.setCursorPos(gridStartX - 1, gridStartY - 1)
+    n.write('\159' .. string.rep('\143', 3 * slotWidth), colors.black, colors.gray)
+
+    for i = 1, 3 * slotHeight do
+        term.setCursorPos(gridStartX - 1, gridStartY - 1 + i)
+        n.write('\149', colors.black, colors.gray)
+    end
+
+    for slot = 1, 9 do
+        drawSlot(slot, colors.black)
+    end
+end
+
+
+--CRAFTING
 
 local function getMostPlentifulItemForTagInput(tag)
     local itemID
@@ -79,69 +123,21 @@ local function moveItemsToGrid(itemGrid)
     for gridPos, itemID in pairs(itemGrid) do
         local slot = getGridPosSlot(gridPos)
         r.action(controllerID, {'moveItemToCrafter', itemID, slot})
+        
+        drawSlot(slot, colors.orange, registry.itemDetails[itemID].displayName)
     end
 end
 
 
---[[local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+
+local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 print('Result: ' .. result)
 
-moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))]]
-
-
-
-local gridStartX = 29
-local gridStartY = 7
-local slotWidth = 3
-local slotHeight = 2
-
-local function drawSlot(x, y, slotColor)
-    local bgColor = colors.gray
-
-    term.setCursorPos(x, y)
-    n.write('  ', slotColor, slotColor)
-    n.write('\149', slotColor, bgColor)
-
-    term.setCursorPos(x, y + 1)
-    n.write('\143\143\133', slotColor, bgColor)
-
-end
-
-
-local function drawEmptyGrid()
-    term.setCursorPos(gridStartX - 1, gridStartY - 1)
-    n.write('\159' .. string.rep('\143', 3 * slotWidth), colors.black, colors.gray)
-
-    for i = 1, 3 * slotHeight do
-        term.setCursorPos(gridStartX - 1, gridStartY - 1 + i)
-        n.write('\149', colors.black, colors.gray)
-    end
-
-    
-
-    for y = 0, 2 do
-        for x = 0, 2 do
-            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), colors.black)
-        end
-    end
-end
-local function drawGrid(itemGrid)
-    
-
-    for slot in pairs(itemGrid) do
-        local position = slot - 1
-        local x = gridStartX + (math.fmod(position, 3) * slotWidth)
-        local y = gridStartY + (math.floor(position / 3) * slotHeight)
-        drawSlot(x, y, colors.orange)
-    end
-end
-
-
-
-local resultName = 'Builder'
-local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
+moveItemsToGrid(itemGrid)
+
+
 
 drawEmptyGrid()
 --drawGrid(itemGrid)
