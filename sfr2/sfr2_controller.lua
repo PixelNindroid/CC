@@ -173,6 +173,7 @@ end
 
 remap()
 sort(crafterContainerID)
+sort(tempStorageID)
 remap()
 
 local function listen(id, msg, ptc)
