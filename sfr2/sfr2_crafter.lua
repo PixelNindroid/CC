@@ -144,17 +144,33 @@ local function moveItemsToGrid(itemGrid)
         })
     end
 end
-local function craft(limit)
+
+local function ejectCrafterSlot(crafterSlot)
+    turtle.select(crafterSlot)
+    turtle.drop(crafterSlot)
+end
+
+local currentItemGrid
+local function craftAndEject(limit)
     turtle.craft(limit)
+
+    for i = 1, 3 do
+        if turtle.getItemDetail(i).name ~= currentItemGrid[i] then
+            ejectCrafterSlot(i)
+            return
+        end
+    end
+    ejectCrafterSlot(4)
 end
 
 local function search()
     term.setCursorPos(1, 2)
     local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
     local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
-
-    local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
+    local recipe = registry.craftingRecipes[getBestCraftingRecipe(result)]
+    local itemGrid = getItemGrid(recipe.grid)
     moveItemsToGrid(itemGrid)
+    currentItemGrid = itemGrid
 end
 
 buttox.define('craft1', {
@@ -162,7 +178,7 @@ buttox.define('craft1', {
     x       = 25,
     y       = 13,
     onUp    = function(b, mouseButton)
-        craft(1)
+        craftAndEject(1)
     end
 })
 buttox.define('craftAll', {
@@ -170,7 +186,7 @@ buttox.define('craftAll', {
     x       = 30,
     y       = 13,
     onUp    = function(b, mouseButton)
-        craft()
+        craftAndEject()
     end
 })
 
