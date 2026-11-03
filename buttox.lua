@@ -13,6 +13,7 @@ function buttox.draw(b)
     end
 
     term.setCursorPos(b.x, b.y)
+    n.write(b.text, b.textColor, b.buttonColor)
 end
 
 function buttox.define(name, opts)
@@ -26,7 +27,7 @@ function buttox.define(name, opts)
         h           = 1,
         textColor   = opts.textColor or colors.white,
         buttonColor = opts.buttonColor or colors.orange,
-        clickColor  = opts.clickColor or colors.yellow
+        selectColor = opts.selectColor or colors.yellow
     }
     if opts.fancy then
         b.fancy = true
