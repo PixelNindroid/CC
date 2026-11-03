@@ -85,7 +85,7 @@ local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be 
     local fromContainer = peripheral.wrap(from)
 
     if fromContainer.items then --unslotted, use tempStorage
-        local moved = fromContainer.pushItems(tempStorageID, itemID, toMove)
+        local moved = fromContainer.pushItem(tempStorageID, itemID, toMove)
         return moveItemFromToSlot(itemID, tempStorageID, to, toSlot, moved)
     end
 
