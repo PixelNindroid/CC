@@ -85,10 +85,11 @@ local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be 
     local fromContainer = peripheral.wrap(from)
 
     if fromContainer.items then --unslotted, use tempStorage
-        fromContainer.pushItems()
+        local moved = fromContainer.pushItems(tempStorageID, itemID, toMove)
+        return moveItemFromToSlot(itemID, tempStorageID, to, toSlot, moved)
     end
 
-    if fromContainer.list then
+    if fromContainer.list then --slotted
         local slots = getSlots(itemID, from)
 
         for i = #slots, 1, -1 do
@@ -104,12 +105,6 @@ local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be 
             toMove = toMove - moved
             if toMove <= 0 then break end
         end
-    elseif fromContainer.items then
-        local toContainer = peripheral.wrap(to)
-        if toContainer.list then
-            
-        end
-        local moved = fromContainer.pushItems()
     end
 end
     
