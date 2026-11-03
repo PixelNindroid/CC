@@ -82,6 +82,30 @@ local function getSlots(itemID, containerID)
 
     return slots
 end
+local function moveItemsFromSlotsTo(slots, from, to, toMove, toSlot)
+    for i = #slots, 1, -1 do
+        local fromSlot = slots[i]
+        local moved = fromContainer.pushItems(to, fromSlot, toMove, toSlot)
+
+        if moved > 0 then
+            print(('Moved %d items from %s to %s'):format(moved, from, to))
+        else
+            printError(('Failed to move slot %s from %s to %s'):format(fromSlot, from, to))
+        end
+
+        toMove = toMove - moved
+        if toMove <= 0 then break end
+    end
+end
+local function moveItemsFromTo(itemID, from, to, limit)
+    local fromContainer = peripheral.wrap(from)
+    if fromContainer.items then 
+        fromContainer.pushItem(to, itemID, limit)
+    elseif fromContainer.list then
+        local slots = getSlots(itemID, from)
+        moveItemsFromSlotsTo(slots, from, to, limit)
+    end
+end
 local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be slotted
     if not itemMap[itemID] then
         printError('Item not found in any container: ' .. itemID)
@@ -97,24 +121,9 @@ local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be 
 
     if fromContainer.list then --slotted
         local slots = getSlots(itemID, from)
-
-        for i = #slots, 1, -1 do
-            local fromSlot = slots[i]
-            local moved = fromContainer.pushItems(to, fromSlot, limit, toSlot)
-
-            if moved > 0 then
-                print(('Moved %d items from %s to %s'):format(moved, from, to))
-            else
-                printError(('Failed to move slot %s from %s to %s'):format(fromSlot, from, to))
-            end
-
-            toMove = toMove - moved
-            if toMove <= 0 then break end
-        end
+        moveItemsFromSlotsTo(slots, from, to, toMove, toSlot)
     end
-end
-    
-
+end  
 local function moveItemTo(itemID, to, toSlot, limit)
     if not itemMap[itemID] then
         printError('Item not found in any container: ' .. itemID)
@@ -132,6 +141,16 @@ local function moveItemTo(itemID, to, toSlot, limit)
             end
         end
     end
+end
+
+local function sort(containerID)
+    local container = peripheral.wrap(containerID)
+    if not container then
+        printError('Container not found: ' .. containerID)
+        return
+    end
+
+    
 end
 
 remap()
