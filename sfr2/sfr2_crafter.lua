@@ -193,6 +193,8 @@ buttox.define('craftAll', {
 
 drawEmptyGrid()
 
+search()
+
 
 
 
