@@ -61,5 +61,13 @@ function buttox.handleClick(p1, p2, p3)
         end
     end
 end
+function buttox.run()
+    while true do
+        local event, p1, p2, p3 = os.pullEvent()
+        if event == 'mouse_click' then
+            buttox.handleClick(p1, p2, p3)
+        end
+    end
+end
 
 return buttox
