@@ -133,4 +133,5 @@ local resultName = 'Builder'
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
 
+clearGridGUI()
 drawGrid(itemGrid)
