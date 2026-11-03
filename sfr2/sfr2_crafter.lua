@@ -131,8 +131,15 @@ local function moveItemsToGrid(itemGrid)
             y = y,
             text = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
             fancy = true,
-            data = {itemID = itemID, slot = crafterSlot},
-            onClick = 
+            data = {itemID = itemID, slot = slot},
+            onClick = function ()
+                local slotButtons = buttox.getButtonsInGroup('slotGroup')
+                for _, b in pairs(slotButtons) do
+                    if b.data.itemID == itemID and b.data.slot ~= slot then
+                        buttox.draw(b, true)
+                    end
+                end
+            end
         })
     end
 end
