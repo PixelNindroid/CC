@@ -129,6 +129,14 @@ local function moveItemsToGrid(itemGrid)
     end
 end
 
+buttox.define('test', {
+    x = 10,
+    y = 5,
+    onClick = function(mouseButton)
+        print('Button clicked: ' .. mouseButton.name)
+    end
+})
+
 drawEmptyGrid()
 
 local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
