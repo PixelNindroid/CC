@@ -137,4 +137,4 @@ local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames,
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
 
 drawEmptyGrid()
-drawGrid(itemGrid)
+--drawGrid(itemGrid)
