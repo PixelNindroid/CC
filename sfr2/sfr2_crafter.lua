@@ -143,7 +143,7 @@ buttox.define('test', {
         print('Button clicked: ' .. mouseButton)
     end
 })
-buttox.run()
+
 
 drawEmptyGrid()
 
@@ -155,6 +155,6 @@ local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(resu
 moveItemsToGrid(itemGrid)
 
 
-
+buttox.run()
 
 
