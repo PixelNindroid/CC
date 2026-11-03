@@ -110,7 +110,7 @@ local function drawSlot(x, y)
         n.write('\149', slotColor, bgColor)
     end
 
-    term.setCursorPos(x, y + 1)
+    term.setCursorPos(x, y + 3)
     n.write('\143\143\143\143\133', slotColor, bgColor)
 
 end
