@@ -175,7 +175,7 @@ end
 
 buttox.define('craft1', {
     text    = 'C1',
-    x       = 25,
+    x       = 30,
     y       = 13,
     onUp    = function(b, mouseButton)
         craftAndEject(1)
@@ -183,7 +183,7 @@ buttox.define('craft1', {
 })
 buttox.define('craftAll', {
     text    = 'All',
-    x       = 30,
+    x       = 35,
     y       = 13,
     onUp    = function(b, mouseButton)
         craftAndEject()
