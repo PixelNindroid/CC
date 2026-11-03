@@ -10,6 +10,7 @@ local crafter = peripheral.find('turtle')
 local crafterContainerID = peripheral.getName(crafter)
 
 local tempStorage = peripheral.find('minecraft:trapped_chest')
+local tempStorageID = peripheral.getName(tempStorage)
 
 
 if not peripherals.wirelessModems then
@@ -79,13 +80,12 @@ local function getSlots(itemID, containerID)
 
     return slots
 end
-local function moveItemFromTo(itemID, from, to, toSlot, limit)
+local function moveItemFromToSlot(itemID, from, to, toSlot, limit) --to must be slotted
     local toMove = limit or registry.itemDetails[itemID].maxCount
     local fromContainer = peripheral.wrap(from)
 
-    local toContainer = peripheral.wrap(to)
-    if toContainer.list then
-        
+    if fromContainer.items then --unslotted, use tempStorage
+        fromContainer.pushItems()
     end
 
     if fromContainer.list then
@@ -94,7 +94,6 @@ local function moveItemFromTo(itemID, from, to, toSlot, limit)
         for i = #slots, 1, -1 do
             local fromSlot = slots[i]
             local moved = fromContainer.pushItems(to, fromSlot, limit, toSlot)
-            local moved = toContainer.pullItems()
 
             if moved > 0 then
                 print(('Moved %d items from %s to %s'):format(moved, from, to))
@@ -121,7 +120,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
     print(itemID)
     for from in pairs(itemMap[itemID].containerCount) do
         if from ~= to then
-            local moved = moveItemFromTo(itemID, from, to, toSlot, toMove)
+            local moved = moveItemFromToSlot(itemID, from, to, toSlot, toMove)
             if moved and (moved > 0) then
                 toMove = toMove - moved
                 if toMove <= 0 then break end
