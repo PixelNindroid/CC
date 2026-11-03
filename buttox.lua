@@ -4,17 +4,18 @@ local buttox = {}
 local buttons = {}
 
 function buttox.draw(b, isSelected)
+    local _buttonColor = isSelected and b.selectColor or b.buttonColor
 
     if b.fancy then
         term.setCursorPos(b.x + b.w, b.y)
-        n.write('\149', b.buttonColor, b.bgColor)
+        n.write('\149', _buttonColor, b.bgColor)
 
         term.setCursorPos(b.x, b.y + 1)
-        n.write(string.rep('\143', b.w) .. '\133', isSelected and b.selectColor or b.buttonColor, b.bgColor)
+        n.write(string.rep('\143', b.w) .. '\133', _buttonColor, b.bgColor)
     end
 
     term.setCursorPos(b.x, b.y)
-    n.write(b.text, b.textColor, isSelected and b.selectColor or b.buttonColor)
+    n.write(b.text, b.textColor, _buttonColor)
 end
 
 function buttox.define(name, opts)
@@ -28,7 +29,8 @@ function buttox.define(name, opts)
         h           = 1,
         textColor   = opts.textColor or colors.white,
         buttonColor = opts.buttonColor or colors.orange,
-        selectColor = opts.selectColor or colors.yellow
+        selectColor = opts.selectColor or colors.yellow,
+        onClick     = opts.onClick  
     }
     if opts.fancy then
         b.fancy = true
@@ -37,8 +39,27 @@ function buttox.define(name, opts)
         b.h = b.h + 1
     end
 
+    buttons[name] = b
     buttox.draw(b)
     return b
+end
+
+local mouseButtonMap = {
+    'left',
+    'right',
+    'middle'
+}
+function buttox.handleClick(p1, p2, p3)
+    local mouseButton = mouseButtonMap[p1]
+    local x = p2
+    local y = p3
+
+    for _, b in pairs(buttons) do
+        if b.onClick and (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
+            b.onClick(mouseButton, b)
+            return b
+        end
+    end
 end
 
 return buttox
