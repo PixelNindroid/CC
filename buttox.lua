@@ -30,7 +30,8 @@ function buttox.define(name, opts)
         textColor   = opts.textColor or colors.white,
         buttonColor = opts.buttonColor or colors.orange,
         selectColor = opts.selectColor or colors.yellow,
-        onClick     = opts.onClick  
+        onClick     = opts.onClick,  
+        onUp        = opts.onUp
     }
     if opts.fancy then
         b.fancy = true
@@ -61,6 +62,8 @@ function buttox.handleClick(p1, p2, p3)
 
             lastClicked.b = b
             lastClicked.mouseButton = mouseButton
+
+            b.onClick(b, mouseButton)
             
             return b
         end
@@ -70,7 +73,7 @@ function buttox.handleUp()
     if lastClicked.b then
         buttox.draw(lastClicked.b)
 
-        lastClicked.b.onClick(lastClicked.mouseButton)
+        lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
     end
 end
 function buttox.run()
