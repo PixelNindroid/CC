@@ -226,6 +226,27 @@ function n.writeStriped(text, color)
     n.write(text, color, n.getStripedColor(n.getCursorY()))
 end
 
+function n.setNeonColors()
+    local neonColors = {
+        orange = 0xff5a12,
+        white = 0xefeefd,
+        black = 0x262626,
+        gray = 0x2a2a2a,
+        lightGray = 0xb3afbb,
+        red = 0xe11c38,
+        green = 0x10e350,
+        blue = 0x3070ff,
+        purple = 0xc46afc,
+        cyan = 0x12dee5,
+        brown = 0xb24a21,
+        yellow = 0xdbdc40
+    }
+    for name, hex in pairs(neonColors) do
+        term.setPaletteColor(colors[name], hex)
+        --n.write(' ', nil, colors[name])
+    end
+end
+
 
 --SETTINGS
 
