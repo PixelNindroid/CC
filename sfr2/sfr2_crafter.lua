@@ -27,9 +27,9 @@ local function getSlotGuiPos(slot)
 
     return x, y
 end
-local function drawSlot(slot, slotColor, text)
+local function drawSlot(gridPos, slotColor, text)
     local bgColor = colors.gray
-    local x, y = getSlotGuiPos(slot)
+    local x, y = getSlotGuiPos(gridPos)
     text = text and strings.ensure_width(text, 2) or '  '
 
     term.setCursorPos(x, y)
@@ -124,7 +124,7 @@ local function moveItemsToGrid(itemGrid)
         local slot = getGridPosSlot(gridPos)
         r.action(controllerID, {'moveItemToCrafter', itemID, slot})
         
-        drawSlot(slot, colors.orange, registry.itemDetails[itemID].displayName)
+        drawSlot(gridPos, colors.orange, registry.itemDetails[itemID].displayName)
     end
 end
 
