@@ -100,6 +100,21 @@ local function drawSlot(x, y)
 
 end
 
+local function drawSlot(x, y)
+    local slotColor = colors.gray
+    local bgColor = colors.black
+
+    for i = 0, 2 do
+        term.setCursorPos(x, y + i)
+        n.write('    ', slotColor, slotColor)
+        n.write('\149', slotColor, bgColor)
+    end
+
+    term.setCursorPos(x, y + 1)
+    n.write('\143\143\143\143\133', slotColor, bgColor)
+
+end
+
 local function drawGrid(itemGrid)
     local startX = 20
     local startY = 5
