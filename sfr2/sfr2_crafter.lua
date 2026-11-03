@@ -108,7 +108,6 @@ local function drawGrid(itemGrid)
         local x = startX + (math.fmod(position, 3) * 3)
         local y = startY + (math.floor(position / 3) * 2)
         drawSlot(x, y)
-        read()
     end
 end
 
@@ -117,6 +116,5 @@ end
 local resultName = 'Builder'
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
-pretty.pretty_print(itemGrid)
-read()
+
 drawGrid(itemGrid)
