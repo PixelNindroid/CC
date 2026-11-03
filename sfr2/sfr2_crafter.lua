@@ -108,6 +108,7 @@ local function drawGrid(itemGrid)
         local x = startX + (math.fmod(slot, 3) * 3)
         local y = startY + (math.floor(slot / 3) * 2)
         drawSlot(x, y)
+        read()
     end
 
 end
