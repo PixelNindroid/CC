@@ -99,4 +99,19 @@ local function drawSlot(x, y)
     n.write('\143\143\133', slotColor, bgColor)
 
 end
-drawSlot(10, 10)
+
+local function drawGrid(itemGrid)
+    local startX = 20
+    local startY = 5
+
+    for slot in pairs(itemGrid) do
+        local x = startX + (slot % 3 * 3)
+        local y = startY + (slot // 3 * 2)
+        drawSlot()
+    end
+
+end
+
+local resultName = 'Builder'
+local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
+drawGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))
