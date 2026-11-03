@@ -33,12 +33,18 @@ local function drawSlot(gridPos, slotColor, text)
     local x, y = getSlotGuiPos(gridPos)
     text = text and strings.ensure_width(text, 2) or '  '
 
-    term.setCursorPos(x, y)
+    buttox.define('slot_' .. gridPos, {
+        x = x,
+        y = y,
+        fancy = true
+    })
+
+    --[[term.setCursorPos(x, y)
     n.write(text, colors.white, slotColor)
     n.write('\149', slotColor, bgColor)
 
     term.setCursorPos(x, y + 1)
-    n.write('\143\143\133', slotColor, bgColor)
+    n.write('\143\143\133', slotColor, bgColor)]]
 end
 local function drawEmptyGrid()
     term.setCursorPos(gridStartX - 1, gridStartY - 1)
