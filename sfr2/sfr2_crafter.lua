@@ -88,11 +88,15 @@ print('Result: ' .. result)
 moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))]]
 
 local function drawSlot(x, y)
+    local slotColor = colors.gray
+    local bgColor = colors.black
+
     term.setCursorPos(x, y)
-    n.write('┌───┐')
+    n.write('  ', slotColor, slotColor)
+    n.write('\149', slotColor, bgColor)
+
     term.setCursorPos(x, y + 1)
-    n.write('│   │')
-    term.setCursorPos(x, y + 2)
-    n.write('└───┘')
+    n.write('\143\143\133', slotColor, bgColor)
+
 end
 drawSlot(1, 1)
