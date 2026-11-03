@@ -3,17 +3,18 @@ local n = require('libs.ninlib')
 local buttox = {}
 local buttons = {}
 
-function buttox.draw(b)
+function buttox.draw(b, isSelected)
+
     if b.fancy then
         term.setCursorPos(b.x + b.w, b.y)
         n.write('\149', b.buttonColor, b.bgColor)
 
         term.setCursorPos(b.x, b.y + 1)
-        n.write(string.rep('\143', b.w) .. '\133', buttons.buttonColor, b.bgColor)
+        n.write(string.rep('\143', b.w) .. '\133', isSelected and b.selectColor or b.buttonColor, b.bgColor)
     end
 
     term.setCursorPos(b.x, b.y)
-    n.write(b.text, b.textColor, b.buttonColor)
+    n.write(b.text, b.textColor, isSelected and b.selectColor or b.buttonColor)
 end
 
 function buttox.define(name, opts)
