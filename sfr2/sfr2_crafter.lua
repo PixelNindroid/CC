@@ -97,7 +97,7 @@ local slotWidth = 3
 local slotHeight = 2
 
 local function drawSlot(x, y, slotColor)
-    local bgColor = colors.black
+    local bgColor = colors.orange
 
     term.setCursorPos(x, y)
     n.write('  ', slotColor, slotColor)
@@ -109,10 +109,13 @@ local function drawSlot(x, y, slotColor)
 end
 
 
-local function clearGridGUI()
-    for y = 0, 3 do
-        for x = 0, 3 do
-            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), (x == 3 or y == 3) and colors.gray or colors.lightGray)
+local function drawEmptyGrid()
+    term.setCursorPos(gridStartX - 1, gridStartY - 1)
+    n.write('\159' .. string.rep('\143', 3 * slotWidth))
+
+    for y = 0, 2 do
+        for x = 0, 2 do
+            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), colors.black)
         end
     end
 end
@@ -133,5 +136,5 @@ local resultName = 'Builder'
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
 
-clearGridGUI()
+drawEmptyGrid()
 drawGrid(itemGrid)
