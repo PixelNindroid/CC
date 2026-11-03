@@ -126,7 +126,19 @@ local function drawGrid(itemGrid)
         drawSlot(x, y)
         read()
     end
+end
 
+local function drawGrid(itemGrid)
+    local startX = 20
+    local startY = 5
+
+    for slot in pairs(itemGrid) do
+        local position = slot - 1
+        local x = startX + (math.fmod(position, 3) * 6)
+        local y = startY + (math.floor(position / 3) * 4)
+        drawSlot(x, y)
+        read()
+    end
 end
 
 local resultName = 'Builder'
