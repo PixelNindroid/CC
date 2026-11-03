@@ -68,7 +68,7 @@ function buttox.handleClick(p1, p2, p3)
 end
 function buttox.handleUp()
     if lastClicked.b then
-        buttox.draw(lastClicked.b, false)
+        buttox.draw(lastClicked.b)
 
         lastClicked.b.onClick(lastClicked.mouseButton)
     end
