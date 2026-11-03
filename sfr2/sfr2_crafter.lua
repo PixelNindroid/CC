@@ -91,8 +91,8 @@ moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(resul
 
 
 
-local gridStartX = 28
-local gridStartY = 6
+local gridStartX = 29
+local gridStartY = 7
 local slotWidth = 3
 local slotHeight = 2
 
@@ -112,6 +112,13 @@ end
 local function drawEmptyGrid()
     term.setCursorPos(gridStartX - 1, gridStartY - 1)
     n.write('\159' .. string.rep('\143', 3 * slotWidth), colors.black, colors.orange)
+
+    for i = 1, 3 * slotHeight do
+        term.setCursorPos(gridStartX - 1, gridStartY - 1 + i)
+        n.write('\149', colors.black, colors.orange)
+    end
+
+    
 
     for y = 0, 2 do
         for x = 0, 2 do
