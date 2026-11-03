@@ -132,6 +132,7 @@ end
 buttox.define('test', {
     x = 10,
     y = 5,
+    fancy = true,
     onClick = function(mouseButton)
         print('Button clicked: ' .. mouseButton)
     end
