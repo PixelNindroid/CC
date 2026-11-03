@@ -95,3 +95,4 @@ local function drawSlot(x, y)
     term.setCursorPos(x, y + 2)
     n.write('└───┘')
 end
+drawSlot(1, 1)
