@@ -52,7 +52,7 @@ function buttox.getButton(name)
 end
 function buttox.getButtonsInGroup(group)
     local groupButtons = {}
-    
+
     for _, b in pairs(buttons) do
         if b.group == group then
             table.insert(groupButtons, b)
@@ -60,6 +60,15 @@ function buttox.getButtonsInGroup(group)
     end
 
     return groupButtons
+end
+
+function buttox.remove(name)
+    if name then
+        buttons[name] = nil
+    else
+        buttons = {}
+    end
+    
 end
 
 local mouseButtonMap = {
