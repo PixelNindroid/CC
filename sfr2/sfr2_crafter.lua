@@ -128,7 +128,7 @@ local function moveItemsToGrid(itemGrid)
     end
 end
 
-
+drawEmptyGrid()
 
 local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
@@ -139,5 +139,5 @@ moveItemsToGrid(itemGrid)
 
 
 
-drawEmptyGrid()
---drawGrid(itemGrid)
+
+
