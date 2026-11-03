@@ -112,7 +112,7 @@ end
 local function clearGridGUI()
     for y = 0, 3 do
         for x = 0, 3 do
-            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), colors.gray)
+            drawSlot(gridStartX + (x * slotWidth), gridStartY + (y * slotHeight), (x == 3 or x == 3) and colors.gray or colors.lightGray)
         end
     end
 end
