@@ -31,7 +31,9 @@ function buttox.define(name, opts)
         buttonColor = opts.buttonColor or colors.orange,
         selectColor = opts.selectColor or colors.yellow,
         onClick     = opts.onClick,  
-        onUp        = opts.onUp
+        onUp        = opts.onUp,
+        group       = opts.group,
+        data        = opts.data or {}
     }
     if opts.fancy then
         b.fancy = true
@@ -43,6 +45,21 @@ function buttox.define(name, opts)
     buttons[name] = b
     buttox.draw(b)
     return b
+end
+
+function buttox.getButton(name)
+    return buttons[name]
+end
+function buttox.getButtonsInGroup(group)
+    local groupButtons = {}
+    
+    for _, b in pairs(buttons) do
+        if b.group == group then
+            table.insert(groupButtons, b)
+        end
+    end
+
+    return groupButtons
 end
 
 local mouseButtonMap = {
