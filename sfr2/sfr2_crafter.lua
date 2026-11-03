@@ -81,9 +81,17 @@ local function moveItemsToGrid(itemGrid)
 end
 
 
-local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+--[[local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
 print('Result: ' .. result)
 
-moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))
+moveItemsToGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))]]
 
+local function drawSlot(x, y)
+    term.setCursorPos(x, y)
+    n.write('┌───┐')
+    term.setCursorPos(x, y + 1)
+    n.write('│   │')
+    term.setCursorPos(x, y + 2)
+    n.write('└───┘')
+end
