@@ -137,6 +137,7 @@ local function moveItemsToGrid(itemGrid)
                 for _, b in pairs(slotButtons) do
                     if b.data.itemID == itemID and b.data.slot ~= slot then
                         buttox.draw(b, true)
+                        print('eeeeeeee')
                     end
                 end
             end
