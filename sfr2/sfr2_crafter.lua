@@ -132,7 +132,7 @@ drawEmptyGrid()
 
 local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
-print('Result: ' .. result)
+--print('Result: ' .. result)
 
 local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
 moveItemsToGrid(itemGrid)
