@@ -115,4 +115,7 @@ end
 
 local resultName = 'Builder'
 local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
-drawGrid(getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid))
+local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
+pretty.pretty_print(itemGrid)
+read()
+drawGrid(itemGrid)
