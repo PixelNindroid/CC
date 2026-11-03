@@ -7,11 +7,11 @@ function buttox.draw(b, isSelected)
     local _buttonColor = isSelected and b.selectColor or b.buttonColor
 
     if b.fancy then
-        term.setCursorPos(b.x + b.w, b.y)
+        term.setCursorPos(b.x + b.w - 1, b.y)
         n.write('\149', _buttonColor, b.bgColor)
 
         term.setCursorPos(b.x, b.y + 1)
-        n.write(string.rep('\143', b.w) .. '\133', _buttonColor, b.bgColor)
+        n.write(string.rep('\143', b.w - 1) .. '\133', _buttonColor, b.bgColor)
     end
 
     term.setCursorPos(b.x, b.y)
