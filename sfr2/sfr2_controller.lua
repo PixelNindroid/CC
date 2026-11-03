@@ -4,10 +4,13 @@ local r = require('libs.redlib')
 local registry = require('libs.registry')
 local pretty = require('cc.pretty')
 
+local peripherals = n.mapPeripherals()
+
 local crafter = peripheral.find('turtle')
 local crafterContainerID = peripheral.getName(crafter)
 
-local peripherals = n.mapPeripherals()
+local tempStorage = peripheral.find('minecraft:trapped_chest')
+
 
 if not peripherals.wirelessModems then
     printError('Wireless modem not found')
@@ -76,25 +79,41 @@ local function getSlots(itemID, containerID)
 
     return slots
 end
-local function moveItem(from, to, toSlot, limit)
+local function moveItemFromTo(itemID, from, to, toSlot, limit)
     local toMove = limit or registry.itemDetails[itemID].maxCount
     local fromContainer = peripheral.wrap(from)
-    local slots = getSlots(itemID, from)
 
-    for i = #slots, 1, -1 do
-        local fromSlot = slots[i]
-        local moved = fromContainer.pushItems(to, fromSlot, limit, toSlot)
+    local toContainer = peripheral.wrap(to)
+    if toContainer.list then
+        
+    end
 
-        if moved > 0 then
-            print(('Moved %d items from %s to %s'):format(moved, from, to))
-        else
-            printError(('Failed to move slot %s from %s to %s'):format(fromSlot, from, to))
+    if fromContainer.list then
+        local slots = getSlots(itemID, from)
+
+        for i = #slots, 1, -1 do
+            local fromSlot = slots[i]
+            local moved = fromContainer.pushItems(to, fromSlot, limit, toSlot)
+            local moved = toContainer.pullItems()
+
+            if moved > 0 then
+                print(('Moved %d items from %s to %s'):format(moved, from, to))
+            else
+                printError(('Failed to move slot %s from %s to %s'):format(fromSlot, from, to))
+            end
+
+            toMove = toMove - moved
+            if toMove <= 0 then break end
         end
-
-        toMove = toMove - moved
-        if toMove <= 0 then break end
+    elseif fromContainer.items then
+        local toContainer = peripheral.wrap(to)
+        if toContainer.list then
+            
+        end
+        local moved = fromContainer.pushItems()
     end
 end
+    
 
 local function moveItemTo(itemID, to, toSlot, limit)
     local toMove = limit or registry.itemDetails[itemID].maxCount
@@ -102,7 +121,7 @@ local function moveItemTo(itemID, to, toSlot, limit)
     print(itemID)
     for from in pairs(itemMap[itemID].containerCount) do
         if from ~= to then
-            local moved = moveItem(from, to, toSlot, toMove)
+            local moved = moveItemFromTo(itemID, from, to, toSlot, toMove)
             if moved and (moved > 0) then
                 toMove = toMove - moved
                 if toMove <= 0 then break end
