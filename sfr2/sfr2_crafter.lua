@@ -155,7 +155,8 @@ local function craftAndEject(limit)
     turtle.craft(limit)
 
     for i = 1, 3 do
-        if turtle.getItemDetail(i).name ~= currentItemGrid[i] then
+        local itemDetail = turtle.getItemDetail(i)
+        if not itemDetail or turtle.getItemDetail(i).name ~= currentItemGrid[i] then
             ejectCrafterSlot(i)
             return
         end
