@@ -138,7 +138,6 @@ local function moveItemsToGrid(itemGrid)
                 for _, b in pairs(slotButtons) do
                     if b.data.itemID == itemID and b.data.slot ~= slot then
                         buttox.draw(b, true)
-                        --print('eeeeeeee')
                     end
                 end
             end
@@ -146,11 +145,19 @@ local function moveItemsToGrid(itemGrid)
     end
 end
 
+local function search()
+    term.setCursorPos(1, 2)
+    local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+    local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
+
+    local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
+    moveItemsToGrid(itemGrid)
+end
+
 buttox.define('test', {
-    x = 10,
-    y = 5,
-    fancy = true,
-    onClick = function(b, mouseButton)
+    x = 20,
+    y = 13,
+    onUp = function(b, mouseButton)
         print('Button clicked: ' .. mouseButton)
     end
 })
@@ -158,14 +165,15 @@ buttox.define('test', {
 
 drawEmptyGrid()
 
-local resultName = 'Builder' --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
-local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
---print('Result: ' .. result)
-
-local itemGrid = getItemGrid(registry.craftingRecipes[getBestCraftingRecipe(result)].grid)
-moveItemsToGrid(itemGrid)
 
 
-buttox.run()
 
+while true do
+    local event, p1, p2, p3 = os.pullEvent()
 
+    if event == 'mouse_click' then
+        buttox.handleClick(p1, p2, p3)
+    elseif event == 'mouse_up' then
+        buttox.handleUp()
+    end
+end
