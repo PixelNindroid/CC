@@ -173,19 +173,30 @@ local function search()
     currentItemGrid = itemGrid
 end
 
-buttox.define('craft1', {
-    text    = 'C1',
-    x       = 30,
+
+buttox.define('refil', {
+    x       = 28,
     y       = 13,
-    onUp    = function(b, mouseButton)
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        moveItemsToGrid(currentItemGrid)
+    end
+})
+buttox.define('craft1', {
+    text    = 'c1',
+    x       = 34,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
         craftAndEject(1)
     end
 })
 buttox.define('craftAll', {
     text    = 'All',
-    x       = 35,
+    x       = 37,
     y       = 13,
-    onUp    = function(b, mouseButton)
+    buttonColor = colors.lightGray,
+    onUp    = function()
         craftAndEject()
     end
 })
