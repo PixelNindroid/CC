@@ -136,6 +136,7 @@ buttox.define('test', {
         print('Button clicked: ' .. mouseButton.name)
     end
 })
+buttox.run()
 
 drawEmptyGrid()
 
