@@ -111,7 +111,7 @@ end
 
 local function drawEmptyGrid()
     term.setCursorPos(gridStartX - 1, gridStartY - 1)
-    n.write('\159' .. string.rep('\143', 3 * slotWidth))
+    n.write('\159' .. string.rep('\143', 3 * slotWidth), colors.black, colors.orange)
 
     for y = 0, 2 do
         for x = 0, 2 do
