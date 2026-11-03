@@ -17,6 +17,11 @@ function buttox.draw(b, isSelected)
     term.setCursorPos(b.x, b.y)
     n.write(b.text, b.textColor, _buttonColor)
 end
+function buttox.drawAll()
+    for _, b in pairs(buttons) do
+        buttox.draw(b)
+    end
+end
 
 function buttox.define(name, opts)
     local text = opts.text or name
@@ -74,6 +79,8 @@ function buttox.removeGroup(group)
         buttox.remove(b.name)
     end
 end
+
+
 
 local mouseButtonMap = {
     'left',
