@@ -28,7 +28,7 @@ n.printRight('Done', colors.green)
 
 --MAP
 
-local function getContainerItemList(container)
+local function getContainerItemData(container)
     if container.list then
         return container.list()
     elseif container.items then
@@ -37,6 +37,13 @@ local function getContainerItemList(container)
         printError('Container ' .. containerID .. ' does not have a list or items method')
         return {}
     end
+end
+local function getContainerItemCounts(container)
+    local counts = {}
+    for _, item in pairs(getContainerItemData(container)) do
+        counts[item.name] = (counts[item.name] or 0) + item.count
+    end
+    return counts
 end
 
 local itemMap --{itemID = {'containerCount' = {containerID = count}, 'totalCount' = totalCount}
@@ -59,9 +66,9 @@ local function getItemMap()
 
     for _, containerID in pairs(peripherals.containers) do
         local container = peripheral.wrap(containerID)
-        for _, v in pairs(getContainerItemList(container)) do
-            addToItemMap(map, v.name, v.count, containerID)
-            totalTotalCount = totalTotalCount + v.count
+        for _, item in pairs(getContainerItemData(container)) do
+            addToItemMap(map, item.name, item.count, containerID)
+            totalTotalCount = totalTotalCount + item.count
         end
     end
 
@@ -76,7 +83,7 @@ end
 local function getSlots(itemID, containerID)
     local slots = {}
 
-    for slot, item in pairs(getContainerItemList(peripheral.wrap(containerID))) do
+    for slot, item in pairs(getContainerItemData(peripheral.wrap(containerID))) do
         if item.name == itemID then table.insert(slots, slot) end
     end
 
@@ -143,6 +150,11 @@ local function moveItemTo(itemID, to, toSlot, limit)
     end
 end
 
+local function getSortLoc(itemID)
+    local containerID = peripheral.getName(peripheral.find(mainStorageContainerType))
+    
+    return containerID
+end
 local function sort(containerID)
     local container = peripheral.wrap(containerID)
     if not container then
@@ -150,9 +162,14 @@ local function sort(containerID)
         return
     end
 
+    for itemID in pairs(getContainerItemCounts(container)) do
+        moveItemsFromTo(itemID, containerID, getSortLoc(itemID))
+    end
     
 end
 
+remap()
+sort(crafterContainerID)
 remap()
 
 local function listen(id, msg, ptc)
