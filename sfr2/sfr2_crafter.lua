@@ -3,6 +3,8 @@ local r = require('libs.redlib')
 local completion = require('cc.completion')
 local pretty = require('cc.pretty')
 
+n.setNeonColors()
+
 peripheral.find("modem", rednet.open)
 
 local controllerID = r.getHostID('SFR2_CONTROLLER')
