@@ -89,8 +89,9 @@ local function getSlots(itemID, containerID)
 
     return slots
 end
-local function moveItemsFromSlotsTo(slots, from, to, toMove, toSlot)
+local function moveItemsFromSlotsTo(slots, from, to, limit, toSlot)
     local fromContainer = peripheral.wrap(from)
+    local toMove = limit or registry.itemDetails[itemID].maxCount
 
     for i = #slots, 1, -1 do
         local fromSlot = slots[i]
