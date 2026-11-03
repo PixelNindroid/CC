@@ -239,7 +239,7 @@ function n.setNeonColors()
         purple = 0xc46afc,
         cyan = 0x12dee5,
         brown = 0xb24a21,
-        yellow = 0xff9c51
+        yellow = 0xffaf3e
     }
     for name, hex in pairs(neonColors) do
         term.setPaletteColor(colors[name], hex)
