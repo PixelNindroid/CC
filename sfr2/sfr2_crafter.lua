@@ -127,12 +127,12 @@ local function moveItemsToGrid(itemGrid)
         local x, y = getSlotDrawPos(slot)
 
         buttox.define('slot_' .. slot, {
-            x = x,
-            y = y,
-            text = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
-            fancy = true,
-            group = 'slot',
-            data = {itemID = itemID, slot = slot},
+            x       = x,
+            y       = y,
+            text    = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
+            fancy   = true,
+            group   = 'slot',
+            data    = {itemID = itemID, slot = slot},
             onClick = function ()
                 local slotButtons = buttox.getButtonsInGroup('slot')
                 for _, b in pairs(slotButtons) do
@@ -144,6 +144,9 @@ local function moveItemsToGrid(itemGrid)
         })
     end
 end
+local function craft(limit)
+    turtle.craft(limit)
+end
 
 local function search()
     term.setCursorPos(1, 2)
@@ -154,11 +157,20 @@ local function search()
     moveItemsToGrid(itemGrid)
 end
 
-buttox.define('test', {
-    x = 20,
-    y = 13,
-    onUp = function(b, mouseButton)
-        print('Button clicked: ' .. mouseButton)
+buttox.define('craft1', {
+    text    = 'C1',
+    x       = 25,
+    y       = 13,
+    onUp    = function(b, mouseButton)
+        craft(1)
+    end
+})
+buttox.define('craftAll', {
+    text    = 'All',
+    x       = 30,
+    y       = 13,
+    onUp    = function(b, mouseButton)
+        craft()
     end
 })
 
