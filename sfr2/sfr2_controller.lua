@@ -9,6 +9,8 @@ local peripherals = n.mapPeripherals()
 local crafter = peripheral.find('turtle')
 local crafterContainerID = peripheral.getName(crafter)
 
+local mainStorageContainerType = 'neepmeat:flex_silo'
+
 local tempStorage = peripheral.find('minecraft:trapped_chest')
 local tempStorageID = peripheral.getName(tempStorage)
 
