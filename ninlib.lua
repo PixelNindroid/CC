@@ -232,7 +232,7 @@ function n.setNeonColors()
         white = 0xefeefd,
         black = 0x262626,
         gray = 0x2a2a2a,
-        lightGray = 0x7A7C80,
+        lightGray = 0xA0A3A7,
         red = 0xe11c38,
         green = 0x10e350,
         blue = 0x3070ff,
