@@ -99,4 +99,4 @@ local function drawSlot(x, y)
     n.write('\143\143\133', slotColor, bgColor)
 
 end
-drawSlot(1, 1)
+drawSlot(10, 10)
