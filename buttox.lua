@@ -5,8 +5,11 @@ local buttons = {}
 
 function buttox.draw(b)
     if b.fancy then
-        term.setCursorPos(b.x + b.w - 1, b.y
-        n.write('\149', b.buttonColor, bgColor))
+        term.setCursorPos(b.x + b.w, b.y)
+        n.write('\149', b.buttonColor, b.bgColor)
+
+        term.setCursorPos(b.x, b.y + 1)
+        n.write(string.rep('\143', b.w) .. '\133', buttons.buttonColor, b.bgColor)
     end
 
     term.setCursorPos(b.x, b.y)
