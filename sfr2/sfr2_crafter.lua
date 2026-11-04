@@ -228,6 +228,7 @@ local function getDisplayItemList()
     local list = {}
 
     for itemID, v in pairs(itemMap) do
+        print(registry.itemDetails[itemID])
         table.insert(list, {
             itemID = itemID,
             count = v.totalCount,
