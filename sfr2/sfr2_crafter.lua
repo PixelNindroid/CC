@@ -244,14 +244,15 @@ local function getDisplayItemList()
     return list
 end
 local function displayList(list, x, y, w, h)
-    grab.serialize('dl', list)
     
     for i = 1, h do
         term.setCursorPos(x, y + h - 1)
         m.exe(list[i].display)
     end
 end
+term.clear()
 displayList(getDisplayItemList(), 1, 3, 27, 10)
+read()
 
 local textInputX = 1
 local textInputY = 1
