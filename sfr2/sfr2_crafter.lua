@@ -222,8 +222,17 @@ local function formatCount(count) --4 wide
     else --999M
         return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
     end
-    
-    return countString
+end
+
+local function getDisplayItemList()
+    local list = {}
+    for itemID, v in pairs(itemMap) do
+        table.insert(list, {
+            itemID = itemID,
+            count = v.totalCount,
+            display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID]}
+        })
+    end
 end
 
 local textInputX = 1
