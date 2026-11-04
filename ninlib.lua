@@ -161,13 +161,14 @@ function n.setCursorY(y)
     term.setCursorPos(n.getCursorX(), y)
 end
 
-function n.write(text, color, bg)
+function n.write(text, color, bg, w)
     if not text then return end
     if type(color) == 'number' then term.setTextColor(color) end
     if type(bg) == 'number' then term.setBackgroundColor(bg) end
 
     local space = n.termWith - n.getCursorX() + 1
     if #text > space then text = strings.ensure_width(text, space) end
+    if w then text = strings.ensure_width(text, w) end
     write(text)
     term.setTextColor(colors.white)
     term.setBackgroundColor(colors.black)
@@ -223,8 +224,8 @@ function n.clearStriped(startY, lines)
     term.setBackgroundColor(colors.black)
     term.setCursorPos(1, startY)
 end
-function n.writeStriped(text, color)
-    n.write(text, color, n.getStripedColor(n.getCursorY()))
+function n.writeStriped(text, color, w)
+    n.write(text, color, n.getStripedColor(n.getCursorY()), w)
 end
 
 function n.setNeonColors()
