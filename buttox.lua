@@ -4,6 +4,9 @@ local m = require('libs.makeup')
 local buttox = {}
 local widgets = {}
 
+
+--DRAW
+
 local function drawButton(w)
     local _buttonColor = w.isActive and w.activeColor or w.buttonColor
 
@@ -31,6 +34,9 @@ function buttox.drawAll()
         w:draw()
     end
 end
+
+
+--DEFINE
 
 local function define(name, w)
     widgets[name] = w
@@ -66,6 +72,12 @@ function buttox.defineButton(name, opts)
 
     return define(name, w)
 end
+
+local function scrollList(w, scrollDir)
+    local max = #w.list - w.h + 2
+    w.topi = math.max(1, math.min(w.topi + scrollDir, max))
+    w:draw()
+end
 function buttox.defineList(name, opts)
     local w = {
         type        = 'list',
@@ -78,7 +90,8 @@ function buttox.defineList(name, opts)
         w           = opts.w or 20,
         h           = opts.h or #list,
         onClick     = opts.onClick,
-        onUp        = opts.onUp
+        onUp        = opts.onUp,
+        onScroll    = scrollList
     }
 
     return define(name, w)
@@ -115,7 +128,7 @@ end
 
 --CLICK
 
-local function inBounds(x, y, w)
+local function inBounds(w, x, y)
     return (x >= w.x and x < w.x + w.w) and (y >= w.y and y < w.y + w.h)
 end
 
@@ -132,7 +145,7 @@ function buttox.handle(event, p1, p2, p3)
         local y = p3
 
         for _, w in pairs(widgets) do
-            if inBounds(x, y, w) then
+            if inBounds(w, x, y) then
                 if w.isActive then 
                     w.isActive = true
                     w:draw()
@@ -161,6 +174,17 @@ function buttox.handle(event, p1, p2, p3)
                 w.onUp(w, lastClicked.mouseButton)
             end
         end
+    elseif event == 'mouse_scroll' then
+        local scrollDir = p1
+        local x = p2
+        local y = p3
+
+        for _, w in pairs(widgets) do
+            if inBounds(w, x, y) and w.onScroll then
+                w:onScroll(scrollDir)
+            end
+        end
+        
     end
 end
 function buttox.run()
