@@ -88,12 +88,6 @@ local function getDisplayItemList()
 
     return list
 end
-local function displayList(list, x, y, w, h)
-    for i = 1, h do
-        term.setCursorPos(x, y + i - 1)
-        m.exe(list[i].display, w)
-    end
-end
 
 
 --CRAFTING
@@ -234,6 +228,17 @@ term.clear()
 term.setCursorPos(1, 1)
 n.write('/', colors.orange)
 
+buttox.defineList('items', {
+    x       = 1,
+    y       = 3,
+    w       = 27,
+    h       = 11,
+    list    = getDisplayItemList()
+})
+
+
+drawEmptyGrid()
+
 buttox.defineButton('refil', {
     x       = 25,
     y       = 13,
@@ -270,8 +275,8 @@ buttox.defineButton('craftAll', {
     end
 })
 
-displayList(getDisplayItemList(), 1, 3, 27, 11)
-drawEmptyGrid()
+
+
 
 while true do
     local event, p1, p2, p3 = os.pullEvent()
