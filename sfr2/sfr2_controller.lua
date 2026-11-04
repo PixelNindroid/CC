@@ -186,7 +186,7 @@ local function listen(id, msg, ptc)
         end
 
     }, {
-        registry = registry,
+        registry = registry
     })
 end
 
