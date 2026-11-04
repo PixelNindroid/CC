@@ -133,8 +133,10 @@ function buttox.handle(event, p1, p2, p3)
 
         for _, w in pairs(widgets) do
             if inBounds(x, y, w) then
-                if w.isActive then w.isActive = true end
-                w:draw()
+                if w.isActive then 
+                    w.isActive = true
+                    w:draw()
+                end
 
                 lastClicked.w = w
                 lastClicked.mouseButton = mouseButton
@@ -149,9 +151,11 @@ function buttox.handle(event, p1, p2, p3)
     elseif event == 'mouse_up' then
         if lastClicked.w then
             local w = lastClicked.w
-            
-            if w.isActive then w.isActive = false end
-            w:draw()
+
+            if w.isActive then 
+                w.isActive = false
+                w:draw()
+            end
 
             if w.onUp then
                 w.onUp(w, lastClicked.mouseButton)
