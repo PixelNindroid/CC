@@ -232,7 +232,7 @@ buttox.defineList('items', {
     x       = 1,
     y       = 3,
     w       = 27,
-    h       = 11,
+    h       = 10,
     list    = getDisplayItemList()
 })
 
