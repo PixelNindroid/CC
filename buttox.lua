@@ -88,44 +88,41 @@ local mouseButtonMap = {
     'middle'
 }
 local lastClicked = {}
-function buttox.handleClick(p1, p2, p3)
-    local mouseButton = mouseButtonMap[p1]
-    local x = p2
-    local y = p3
+function buttox.handle(event, p1, p2, p3)
+    if event == 'mouse_click' then
+        local mouseButton = mouseButtonMap[p1]
+        local x = p2
+        local y = p3
 
-    for _, b in pairs(buttons) do
-        if (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
-            buttox.draw(b, true)
+        for _, b in pairs(buttons) do
+            if (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
+                buttox.draw(b, true)
 
-            lastClicked.b = b
-            lastClicked.mouseButton = mouseButton
+                lastClicked.b = b
+                lastClicked.mouseButton = mouseButton
 
-            if b.onClick then
-                b.onClick(b, mouseButton)
+                if b.onClick then
+                    b.onClick(b, mouseButton)
+                end
+                
+                return b
             end
-            
-            return b
-        end
-    end    
-end
-function buttox.handleUp()
-    if lastClicked.b then
-        buttox.draw(lastClicked.b)
+        end    
+    elseif event == 'mouse_up' then
+        if lastClicked.b then
+            buttox.draw(lastClicked.b)
 
-        if lastClicked.b.onUp then
-            lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
+            if lastClicked.b.onUp then
+                lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
+            end
         end
     end
 end
 function buttox.run()
     while true do
-        local event, p1, p2, p3 = os.pullEvent()
+        local _, p1, p2, p3 = os.pullEvent()
+        buttox.handle(p1, p2, p3)
 
-        if event == 'mouse_click' then
-            buttox.handleClick(p1, p2, p3)
-        elseif event == 'mouse_up' then
-            buttox.handleUp()
-        end
     end
 end
 
