@@ -1,5 +1,6 @@
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
+local m = require('libs.makeup')
 local buttox = require('libs.buttox')
 local completion = require('cc.completion')
 local pretty = require('cc.pretty')
@@ -208,6 +209,22 @@ buttox.define('craftAll', {
 drawEmptyGrid()
 
 --search()
+
+local function formatCount(count) --4 wide
+    if count < 1000 then --_999
+        return m.txtr(tostring(count), 4, colors.lightGray)
+    elseif count < 10000 then --9.9k
+        return {m.txt(string.format('%.1f', count / 1000), colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 1000000 then --999k
+        return {m.txtr(math.floor(count / 1000), 3, colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 10000000 then --9.9M
+        return {m.txt(string.format('%.1f', count / 1000000), colors.lightGray), m.txt('M', colors.red)}
+    else --999M
+        return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
+    end
+    
+    return countString
+end
 
 local textInputX = 1
 local textInputY = 1
