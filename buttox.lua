@@ -75,7 +75,7 @@ function buttox.defineList(name, opts)
         topi        = opts.topi or 1,
         x           = opts.x or 1,
         y           = opts.y or 1,
-        w           = oprs.w or 20,
+        w           = opts.w or 20,
         h           = opts.h or #list,
         onClick     = opts.onClick,
         onUp        = opts.onUp
