@@ -162,6 +162,7 @@ function n.setCursorY(y)
 end
 
 function n.write(text, color, bg)
+    if not text then return end
     if type(color) == 'number' then term.setTextColor(color) end
     if type(bg) == 'number' then term.setBackgroundColor(bg) end
 
