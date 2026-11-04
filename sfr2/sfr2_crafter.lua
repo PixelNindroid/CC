@@ -84,7 +84,7 @@ local function getDisplayItemList()
         table.insert(list, {
             itemID = itemID,
             count = 0,
-            display = m.txt(registry.itemDetails[itemID].displayName, colors.green)
+            display = itemID--m.txt(registry.itemDetails[itemID].displayName, colors.green)
         })
     end
 
