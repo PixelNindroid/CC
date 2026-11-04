@@ -230,13 +230,13 @@ end
 
 function n.drawRect(x, y, w, h, color)
     for i = 1, h do
-        term.setCursorPos(x, y + i)
+        term.setCursorPos(x, y + i - 1)
         n.write(' ', nil, color, w)
     end
 end
 function n.drawRectStriped(x, y, w, h)
     for i = 1, h do
-        term.setCursorPos(x, y + i)
+        term.setCursorPos(x, y + i - 1)
         n.writeStriped(' ', nil, w)
     end
 end
