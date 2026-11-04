@@ -226,6 +226,7 @@ end
 
 while true do
     local event, p1, p2, p3 = os.pullEvent()
+    print('AAAAAAAAAAAAAAAAAAAAAA')
 
     buttox.handle(event, p1, p2, p3)
     handleTyping(event, p1)
