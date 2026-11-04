@@ -231,6 +231,8 @@ end
 
 
 term.clear()
+term.setCursorPos(1, 1)
+n.write('/', colors.orange)
 
 buttox.define('refil', {
     x       = 25,
