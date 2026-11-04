@@ -243,6 +243,7 @@ local function getDisplayItemList()
     return list
 end
 local function displayList(list, x, y, w, h)
+    grab.serialize('dl', list)
     
     for i = 1, h do
         term.setCursorPos(x, y + h - 1)
