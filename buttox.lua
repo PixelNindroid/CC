@@ -22,6 +22,7 @@ local function drawButton(w)
     n.write(w.text, w.textColor, _buttonColor)
 end
 local function drawList(w)
+    n.drawRectStriped(w.x, w.y, w.w, w.h)
     for currentH = 1, w.h do
         term.setCursorPos(w.x, w.y + currentH - 1)
 
@@ -29,6 +30,7 @@ local function drawList(w)
         m.exe(w.list[i].display, w.w)
     end
 end
+
 function buttox.drawAll()
     for _, w in pairs(widgets) do
         w:draw()
