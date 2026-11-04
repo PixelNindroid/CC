@@ -168,7 +168,7 @@ end
 
 local function search()
     term.setCursorPos(1, 2)
-    local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
+    local resultName = --read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
     local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
     local recipe = registry.craftingRecipes[getBestCraftingRecipe(result)]
     local itemGrid = getItemGrid(recipe.grid)
