@@ -56,6 +56,9 @@ function grab.unserializeJSON(path)
     return text and textutils.unserializeJSON(text) or nil
 end
 
+local function bust(url)
+    return url .. '?cb=' .. os.epoch('utc')
+end
 local function getGitRepo(fileName)
     local category = CATEGORIES[fileName]
     local subfolder = category and (category .. '/') or ''
@@ -63,7 +66,7 @@ local function getGitRepo(fileName)
 
     local request
     repeat
-        request = http.get(url, {["Cache-Control"] = "no-cache", ["Pragma"] = "no-cache"})
+        request = http.get(bust(url), {["Cache-Control"] = "no-cache", ["Pragma"] = "no-cache"})
 
         if not request then
             print('HTTP request for '..fileName..' failed!')
@@ -86,8 +89,8 @@ local function grabLib(name)
 end
 local function refreshGit()
     write('Checking API for latest push... ')
-    local url = "https://api.github.com/repos/PixelNindroid/CC/commits/main"
-    local response = http.get(url, {["User-Agent"] = "ComputerCraft"})
+    local url = bust('https://api.github.com/repos/PixelNindroid/CC/commits/main')
+    local response, err = http.get(url, {["User-Agent"] = "ComputerCraft"})
     
     if response then
         local data = textutils.unserializeJSON(response.readAll())
@@ -99,13 +102,23 @@ local function refreshGit()
             return
         end
     end
-    print('Failed. Falling back to cached main.')
+    printError('Failed. Falling back to cached main.')
+    printError(err)
+end
+local function selfUpdate()
+    local new = getGitRepo('grab.lua')
+    if new ~= grab.pull('/libs/grab.lua') then
+        grab.put('/libs/grab.lua', new)
+        print('grab updated, rebooting...')
+        sleep(1)
+        os.reboot()
+    end
 end
 function grab.grabAll(main)
     refreshGit()
+    selfUpdate()
 
     local mainFileName = main..'.lua'
-    grabLib('grab')
     print('\nGrabbing '..main..'..')
 
     grab.put(mainFileName, getGitRepo(mainFileName))
