@@ -234,7 +234,7 @@ term.clear()
 term.setCursorPos(1, 1)
 n.write('/', colors.orange)
 
-buttox.define('refil', {
+buttox.defineButton('refil', {
     x       = 25,
     y       = 13,
     buttonColor = colors.lightGray,
@@ -242,7 +242,7 @@ buttox.define('refil', {
         moveItemsToGrid(currentItemGrid)
     end
 })
-buttox.define('craft1', {
+buttox.defineButton('craft1', {
     text    = 'c1',
     x       = 31,
     y       = 13,
@@ -251,7 +251,7 @@ buttox.define('craft1', {
         craftAndEject(1)
     end
 })
-buttox.define('craft8', {
+buttox.defineButton('craft8', {
     text    = 'c8',
     x       = 34,
     y       = 13,
@@ -260,7 +260,7 @@ buttox.define('craft8', {
         craftAndEject(1)
     end
 })
-buttox.define('craftAll', {
+buttox.defineButton('craftAll', {
     text    = 'All',
     x       = 37,
     y       = 13,
