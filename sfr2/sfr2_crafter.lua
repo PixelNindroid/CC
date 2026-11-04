@@ -249,7 +249,7 @@ local function displayList(list, x, y, w, h)
     
     for i = 1, h do
         term.setCursorPos(x, y + i - 1)
-        m.exe(list[i].display)
+        m.exe(list[i].display, w)
     end
 end
 
