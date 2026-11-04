@@ -14,6 +14,7 @@ peripheral.find("modem", rednet.open)
 local controllerID = r.getHostID('SFR2_CONTROLLER')
 
 local registry = r.getVar(controllerID, 'registry')
+local sortedCraftableDisplayNames = registry.craftableDisplayNames:sort()
 local itemMap = r.action(controllerID, 'remap')
 
 
