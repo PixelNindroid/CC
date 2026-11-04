@@ -237,10 +237,12 @@ local function getDisplayItemList()
     end
 
     table.sort(list, function (a, b)
-        return a.count < b.count
+        if a.count == b.count then
+            return a:lower() < b:lower()
+        end
+        return a.count > b.count
     end)
 
-    print('WWWWWWWWWWWWWWWWWWWWWWWWWWW')
     return list
 end
 local function displayList(list, x, y, w, h)
