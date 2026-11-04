@@ -218,15 +218,24 @@ drawEmptyGrid()
 
 search()
 
+local textInputX = 0
+local textInputY = 0
+local typed = ''
+local function handleTyping(event, p1)
+    if event == 'char' then
+        typed = typed .. p1
+    elseif event == 'key' then
+    else
+        return
+    end
 
-
+    term.setCursorPos(textInputX, textInputY)
+    write(typed .. '_')
+end
 
 while true do
     local event, p1, p2, p3 = os.pullEvent()
 
-    if event == 'mouse_click' then
-        buttox.handleClick(p1, p2, p3)
-    elseif event == 'mouse_up' then
-        buttox.handleUp()
-    end
+    buttox.handle(event, p1, p2, p3)
+    handleTyping(event, p1)
 end
