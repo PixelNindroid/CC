@@ -216,7 +216,7 @@ buttox.define('craftAll', {
 
 drawEmptyGrid()
 
-search()
+--search()
 
 local textInputX = 0
 local textInputY = 0
