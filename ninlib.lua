@@ -228,6 +228,19 @@ function n.writeStriped(text, color, w)
     n.write(text, color, n.getStripedColor(n.getCursorY()), w)
 end
 
+function n.drawRect(x, y, w, h, color)
+    for i = 1, h do
+        term.setCursorPos(x, y + i)
+        n.write(nil, nil, color, w)
+    end
+end
+function n.drawRectStriped(x, y, w, h)
+    for i = 1, h do
+        term.setCursorPos(x, y + i)
+        n.writeStriped(nil, nil, w)
+    end
+end
+
 function n.setNeonColors()
     local neonColors = {
         orange = 0xff5a12,
