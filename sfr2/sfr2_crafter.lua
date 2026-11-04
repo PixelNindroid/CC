@@ -252,9 +252,9 @@ local function displayList(list, x, y, w, h)
         m.exe(list[i].display)
     end
 end
-term.clear()
-displayList(getDisplayItemList(), 1, 3, 27, 10)
-read()
+
+displayList(getDisplayItemList(), 1, 3, 27, 11)
+
 
 local textInputX = 1
 local textInputY = 1
