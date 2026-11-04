@@ -170,41 +170,7 @@ end
 
 
 
-buttox.define('refil', {
-    x       = 25,
-    y       = 13,
-    buttonColor = colors.lightGray,
-    onUp    = function()
-        moveItemsToGrid(currentItemGrid)
-    end
-})
-buttox.define('craft1', {
-    text    = 'c1',
-    x       = 31,
-    y       = 13,
-    buttonColor = colors.lightGray,
-    onUp    = function()
-        craftAndEject(1)
-    end
-})
-buttox.define('craft8', {
-    text    = 'c8',
-    x       = 34,
-    y       = 13,
-    buttonColor = colors.lightGray,
-    onUp    = function()
-        craftAndEject(1)
-    end
-})
-buttox.define('craftAll', {
-    text    = 'All',
-    x       = 37,
-    y       = 13,
-    buttonColor = colors.lightGray,
-    onUp    = function()
-        craftAndEject()
-    end
-})
+
 
 
 drawEmptyGrid()
@@ -246,12 +212,50 @@ local function getDisplayItemList()
     return list
 end
 local function displayList(list, x, y, w, h)
-    
     for i = 1, h do
         term.setCursorPos(x, y + i - 1)
         m.exe(list[i].display, w)
     end
 end
+
+term.clear()
+
+buttox.define('refil', {
+    x       = 25,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        moveItemsToGrid(currentItemGrid)
+    end
+})
+buttox.define('craft1', {
+    text    = 'c1',
+    x       = 31,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        craftAndEject(1)
+    end
+})
+buttox.define('craft8', {
+    text    = 'c8',
+    x       = 34,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        craftAndEject(1)
+    end
+})
+buttox.define('craftAll', {
+    text    = 'All',
+    x       = 37,
+    y       = 13,
+    buttonColor = colors.lightGray,
+    onUp    = function()
+        craftAndEject()
+    end
+})
+
 
 displayList(getDisplayItemList(), 1, 3, 27, 11)
 
