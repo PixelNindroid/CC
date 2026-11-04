@@ -1,9 +1,10 @@
 local n = require('libs.ninlib')
+local m = require('libs.makeup')
 
 local buttox = {}
-local buttons = {}
+local elements = {}
 
-function buttox.draw(b, isSelected)
+function buttox.drawButton(b, isSelected)
     local _buttonColor = isSelected and b.selectColor or b.buttonColor
 
     if b.fancy then
@@ -18,14 +19,15 @@ function buttox.draw(b, isSelected)
     n.write(b.text, b.textColor, _buttonColor)
 end
 function buttox.drawAll()
-    for _, b in pairs(buttons) do
-        buttox.draw(b)
+    for _, b in pairs(elements) do
+        buttox.drawButton(b)
     end
 end
 
-function buttox.define(name, opts)
+function buttox.defineButton(name, opts)
     local text = opts.text or name
     local b = {
+        type        = 'button',
         name        = name,
         text        = text,
         x           = opts.x or 1,
@@ -47,18 +49,18 @@ function buttox.define(name, opts)
         b.h = b.h + 1
     end
 
-    buttons[name] = b
-    buttox.draw(b)
+    elements[name] = b
+    buttox.drawButton(b)
     return b
 end
 
-function buttox.getButton(name)
-    return buttons[name]
+function buttox.getElement(name)
+    return elements[name]
 end
-function buttox.getButtonsInGroup(group)
+function buttox.getElementsInGroup(group)
     local groupButtons = {}
 
-    for _, b in pairs(buttons) do
+    for _, b in pairs(elements) do
         if b.group == group then
             table.insert(groupButtons, b)
         end
@@ -69,9 +71,9 @@ end
 
 function buttox.remove(name)
     if name then
-        buttons[name] = nil
+        elements[name] = nil
     else
-        buttons = {}
+        elements = {}
     end
 end
 function buttox.removeGroup(group)
@@ -81,6 +83,11 @@ function buttox.removeGroup(group)
 end
 
 
+--CLICK
+
+local function inBounds(x, y, b)
+    return (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h)
+end
 
 local mouseButtonMap = {
     'left',
@@ -94,15 +101,15 @@ function buttox.handle(event, p1, p2, p3)
         local x = p2
         local y = p3
 
-        for _, b in pairs(buttons) do
-            if (x >= b.x and x < b.x + b.w) and (y >= b.y and y < b.y + b.h) then
-                buttox.draw(b, true)
+        for _, b in pairs(elements) do
+            if inBounds(x, y, b) then
+                buttox.drawButton(b, true)
 
                 lastClicked.b = b
                 lastClicked.mouseButton = mouseButton
 
                 if b.onClick then
-                    b.onClick(b, mouseButton)
+                    b.onClick(b, mouseButton, x, y)
                 end
                 
                 return b
@@ -110,7 +117,7 @@ function buttox.handle(event, p1, p2, p3)
         end    
     elseif event == 'mouse_up' then
         if lastClicked.b then
-            buttox.draw(lastClicked.b)
+            buttox.drawButton(lastClicked.b)
 
             if lastClicked.b.onUp then
                 lastClicked.b.onUp(lastClicked.b, lastClicked.mouseButton)
