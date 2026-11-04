@@ -166,7 +166,7 @@ local function craftAndEject(limit)
     ejectCrafterSlot(4)
 end
 
-local function search()
+--[[local function search()
     term.setCursorPos(1, 2)
     local resultName = read(nil, nil, function(text) return completion.choice(text, registry.craftableDisplayNames) end)
     local result = registry.craftable[n.keyFromValue(registry.craftableDisplayNames, resultName)]
@@ -174,7 +174,7 @@ local function search()
     local itemGrid = getItemGrid(recipe.grid)
     moveItemsToGrid(itemGrid)
     currentItemGrid = itemGrid
-end
+end]]
 
 
 buttox.define('refil', {
