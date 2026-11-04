@@ -215,6 +215,7 @@ local typed = ''
 local function handleTyping(event, p1)
     if event == 'char' then
         typed = typed .. p1
+        print(p1)
     elseif event == 'key' then
     else
         return
