@@ -73,7 +73,7 @@ local function getDisplayItemList()
     local list = {}
 
     for itemID, v in pairs(itemMap) do
-        list:insert({
+        table.insert(list, {
             itemID = itemID,
             count = v.totalCount,
             display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
@@ -81,7 +81,7 @@ local function getDisplayItemList()
     end
 
     for _, itemID in pairs(registry.craftable) do
-        list:insert({
+        table.insert(list, {
             itemID = itemID,
             count = 0,
             display = m.txt(registry.itemDetails[itemID].displayName, colors.green)
