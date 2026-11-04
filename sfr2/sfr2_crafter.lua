@@ -273,7 +273,7 @@ local function handleTyping(event, p1)
     end
 
     term.setCursorPos(textInputX, textInputY)
-    write(typed .. '_')
+    write(typed .. '_ ')
 end
 
 while true do
