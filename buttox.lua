@@ -148,7 +148,7 @@ function buttox.handle(event, p1, p2, p3)
         end    
     elseif event == 'mouse_up' then
         if lastClicked.w then
-            if w.isActive then w.isActive = false end
+            if lastClicked.w.isActive then lastClicked.w.isActive = false end
             w:draw()
 
             if lastClicked.w.onUp then
