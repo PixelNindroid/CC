@@ -219,6 +219,7 @@ local function handleTyping(event, p1)
         if arg == keys.backspace then
             if #typed > 0 then
                 typed = string.sub(typed, 1, #typed - 1)
+                print('bbbbbb')
             end
         end
     else
