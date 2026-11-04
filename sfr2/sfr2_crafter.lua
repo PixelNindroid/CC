@@ -168,7 +168,7 @@ local function moveItemsToGrid(itemGrid)
 
         local x, y = getSlotDrawPos(slot)
 
-        buttox.define('slot_' .. slot, {
+        buttox.defineButton('slot_' .. slot, {
             x       = x,
             y       = y,
             text    = strings.ensure_width(registry.itemDetails[itemID].displayName, 2),
