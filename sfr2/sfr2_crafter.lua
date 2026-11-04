@@ -216,7 +216,7 @@ local function handleTyping(event, p1)
     if event == 'char' then
         typed = typed .. p1
     elseif event == 'key' then
-        if arg == keys.backspace then
+        if p1 == keys.backspace then
             if #typed > 0 then
                 typed = string.sub(typed, 1, #typed - 1)
             end
