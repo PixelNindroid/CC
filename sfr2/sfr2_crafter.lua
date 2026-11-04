@@ -55,6 +55,46 @@ local function drawEmptyGrid()
     end
 end
 
+local function formatCount(count) --4 wide
+    if count < 1000 then --_999
+        return m.txtr(tostring(count), 4, colors.lightGray)
+    elseif count < 10000 then --9.9k
+        return {m.txt(string.format('%.1f', count / 1000), colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 1000000 then --999k
+        return {m.txtr(math.floor(count / 1000), 3, colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 10000000 then --9.9M
+        return {m.txt(string.format('%.1f', count / 1000000), colors.lightGray), m.txt('M', colors.red)}
+    else --999M
+        return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
+    end
+end
+local function getDisplayItemList()
+    local list = {}
+
+    for itemID, v in pairs(itemMap) do
+        table.insert(list, {
+            itemID = itemID,
+            count = v.totalCount,
+            display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
+        })
+    end
+
+    table.sort(list, function (a, b)
+        if a.count == b.count then
+            return registry.itemDetails[a.itemID].displayName:lower() < registry.itemDetails[b.itemID].displayName:lower()
+        end
+        return a.count > b.count
+    end)
+
+    return list
+end
+local function displayList(list, x, y, w, h)
+    for i = 1, h do
+        term.setCursorPos(x, y + i - 1)
+        m.exe(list[i].display, w)
+    end
+end
+
 
 --CRAFTING
 
@@ -169,54 +209,26 @@ local function craftAndEject(limit)
 end
 
 
-
-
-
-
-drawEmptyGrid()
-
---search()
-
-local function formatCount(count) --4 wide
-    if count < 1000 then --_999
-        return m.txtr(tostring(count), 4, colors.lightGray)
-    elseif count < 10000 then --9.9k
-        return {m.txt(string.format('%.1f', count / 1000), colors.lightGray), m.txt('k', colors.red)}
-    elseif count < 1000000 then --999k
-        return {m.txtr(math.floor(count / 1000), 3, colors.lightGray), m.txt('k', colors.red)}
-    elseif count < 10000000 then --9.9M
-        return {m.txt(string.format('%.1f', count / 1000000), colors.lightGray), m.txt('M', colors.red)}
-    else --999M
-        return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
-    end
-end
-
-local function getDisplayItemList()
-    local list = {}
-
-    for itemID, v in pairs(itemMap) do
-        table.insert(list, {
-            itemID = itemID,
-            count = v.totalCount,
-            display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
-        })
-    end
-
-    table.sort(list, function (a, b)
-        if a.count == b.count then
-            return registry.itemDetails[a.itemID].displayName:lower() < registry.itemDetails[b.itemID].displayName:lower()
+local textInputX = 1
+local textInputY = 1
+local typed = ''
+local function handleTyping(event, p1)
+    if event == 'char' then
+        typed = typed .. p1
+    elseif event == 'key' then
+        if p1 == keys.backspace then
+            if #typed > 0 then
+                typed = string.sub(typed, 1, #typed - 1)
+            end
         end
-        return a.count > b.count
-    end)
-
-    return list
-end
-local function displayList(list, x, y, w, h)
-    for i = 1, h do
-        term.setCursorPos(x, y + i - 1)
-        m.exe(list[i].display, w)
+    else
+        return
     end
+
+    term.setCursorPos(textInputX, textInputY)
+    write(typed .. '_ ')
 end
+
 
 term.clear()
 
@@ -256,29 +268,8 @@ buttox.define('craftAll', {
     end
 })
 
-
 displayList(getDisplayItemList(), 1, 3, 27, 11)
-
-
-local textInputX = 1
-local textInputY = 1
-local typed = ''
-local function handleTyping(event, p1)
-    if event == 'char' then
-        typed = typed .. p1
-    elseif event == 'key' then
-        if p1 == keys.backspace then
-            if #typed > 0 then
-                typed = string.sub(typed, 1, #typed - 1)
-            end
-        end
-    else
-        return
-    end
-
-    term.setCursorPos(textInputX, textInputY)
-    write(typed .. '_ ')
-end
+drawEmptyGrid()
 
 while true do
     local event, p1, p2, p3 = os.pullEvent()
