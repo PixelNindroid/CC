@@ -209,8 +209,8 @@ drawEmptyGrid()
 
 --search()
 
-local textInputX = 0
-local textInputY = 0
+local textInputX = 1
+local textInputY = 1
 local typed = ''
 local function handleTyping(event, p1)
     if event == 'char' then
