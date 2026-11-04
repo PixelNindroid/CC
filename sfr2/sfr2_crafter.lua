@@ -238,7 +238,7 @@ local function getDisplayItemList()
 
     table.sort(list, function (a, b)
         if a.count == b.count then
-            return registry.itemDetails[a].displayName:lower() < registry.itemDetails[b].displayName:lower()
+            return registry.itemDetails[a.itemID].displayName:lower() < registry.itemDetails[b.itemID].displayName:lower()
         end
         return a.count > b.count
     end)
