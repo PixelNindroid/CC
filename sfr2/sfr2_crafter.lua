@@ -225,14 +225,14 @@ local function formatCount(count) --4 wide
     end
 end
 
-local function getDisplayItemList(w)
+local function getDisplayItemList()
     local list = {}
 
     for itemID, v in pairs(itemMap) do
         table.insert(list, {
             itemID = itemID,
             count = v.totalCount,
-            display = {formatCount(v.totalCount), ' ' .. strings.ensure_width(registry.itemDetails[itemID].displayName, w - 5)}
+            display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
         })
     end
 
@@ -253,7 +253,7 @@ local function displayList(list, x, y, w, h)
     end
 end
 
-displayList(getDisplayItemList(27), 1, 3, 27, 11)
+displayList(getDisplayItemList(), 1, 3, 27, 11)
 
 
 local textInputX = 1
