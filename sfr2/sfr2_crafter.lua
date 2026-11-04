@@ -14,7 +14,6 @@ peripheral.find("modem", rednet.open)
 local controllerID = r.getHostID('SFR2_CONTROLLER')
 
 local registry = r.getVar(controllerID, 'registry')
-local sortedCraftableDisplayNames = registry.craftableDisplayNames:sort()
 local itemMap = r.action(controllerID, 'remap')
 
 
@@ -69,14 +68,23 @@ local function formatCount(count) --4 wide
         return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
     end
 end
+
 local function getDisplayItemList()
     local list = {}
 
     for itemID, v in pairs(itemMap) do
-        table.insert(list, {
+        list:insert({
             itemID = itemID,
             count = v.totalCount,
             display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
+        })
+    end
+
+    for _, itemID in pairs(registry.craftable) do
+        list:insert({
+            itemID = itemID,
+            count = 0,
+            display = m.txt(registry.itemDetails[itemID].displayName, colors.green)
         })
     end
 
