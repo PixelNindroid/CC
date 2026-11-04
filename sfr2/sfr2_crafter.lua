@@ -226,6 +226,7 @@ end
 
 local function getDisplayItemList()
     local list = {}
+
     for itemID, v in pairs(itemMap) do
         table.insert(list, {
             itemID = itemID,
@@ -233,7 +234,21 @@ local function getDisplayItemList()
             display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID]}
         })
     end
+
+    table.sort(list, function (a, b)
+        return a.count < b.count
+    end)
+
+    return list
 end
+local function displayList(list, x, y, w, h)
+    
+    for i = 1, h do
+        term.setCursorPos(x, y + h - 1)
+        m.exe(list[i])
+    end
+end
+displayList(getDisplayItemList(), 1, 3, 27, 10)
 
 local textInputX = 1
 local textInputY = 1
