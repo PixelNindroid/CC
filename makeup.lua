@@ -65,18 +65,18 @@ end
 
 --DECODE
 
-function m.exe(var)
+function m.exe(var, w)
     if not var then 
         return
 
     elseif type(var) == 'string' then
-        n.writeStriped(var)
+        n.writeStriped(var, nil, w)
 
     elseif var[1] then
         for _, v in ipairs(var) do m.exe(v) end
 
     else --type(var) == 'thingy' then
-        n.writeStriped(var.text, var.color)
+        n.writeStriped(var.text, var.color, w)
     end
 end
 function m.toString(var)
