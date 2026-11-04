@@ -239,6 +239,7 @@ local function getDisplayItemList()
         return a.count < b.count
     end)
 
+    print('WWWWWWWWWWWWWWWWWWWWWWWWWWW')
     return list
 end
 local function displayList(list, x, y, w, h)
