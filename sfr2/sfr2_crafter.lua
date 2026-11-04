@@ -253,7 +253,7 @@ local function displayList(list, x, y, w, h)
     end
 end
 
-displayList(getDisplayItemList(), 1, 3, 27, 11)
+displayList(getDisplayItemList(27), 1, 3, 27, 11)
 
 
 local textInputX = 1
