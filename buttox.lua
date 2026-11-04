@@ -74,7 +74,7 @@ function buttox.defineButton(name, opts)
 end
 
 local function scrollList(w, scrollDir)
-    local max = #w.list - w.h
+    local max = #w.list - w.h + 10
     w.topi = math.max(1, math.min(w.topi + scrollDir, max))
     w:draw()
 end
