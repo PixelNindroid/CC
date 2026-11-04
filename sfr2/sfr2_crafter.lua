@@ -238,7 +238,7 @@ local function getDisplayItemList()
 
     table.sort(list, function (a, b)
         if a.count == b.count then
-            return a:lower() < b:lower()
+            return a.displayName:lower() < b.displayName:lower()
         end
         return a.count > b.count
     end)
