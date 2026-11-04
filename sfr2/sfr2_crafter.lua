@@ -1,6 +1,7 @@
 local n = require('libs.ninlib')
 local r = require('libs.redlib')
 local m = require('libs.makeup')
+local grab = require('libs.grab')
 local buttox = require('libs.buttox')
 local completion = require('cc.completion')
 local pretty = require('cc.pretty')
