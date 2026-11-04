@@ -209,7 +209,7 @@ local function craftAndEject(limit)
 end
 
 
-local textInputX = 1
+local textInputX = 2
 local textInputY = 1
 local typed = ''
 local function handleTyping(event, p1)
