@@ -20,7 +20,7 @@ local function drawButton(w)
 end
 local function drawList(w)
     for currentH = 1, w.h do
-        term.setCursorPos(x, w.y + currentH - 1)
+        term.setCursorPos(w.x, w.y + currentH - 1)
 
         local i = w.topi + currentH - 1
         m.exe(list[i].display, w.w)
