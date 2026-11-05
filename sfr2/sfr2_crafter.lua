@@ -73,18 +73,24 @@ local function getDisplayItemList()
     local list = {}
 
     for itemID, v in pairs(itemMap) do
+        local displayName = registry.itemDetails[itemID].displayName
+
         table.insert(list, {
             itemID = itemID,
+            displayName = displayName,
             count = v.totalCount,
-            display = {formatCount(v.totalCount), ' ' .. registry.itemDetails[itemID].displayName}
+            display = {formatCount(v.totalCount), ' ' .. displayName}
         })
     end
 
     for _, itemID in pairs(registry.craftable) do
+        local displayName = registry.itemDetails[itemID].displayName
+
         table.insert(list, {
             itemID = itemID,
+            displayName = displayName,
             count = 0,
-            display = m.txt(registry.itemDetails[itemID].displayName, colors.green)
+            display = m.txt(displayName, colors.green)
         })
     end
 
@@ -222,8 +228,8 @@ local function getDisplayListMatches(list, searchString)
     end
 
     table.sort(matches, function (a, b)
-        local aText = string.lower(m.toString(a.display))
-        local bText = string.lower(m.toString(b.display))
+        local aText = m.toString(a.display)
+        local bText = m.toString(b.display)
         
         local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
         local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
