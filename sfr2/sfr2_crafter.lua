@@ -227,7 +227,7 @@ local function getDisplayListMatches(list, searchString)
         end
     end
 
-    table.sort(matches, function (a, b) --in stock, start with, count
+    table.sort(matches, function (a, b) --in stock, start with, count, displayName, itemID
         local aInStock = a.count ~= 0
         local bInStock = b.count ~= 0
 
@@ -235,8 +235,11 @@ local function getDisplayListMatches(list, searchString)
             return aInStock
         end
 
-        local aStartsWithSearch = string.find(a.displayName:lower(), searchString, 1, true) == 1
-        local bStartsWithSearch = string.find(b.displayName:lower(), searchString, 1, true) == 1
+        local aText = a.displayName:lower()
+        local bText = b.displayName:lower()
+
+        local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
+        local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
         
         if aStartsWithSearch ~= bStartsWithSearch then
             return aStartsWithSearch
@@ -245,8 +248,12 @@ local function getDisplayListMatches(list, searchString)
         if a.count ~= b.count then
             return a.count > b.count
         end
+
+        if aText ~= bText then
+            return aText < bText
+        end
         
-        return aStartsWithSearch
+        return a.itemID < b.itemID
     end)
 
     return matches
