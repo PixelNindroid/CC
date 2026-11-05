@@ -237,7 +237,7 @@ local function getDisplayListMatches(list, searchString)
     
         local aText = m.toString(a.display)
         local bText = m.toString(b.display)
-        
+
         local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
         local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
         
@@ -250,8 +250,6 @@ local function getDisplayListMatches(list, searchString)
         end
         
         return aText < bText
-        
-        
     end)
 
     return matches
