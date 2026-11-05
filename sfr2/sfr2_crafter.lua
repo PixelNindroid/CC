@@ -55,54 +55,7 @@ local function drawEmptyGrid()
     end
 end
 
-local function formatCount(count) --4 wide
-    if count < 1000 then --_999
-        return m.txtr(tostring(count), 4, colors.lightGray)
-    elseif count < 10000 then --9.9k
-        return {m.txt(string.format('%.1f', count / 1000), colors.lightGray), m.txt('k', colors.red)}
-    elseif count < 1000000 then --999k
-        return {m.txtr(math.floor(count / 1000), 3, colors.lightGray), m.txt('k', colors.red)}
-    elseif count < 10000000 then --9.9M
-        return {m.txt(string.format('%.1f', count / 1000000), colors.lightGray), m.txt('M', colors.red)}
-    else --999M
-        return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
-    end
-end
 
-local function getDisplayItemList()
-    local list = {}
-
-    for itemID, v in pairs(itemMap) do
-        local displayName = registry.itemDetails[itemID].displayName
-
-        table.insert(list, {
-            itemID = itemID,
-            displayName = displayName,
-            count = v.totalCount,
-            display = {formatCount(v.totalCount), ' ' .. displayName}
-        })
-    end
-
-    for _, itemID in pairs(registry.craftable) do
-        local displayName = registry.itemDetails[itemID].displayName
-
-        table.insert(list, {
-            itemID = itemID,
-            displayName = displayName,
-            count = 0,
-            display = m.txt(displayName, colors.green)
-        })
-    end
-
-    table.sort(list, function (a, b)
-        if a.count == b.count then
-            return registry.itemDetails[a.itemID].displayName:lower() < registry.itemDetails[b.itemID].displayName:lower()
-        end
-        return a.count > b.count
-    end)
-
-    return list
-end
 
 
 --CRAFTING
@@ -218,7 +171,68 @@ local function craftAndEject(limit)
 end
 
 
-local function getDisplayListMatches(list, searchString)
+--ITEM DISPLAY LIST
+
+local function formatCount(count) --4 wide
+    if count < 1000 then --_999
+        return m.txtr(tostring(count), 4, colors.lightGray)
+    elseif count < 10000 then --9.9k
+        return {m.txt(string.format('%.1f', count / 1000), colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 1000000 then --999k
+        return {m.txtr(math.floor(count / 1000), 3, colors.lightGray), m.txt('k', colors.red)}
+    elseif count < 10000000 then --9.9M
+        return {m.txt(string.format('%.1f', count / 1000000), colors.lightGray), m.txt('M', colors.red)}
+    else --999M
+        return {m.txtr(math.floor(count / 1000000), 3, colors.lightGray), m.txt('M', colors.red)}
+    end
+end
+local function getMappedItemDisplayList()
+    local list = {}
+
+    for itemID, v in pairs(itemMap) do
+        local displayName = registry.itemDetails[itemID].displayName
+
+        table.insert(list, {
+            itemID = itemID,
+            displayName = displayName,
+            count = v.totalCount,
+            display = {formatCount(v.totalCount), ' ' .. displayName}
+        })
+    end
+
+    table.sort(list, function (a, b)
+        if a.count ~= b.count then
+            return a.count > b.count
+        end
+        return a.displayName < b.displayName
+    end)
+
+    return list
+end
+local function getCraftableItemDisplayList() --only needs to be called once
+    local list = {}
+
+    for _, itemID in pairs(registry.craftable) do
+        local displayName = registry.itemDetails[itemID].displayName
+
+        table.insert(list, {
+            itemID = itemID,
+            displayName = displayName,
+            count = 0,
+            display = m.txt(displayName, colors.green)
+        })
+    end
+
+    table.sort(list, function (a, b)
+        return a.displayName < b.displayName
+    end)
+
+    return list
+end
+local function getItemDisplayList(mapped, craftable)
+    return n.extend(mapped, craftable)
+end
+local function filterItemDisplayList(list, searchString)
     local matches = {}
 
     for i, v in ipairs(list) do
@@ -259,7 +273,8 @@ local function getDisplayListMatches(list, searchString)
     return matches
 end
 
-local displayItemList = getDisplayItemList()
+local craftableItemDisplayList = getCraftableItemDisplayList()
+local itemDisplayList = getItemDisplayList(getMappedItemDisplayList(), craftableItemDisplayList)
 local textInputX = 2
 local textInputY = 1
 local typed = ''
@@ -279,7 +294,7 @@ local function handleTyping(event, p1)
     term.setCursorPos(textInputX, textInputY)
     write(typed .. '_ ')
 
-    local matches = getDisplayListMatches(displayItemList, typed)
+    local matches = filterItemDisplayList(itemDisplayList, typed)
     buttox.editWidget('items', {
         list    = matches,
         topi    = 1
@@ -296,7 +311,7 @@ buttox.defineList('items', {
     y       = 3,
     w       = 27,
     h       = 10,
-    list    = displayItemList,
+    list    = itemDisplayList,
     onClick = function (_, y)
         local v = buttox.getListClickedValue('items', y)
         term.setCursorPos(20, 2)
