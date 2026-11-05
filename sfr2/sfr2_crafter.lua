@@ -217,7 +217,7 @@ local function getDisplayItemListMatches(list, searchString)
 
     for i, v in ipairs(list) do
         if string.match(string.lower(m.toString(v.display)), searchString) then
-            table.insert(matches, list[is])
+            table.insert(matches, list[i])
         end
     end
     print(#matches)
