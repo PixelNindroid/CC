@@ -220,7 +220,20 @@ local function getDisplayListMatches(list, searchString)
             table.insert(matches, list[i])
         end
     end
-    print(#matches)
+
+    table.sort(matches, function (a, b)
+        local aText = string.lower(m.toString(v.display))
+        local bText = string.lower(m.toString(v.display))
+        
+        local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
+        local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
+        
+        if aStartsWithSearch == bStartsWithSearch then
+            return a < b
+        end
+        
+        return aStartsWithSearch
+    end)
 
     return matches
 end
