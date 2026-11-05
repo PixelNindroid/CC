@@ -234,12 +234,9 @@ local function getDisplayListMatches(list, searchString)
         if aInStock ~= bInStock then
             return aInStock
         end
-    
-        local aText = m.toString(a.display)
-        local bText = m.toString(b.display)
 
-        local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
-        local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
+        local aStartsWithSearch = string.find(a.displayName, searchString, 1, true) == 1
+        local bStartsWithSearch = string.find(b.displayName, searchString, 1, true) == 1
         
         if aStartsWithSearch ~= bStartsWithSearch then
             return aStartsWithSearch
@@ -249,7 +246,7 @@ local function getDisplayListMatches(list, searchString)
             return a.count > b.count
         end
         
-        return aText < bText
+        return a.displayName < b.displayName
     end)
 
     return matches
