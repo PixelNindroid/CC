@@ -212,7 +212,7 @@ local function craftAndEject(limit)
 end
 
 
-local function getDisplayItemListMatches(list, searchString)
+local function getDisplayListMatches(list, searchString)
     local matches = {}
 
     for i, v in ipairs(list) do
@@ -245,7 +245,7 @@ local function handleTyping(event, p1)
     term.setCursorPos(textInputX, textInputY)
     write(typed .. '_ ')
 
-    local matches = getDisplayItemListMatches(displayItemList, typed)
+    local matches = getDisplayListMatches(displayItemList, typed)
     buttox.editWidget('items', {
         list    = matches,
         topi    = 1
