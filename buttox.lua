@@ -174,7 +174,7 @@ function buttox.handle(event, p1, p2, p3)
                 lastClicked.mouseButton = mouseButton
 
                 if w.onClick then
-                    w.onClick(w, mouseButton, x, y)
+                    w.onClick(x, y, mouseButton)
                 end
                 
                 return w
@@ -190,7 +190,7 @@ function buttox.handle(event, p1, p2, p3)
             end
 
             if w.onUp then
-                w.onUp(w, lastClicked.mouseButton)
+                w.onUp(lastClicked.mouseButton)
             end
         end
     elseif event == 'mouse_scroll' then
