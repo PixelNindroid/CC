@@ -40,15 +40,30 @@ end
 
 --DEFINE
 
-local function define(name, w)
+function buttox.define(name, opts)
+    local w = {
+        x           = opts.x or 1,
+        y           = opts.y or 1,
+        w           = opts.w or 1,
+        h           = opts.h or 1,
+        isActive    = opts.isActive or true,
+        group       = opts.group,
+        data        = opts.data or {},
+
+        draw        = opts.draw,
+        onClick     = opts.onClick,  
+        onUp        = opts.onUp,
+        onScroll    = opts.onScroll
+    }
+    if not w.draw then printError(name .. ' was defined without a draw function') end
+    
     widgets[name] = w
     w:draw()
     return w
 end
 function buttox.defineButton(name, opts)
     local text = opts.text or name
-    local w = {
-        type        = 'button',
+    local buttonOpts = {
         draw        = drawButton,
         name        = name,
         text        = text,
@@ -66,13 +81,13 @@ function buttox.defineButton(name, opts)
         data        = opts.data or {}
     }
     if opts.fancy then
-        w.fancy = true
-        w.bgColor = opts.bgColor or colors.black
-        w.w = w.w + 1
-        w.h = w.h + 1
+        buttonOpts.fancy = true
+        buttonOpts.bgColor = opts.bgColor or colors.black
+        buttonOpts.w = buttonOpts.w + 1
+        buttonOpts.h = buttonOpts.h + 1
     end
 
-    return define(name, w)
+    return buttox.define(name, buttonOpts)
 end
 
 local function scrollList(w, scrollDir)
@@ -81,8 +96,7 @@ local function scrollList(w, scrollDir)
     w:draw()
 end
 function buttox.defineList(name, opts)
-    local w = {
-        type        = 'list',
+    local listOpts = {
         draw        = drawList,
         name        = name,
         list        = opts.list or {},
@@ -96,7 +110,7 @@ function buttox.defineList(name, opts)
         onScroll    = scrollList
     }
 
-    return define(name, w)
+    return buttox.define(name, listOpts)
 end
 
 function buttox.getListClickedValue(name, y)
