@@ -227,18 +227,27 @@ local function getDisplayListMatches(list, searchString)
         end
     end
 
-    table.sort(matches, function (a, b)
+    table.sort(matches, function (a, b) --in stock, start with, count
+        local aInStock = a.count ~= 0
+        local bInStock = b.count ~= 0
+
+        if aInStock ~= bInStock then
+            return aInStock
+        end
+    
         local aText = m.toString(a.display)
         local bText = m.toString(b.display)
         
         local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
         local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
         
-        if aStartsWithSearch == bStartsWithSearch then
-            return aText < bText
+        if aStartsWithSearch ~= bStartsWithSearch then
+            return aStartsWithSearch
         end
+
+        return a.count < b.count
         
-        return aStartsWithSearch
+        
     end)
 
     return matches
