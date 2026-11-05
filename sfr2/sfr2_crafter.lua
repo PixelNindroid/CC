@@ -246,7 +246,7 @@ local function handleTyping(event, p1)
 
     local matches = getMatches(displayItemList, typed)
     buttox.editWidget('items', {
-        list    = displayItemList,
+        list    = matches,
         topi    = 1
     })
 end
