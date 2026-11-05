@@ -84,7 +84,7 @@ local function getDisplayItemList()
         table.insert(list, {
             itemID = itemID,
             count = 0,
-            display = itemID--m.txt(registry.itemDetails[itemID].displayName, colors.green)
+            display = m.txt(registry.itemDetails[itemID].displayName, colors.green)
         })
     end
 
@@ -212,6 +212,19 @@ local function craftAndEject(limit)
 end
 
 
+local function getMatches(list, searchString)
+    local matches = {}
+
+    for i, v in ipairs(list) do
+        if string.match(string.lower(m.toString(v)), searchString) then
+            table.insert(matches, i)
+        end
+    end
+
+    return matches
+end
+
+local displayItemList = getDisplayItemList()
 local textInputX = 2
 local textInputY = 1
 local typed = ''
@@ -230,6 +243,12 @@ local function handleTyping(event, p1)
 
     term.setCursorPos(textInputX, textInputY)
     write(typed .. '_ ')
+
+    local matches = getMatches(displayItemList, typed)
+    buttox.editWidget('items', {
+        list    = displayItemList,
+        topi    = 1
+    })
 end
 
 
@@ -242,7 +261,7 @@ buttox.defineList('items', {
     y       = 3,
     w       = 27,
     h       = 10,
-    list    = getDisplayItemList()
+    list    = displayItemList
 })
 
 
