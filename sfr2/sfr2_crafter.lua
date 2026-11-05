@@ -296,7 +296,10 @@ buttox.defineList('items', {
     y       = 3,
     w       = 27,
     h       = 10,
-    list    = displayItemList
+    list    = displayItemList,
+    onClick = function (_, y)
+        local v = buttox.getListClickedValue('items', y)
+    end
 })
 
 
@@ -306,7 +309,7 @@ buttox.defineButton('refil', {
     x       = 25,
     y       = 13,
     buttonColor = colors.lightGray,
-    onUp    = function()
+    onUp    = function ()
         moveItemsToGrid(currentItemGrid)
     end
 })
