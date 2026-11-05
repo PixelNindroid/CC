@@ -114,16 +114,25 @@ function buttox.getWidgetsInGroup(group)
     return groupButtons
 end
 
-function buttox.remove(name)
+function buttox.removeWidget(name)
     if name then
         widgets[name] = nil
     else
         widgets = {}
     end
 end
-function buttox.removeGroup(group)
+function buttox.removeWigetsInGroup(group)
     for _, b in pairs(getButtonsInGroup(group)) do
-        buttox.remove(b.name)
+        buttox.removeWidget(b.name)
+    end
+end
+
+function buttox.editWidget(name, opts)
+    for k, v in pairs(opts) do
+        local w = widgets[name]
+
+        w[k] = v
+        w:draw()
     end
 end
 
