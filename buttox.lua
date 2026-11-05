@@ -27,7 +27,7 @@ local function drawList(w)
         term.setCursorPos(w.x, w.y + currentH - 1)
 
         local i = w.topi + currentH - 1
-        m.exe(w.list[i].display, w.w)
+        m.exe(w.list[i] and w.list[i].display or ' ', w.w)
     end
 end
 
