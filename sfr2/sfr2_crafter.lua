@@ -17,6 +17,11 @@ local registry = r.getVar(controllerID, 'registry')
 local itemMap = r.action(controllerID, 'remap')
 
 
+local my_window = window.create(term.current(), 1, 1, 25, 5)
+term.redirect(my_window)
+print("Writing some long text which will wrap around and show the bounds of this window.")
+term.redirect(term.native())
+
 --GUI
 
 local gridStartX = 29
@@ -334,6 +339,7 @@ buttox.defineList('items', {
 
 
 drawEmptyGrid()
+my_window.redraw()
 
 buttox.defineButton('refil', {
     x       = 25,
