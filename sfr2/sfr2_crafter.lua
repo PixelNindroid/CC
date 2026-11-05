@@ -245,7 +245,7 @@ local function getDisplayListMatches(list, searchString)
             return aStartsWithSearch
         end
 
-        return a.count < b.count
+        return a.count > b.count
         
         
     end)
