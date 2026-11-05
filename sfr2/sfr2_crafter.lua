@@ -299,6 +299,7 @@ buttox.defineList('items', {
     list    = displayItemList,
     onClick = function (_, y)
         local v = buttox.getListClickedValue('items', y)
+        print(y ,v)
         term.setCursorPos(20, 2)
         n.write(v.itemID)
     end
