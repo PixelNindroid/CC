@@ -99,6 +99,14 @@ function buttox.defineList(name, opts)
     return define(name, w)
 end
 
+function buttox.getListClickedValue(name, y)
+    local w = widgets[name]
+    local i = w.topi + (w.y - y)
+    local v = w.list[i]
+
+    return v 
+end
+
 function buttox.getWidget(name)
     return widgets[name]
 end
