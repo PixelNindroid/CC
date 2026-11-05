@@ -220,6 +220,7 @@ local function getDisplayItemListMatches(list, searchString)
             table.insert(matches, i)
         end
     end
+    print(#matches)
 
     return matches
 end
