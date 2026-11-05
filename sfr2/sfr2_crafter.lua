@@ -230,7 +230,20 @@ local function getCraftableItemDisplayList() --only needs to be called once
     return list
 end
 local function getItemDisplayList(mapped, craftable)
-    return n.extend(mapped, craftable)
+    local list = mapped
+    local mappedIDs = {}
+
+    for _, v in ipairs(mapped) do
+        mappedIDs[v.itemID] = true
+    end
+
+    for _, v in ipairs(craftable) do
+        if not mappedIDs[v.itemID] then
+            table.insert(list, v)
+        end
+    end
+
+    return list
 end
 local function filterItemDisplayList(list, searchString)
     local matches = {}
