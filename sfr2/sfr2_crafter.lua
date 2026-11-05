@@ -222,8 +222,8 @@ local function getDisplayListMatches(list, searchString)
     end
 
     table.sort(matches, function (a, b)
-        local aText = string.lower(m.toString(v.display))
-        local bText = string.lower(m.toString(v.display))
+        local aText = string.lower(m.toString(a.display))
+        local bText = string.lower(m.toString(b.display))
         
         local aStartsWithSearch = string.find(aText, searchString, 1, true) == 1
         local bStartsWithSearch = string.find(bText, searchString, 1, true) == 1
