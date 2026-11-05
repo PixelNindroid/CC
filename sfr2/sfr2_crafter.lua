@@ -21,8 +21,8 @@ local itemMap = r.action(controllerID, 'remap')
 
 local gridStartX = 29
 local gridStartY = 7
-local slotWidth = 6
-local slotHeight = 4
+local slotWidth = 3
+local slotHeight = 2
 
 local function getSlotDrawPos(slot)
     local x = gridStartX + (math.fmod(slot - 1, 3) * slotWidth)
