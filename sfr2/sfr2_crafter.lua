@@ -235,8 +235,8 @@ local function getDisplayListMatches(list, searchString)
             return aInStock
         end
 
-        local aStartsWithSearch = string.find(a.displayName, searchString, 1, true) == 1
-        local bStartsWithSearch = string.find(b.displayName, searchString, 1, true) == 1
+        local aStartsWithSearch = string.find(a.displayName:lower(), searchString, 1, true) == 1
+        local bStartsWithSearch = string.find(b.displayName:lower(), searchString, 1, true) == 1
         
         if aStartsWithSearch ~= bStartsWithSearch then
             return aStartsWithSearch
